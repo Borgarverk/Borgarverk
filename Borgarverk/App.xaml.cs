@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Borgarverk.Views;
+using Xamarin.Forms;
 
 namespace Borgarverk
 {
@@ -8,7 +9,7 @@ namespace Borgarverk
 		{
 			InitializeComponent();
 
-			MainPage = new BorgarverkPage();
+			MainPage = new NavigationPage(new HomePage());
 		}
 
 		protected override void OnStart()
