@@ -107,6 +107,15 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_directions_car_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_directions_car_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_directions_car_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_store_mall_directory_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_store_mall_directory_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_store_mall_directory_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_content_paste_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_content_paste_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_content_paste_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
