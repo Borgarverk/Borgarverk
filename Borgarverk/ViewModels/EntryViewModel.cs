@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Borgarverk
 {
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string car, station, roadWidth, no, roadLength, roadArea, tarQty, rate;
-		DateTime timeSent;
+		private string roadWidth, no, roadLength, roadArea, tarQty, rate;
+		private CarModel car;
+		private StationModel station;
+		private DateTime timeSent;
 		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		#region properties
-		public string Car
+		public CarModel Car
 		{
 			get { return car; }
 			set
@@ -23,12 +26,13 @@ namespace Borgarverk
 				if (car != value)
 				{
 					car = value;
+					Debug.WriteLine(car.Num);
 					OnPropertyChanged("Car");
 				}
 			}
 		}
 
-		public string Station
+		public StationModel Station
 		{
 			get { return station; }
 			set
@@ -36,6 +40,7 @@ namespace Borgarverk
 				if (station != value)
 				{
 					station = value;
+					Debug.WriteLine(station.Name);
 					OnPropertyChanged("Station");
 				}
 			}
@@ -49,6 +54,7 @@ namespace Borgarverk
 				if (no != value)
 				{
 					no = value;
+					Debug.WriteLine(no);
 					OnPropertyChanged("No");
 				}
 			}
@@ -62,6 +68,7 @@ namespace Borgarverk
 				if (roadWidth != value)
 				{
 					roadWidth = value;
+					Debug.WriteLine(roadWidth);
 					OnPropertyChanged("RoadWidth");
 				}
 			}
@@ -75,6 +82,7 @@ namespace Borgarverk
 				if (roadLength != value)
 				{
 					roadLength = value;
+					Debug.WriteLine(roadLength);
 					OnPropertyChanged("RoadLength");
 				}
 			}
@@ -88,6 +96,7 @@ namespace Borgarverk
 				if (roadArea != value)
 				{
 					roadArea = value;
+					Debug.WriteLine(roadArea);
 					OnPropertyChanged("RoadArea");
 				}
 			}
@@ -101,6 +110,7 @@ namespace Borgarverk
 				if (tarQty != value)
 				{
 					tarQty = value;
+					Debug.WriteLine(tarQty);
 					OnPropertyChanged("TarQty");
 				}
 			}
@@ -114,6 +124,7 @@ namespace Borgarverk
 				if (rate != value)
 				{
 					rate = value;
+					Debug.WriteLine(rate);
 					OnPropertyChanged("Rate");
 				}
 			}
