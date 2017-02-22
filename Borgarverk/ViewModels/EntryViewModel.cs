@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace Borgarverk
 {
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth, no, roadLength, roadArea, tarQty, rate;
+		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
 		private CarModel car;
 		private StationModel station;
 		private DateTime timeSent;
+		private bool isValid = false;
+		private readonly DataService dataService;
 		#endregion
 
+		public EntryViewModel()
+		{
+			//ConfirmOneCommand = new Command();
+			dataService = new DataService();
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
+		public Command ConfirmOneCommand { get; }
 
 		#region properties
 		public CarModel Car
@@ -26,6 +36,8 @@ namespace Borgarverk
 				if (car != value)
 				{
 					car = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("Car");
 				}
 			}
@@ -39,6 +51,8 @@ namespace Borgarverk
 				if (station != value)
 				{
 					station = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("Station");
 				}
 			}
@@ -52,6 +66,8 @@ namespace Borgarverk
 				if (no != value)
 				{
 					no = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("No");
 				}
 			}
@@ -65,6 +81,8 @@ namespace Borgarverk
 				if (roadWidth != value)
 				{
 					roadWidth = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("RoadWidth");
 				}
 			}
@@ -78,6 +96,8 @@ namespace Borgarverk
 				if (roadLength != value)
 				{
 					roadLength = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("RoadLength");
 				}
 			}
@@ -91,6 +111,8 @@ namespace Borgarverk
 				if (roadArea != value)
 				{
 					roadArea = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("RoadArea");
 				}
 			}
@@ -104,6 +126,8 @@ namespace Borgarverk
 				if (tarQty != value)
 				{
 					tarQty = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("TarQty");
 				}
 			}
@@ -117,6 +141,8 @@ namespace Borgarverk
 				if (rate != value)
 				{
 					rate = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("Rate");
 				}
 			}
@@ -130,16 +156,27 @@ namespace Borgarverk
 				if (timeSent != value)
 				{
 					timeSent = value;
+					ValidEntry();
+					OnPropertyChanged("IsValid");
 					OnPropertyChanged("TimeSent");
 				}
 			}
 		}
-		#endregion
 
-		public EntryViewModel()
+		public bool Isvalid
 		{
+			get { return isValid; }
+			set 
+			{
+				if (isValid != value)
+				{
+					isValid = value;
+					OnPropertyChanged("IsValid");
+				}
+			}
 		}
-
+					
+		#endregion
 
 		private ObservableCollection<CarModel> carItems = new ObservableCollection<CarModel>()
 			{
@@ -182,6 +219,18 @@ namespace Borgarverk
 				stationItems = value;
 
 			}
+		}
+
+		void ValidEntry()
+		{
+			isValid = (No.Length > 0) &&
+				(RoadLength.Length > 0) &&
+				(RoadWidth.Length > 0) &&
+				(RoadArea.Length > 0) &&
+				(TarQty.Length > 0) &&
+				(Rate.Length > 0) &&
+				(Car != null) &&
+				(Station != null);
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
