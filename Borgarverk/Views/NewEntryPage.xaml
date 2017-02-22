@@ -5,6 +5,11 @@
 		xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk"
 		xmlns:behavior="clr-namespace:Borgarverk.Behavior;assembly=Borgarverk.Behavior"
 		Title="Ný Færsla">
+	<ContentPage.Resources>
+        <ResourceDictionary>
+            <local:NegateBooleanConverter x:Key="cnvInvert"></local:NegateBooleanConverter>
+        </ResourceDictionary>
+        </ContentPage.Resources>
 	<ContentPage.Content>
 		<Grid Padding="30,0,30,30" x:Name="mainGrid">
 			<Grid.RowDefinitions>
@@ -72,7 +77,6 @@
 				<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10" Grid.Row="2">
 					<Image Source="ic_content_paste_black_24dp.png" VerticalOptions="Center" HeightRequest="15" WidthRequest="15"></Image>
 					<Label Text="Upplýsingar" VerticalOptions="Center"></Label>
-					<Image Source="error" x:Name="errorImage" HeightRequest="15" WidthRequest="15" IsVisible="false"></Image>
 			
 				</StackLayout>
 				<Grid Grid.Row="3">
@@ -131,9 +135,13 @@
 				HorizontalOptions="CenterAndExpand" 
 				Grid.Row="5" HeightRequest="80" 
 				WidthRequest="200"
-				IsEnabled="{Binding IsValid}"
-				>
+				Command="{Binding ConfirmOneCommand}">
 				</Button>
+				<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="5" IsVisible="{Binding IsValid, Converter={StaticResource cnvInvert}}" Grid.Row="6">
+					<Image Source="error" HeightRequest="15" WidthRequest="15" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand"></Image>
+					<Label Text="Fylla verður út alla reiti" TextColor="Red" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+				</StackLayout>
+				<Image Source="success" HeightRequest="15" WidthRequest="15" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsValid}" Grid.Row="6"></Image>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>
