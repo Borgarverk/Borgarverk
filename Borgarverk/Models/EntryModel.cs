@@ -1,10 +1,14 @@
 ﻿using System;
+using SQLite;
+
 namespace Borgarverk
 {
 	public class EntryModel
 	{
-		public CarModel Car { get; set; }
-		public StationModel Station { get; set; }
+		[PrimaryKey, AutoIncrement]
+		public int ID { get; set; }
+		public string Car { get; set; }
+		public string Station { get; set; }
 		public string No { get; set; }
 		public string RoadLength { get; set; }
 		public string RoadWidht { get; set; }

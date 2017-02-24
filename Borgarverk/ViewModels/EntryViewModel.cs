@@ -11,25 +11,25 @@ namespace Borgarverk
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
-		private CarModel car;
-		private StationModel station;
+		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "", car = "", station = "";
 		private DateTime timeSent;
 		private bool isValid = false;
-		private readonly DataService dataService;
+		private readonly IDataService dataService;
+		private ObservableCollection<string> cars;
+		private ObservableCollection<string> stations = new ObservableCollection<string>();
 		#endregion
 
-		public EntryViewModel()
+		public EntryViewModel(IDataService service)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			dataService = new DataService();
+			this.dataService = service;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
 
 		#region properties
-		public CarModel Car
+		public string Car
 		{
 			get { return car; }
 			set
@@ -43,7 +43,7 @@ namespace Borgarverk
 			}
 		}
 
-		public StationModel Station
+		public string Station
 		{
 			get { return station; }
 			set
@@ -175,40 +175,32 @@ namespace Borgarverk
 				}
 			}
 		}
-					
+
 		#endregion
 
-		private ObservableCollection<CarModel> carItems = new ObservableCollection<CarModel>()
-			{
-				new CarModel("ML-455"),
-				new CarModel("MU-510"),
-				new CarModel("BZ-963"),
-				new CarModel("US-553"),
-				new CarModel("AZ-R92")
-			};
 
-		public ObservableCollection<CarModel> CarItems
+		public ObservableCollection<string> CarItems
 		{
 			get
 			{
-				return carItems;
+				return cars;
 			}
 			set
 			{
-				carItems = value;
+				cars = value;
 			}
 		}
 
-		private ObservableCollection<StationModel> stationItems = new ObservableCollection<StationModel>()
+		private ObservableCollection<string> stationItems = new ObservableCollection<string>()
 			{
-				new StationModel("Akureyri"),
-				new StationModel("Ísafjörður"),
-				new StationModel("Reykjavík"),
-				new StationModel("Hlaðbær Colas"),
-				new StationModel("Reyðarfjörður")
+				"Akureyri",
+				"Ísafjörður",
+				"Reykjavík",
+				"Hlaðbær Colas",
+				"Reyðarfjörður"
 			};
 
-		public ObservableCollection<StationModel> StationItems
+		public ObservableCollection<string> StationItems
 		{
 			get
 			{
@@ -229,8 +221,8 @@ namespace Borgarverk
 				(RoadArea.Length > 0) &&
 				(TarQty.Length > 0) &&
 				(Rate.Length > 0) &&
-				(Car != null) &&
-				(Station != null);
+				(Car.Length > 0) &&
+				(Station.Length > 0);
 			IsValid = valid;
 			if (IsValid)
 			{
@@ -254,7 +246,6 @@ namespace Borgarverk
 			model.RoadArea = RoadArea;
 			model.TarQty = TarQty;
 			model.Rate = Rate;
-			model.TimeSent = DateTime.Now;
 			dataService.AddEntry(model);
 		}
 

@@ -10,13 +10,7 @@ namespace Borgarverk
 		public NewEntryPage()
 		{
 			InitializeComponent();
-			BindingContext = new EntryViewModel();
-		}
-
-		private void ValidEntries(object sender, PropertyChangedEventArgs e)
-		{
-			//confirmButton.IsEnabled = validWidth.IsValid && validLength.IsValid && validArea.IsValid
-			//	&& validQty.IsValid && validRate.IsValid && validNo.IsValid;
+			BindingContext = new EntryViewModel(new DataService());
 		}
 	}
 }

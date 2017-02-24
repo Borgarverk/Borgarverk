@@ -1,4 +1,6 @@
 ﻿using System;
+using SQLite;
+
 namespace Borgarverk
 {
 	public class StationModel
@@ -8,6 +10,9 @@ namespace Borgarverk
 		#endregion
 
 		#region properties
+		[PrimaryKey, AutoIncrement]
+		public int ID { get; set; }
+
 		public string Name
 		{
 			get { return name; }
@@ -18,6 +23,9 @@ namespace Borgarverk
 		public StationModel(string n)
 		{
 			this.Name = n;
+		}
+		public StationModel()
+		{
 		}
 
 	}

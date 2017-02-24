@@ -25,7 +25,7 @@
 				<Label Text="Sláðu inn færslunúmer" VerticalOptions="EndAndExpand"></Label>
 				<Entry HorizontalOptions="FillAndExpand" Text="{Binding No, Mode=TwoWay}" x:Name="NoEntry">
 					<Entry.Behaviors>
-						<local:NotEmptyValidationBehavior x:Name="validNo" PropertyChanged="ValidEntries" />
+						<local:NotEmptyValidationBehavior/>
 					</Entry.Behaviors>
 				</Entry>
 			</StackLayout>
@@ -49,7 +49,7 @@
      				 		<DataTemplate>
         						<ViewCell>
           							<ViewCell.View>
-            							<Label Text="{Binding Num}" HorizontalOptions="CenterAndExpand" Margin="5"/>
+            							<Label Text="{Binding}" HorizontalOptions="CenterAndExpand" Margin="5"/>
           							</ViewCell.View>
         						</ViewCell>
      						 </DataTemplate>
@@ -66,7 +66,7 @@
      				 		<DataTemplate>
         						<ViewCell>
           							<ViewCell.View>
-            							<Label Text="{Binding Name}" HorizontalOptions="CenterAndExpand" Margin="5" />
+            							<Label Text="{Binding}" HorizontalOptions="CenterAndExpand" Margin="5" />
           							</ViewCell.View>
         						</ViewCell>
      						 </DataTemplate>
@@ -94,17 +94,17 @@
 					<Label Text="Flatarmál" Grid.Row="0" Grid.Column="2" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding RoadWidth, Mode=TwoWay}" >
 						<Entry.Behaviors>
-							<local:NotEmptyValidationBehavior x:Name="validWidth" PropertyChanged="ValidEntries" />
+							<local:NotEmptyValidationBehavior />
 						</Entry.Behaviors>
 					</Entry>
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding RoadLength, Mode=TwoWay}">
 						<Entry.Behaviors>
-							<local:NotEmptyValidationBehavior x:Name="validLength" PropertyChanged="ValidEntries"/>
+							<local:NotEmptyValidationBehavior/>
 						</Entry.Behaviors>
 					</Entry>
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="2" Text="{Binding RoadArea, Mode=TwoWay}">
 						<Entry.Behaviors>
-							<local:NotEmptyValidationBehavior x:Name="validArea" PropertyChanged="ValidEntries" />
+							<local:NotEmptyValidationBehavior/>
 						</Entry.Behaviors>
 					</Entry>
 				</Grid>
@@ -121,12 +121,12 @@
 					<Label Text="Lítrar/fermeter" Grid.Row="0" Grid.Column="1" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding TarQty, Mode=TwoWay}">
 						<Entry.Behaviors>
-							<local:NotEmptyValidationBehavior x:Name="validQty" PropertyChanged="ValidEntries" />
+							<local:NotEmptyValidationBehavior/>
 						</Entry.Behaviors>
 					</Entry>
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding Rate, Mode=TwoWay}">
 						<Entry.Behaviors>
-							<local:NotEmptyValidationBehavior x:Name="validRate" PropertyChanged="ValidEntries" />
+							<local:NotEmptyValidationBehavior/>
 						</Entry.Behaviors>
 					</Entry>
 				</Grid>

@@ -1,4 +1,6 @@
-﻿using Borgarverk.Views;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Borgarverk.Views;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -8,7 +10,6 @@ namespace Borgarverk
 		public App()
 		{
 			InitializeComponent();
-
 			MainPage = new NavigationPage(new HomePage());
 		}
 
