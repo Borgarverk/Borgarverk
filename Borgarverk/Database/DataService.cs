@@ -18,20 +18,21 @@ namespace Borgarverk
 			database = DependencyService.Get<ISQLite>().GetConnection();
 			database.CreateTable<EntryModel>();
 			database.CreateTable<CarModel>();
-			/*DeleteCars();
+			database.DeleteAll<EntryModel>();
+			//DeleteCars();
 			AddCar(new CarModel("ML-455"));
 			AddCar(new CarModel("MU-510"));
 			AddCar(new CarModel("BZ-963"));
 			AddCar(new CarModel("US-553"));
-			AddCar(new CarModel("AZ-R93"));*/
+			AddCar(new CarModel("AZ-R93"));
 			database.CreateTable<StationModel>();
-			/*DeleteStations();
+			//DeleteStations();
 			AddStation(new StationModel("Akureyri"));
 			AddStation(new StationModel("Hlaðbær Colas"));
 			AddStation(new StationModel("Höfði"));
 			AddStation(new StationModel("Ísafjörður"));
 			AddStation(new StationModel("Reyðarfjörður"));
-			AddStation(new StationModel("Sauðárkrókur"));*/
+			AddStation(new StationModel("Sauðárkrókur"));
 		}
 
 		#region Entry functons
@@ -64,6 +65,7 @@ namespace Borgarverk
 		public void AddEntry(EntryModel model)
 		{
 			model.TimeSent = DateTime.Now;
+			model.Sent = true;
 			lock(locker)
 			{
 				database.Insert(model);

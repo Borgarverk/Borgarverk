@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.EntryListPage">
+	<ContentPage.Content>
+		<ListView ItemsSource="{Binding Entries}">
+			 <ListView.Header>
+   				<StackLayout Padding="10,5,0,5" Orientation="Horizontal">
+        			<Label Text="Car" />
+        			<Label Text="Stations"/>
+					<Label Text="Date Created"/>
+					<Label Text="Sent/Not Sent"/>
+    			</StackLayout>
+			</ListView.Header>
+			<ListView.ItemTemplate>
+     			<DataTemplate>
+       				<ViewCell>
+        				<ViewCell.View>
+           					<StackLayout Padding="10,5,0,5" Orientation="Horizontal">
+        						<Label Text="{Binding Car}" />
+        						<Label Text="{Binding Station}"/>
+								<Label Text="{Binding TimeCreated}"/>
+								<Label Text="{Binding TimeSent}" />
+    						</StackLayout>
+        				</ViewCell.View>
+        			</ViewCell>
+     			</DataTemplate>
+   			</ListView.ItemTemplate>
+		</ListView>
+	</ContentPage.Content>
+</ContentPage>

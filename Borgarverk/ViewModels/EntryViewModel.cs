@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ namespace Borgarverk
 		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
 		private CarModel car;
 		private StationModel station;
-		private DateTime timeSent;
+		private DateTime timeSent, timeCreated;
 		private bool isValid = false;
 		private readonly IDataService dataService;
 		private ObservableCollection<CarModel> cars;
@@ -158,6 +157,19 @@ namespace Borgarverk
 			}
 		}
 
+		public DateTime TimeCreated
+		{
+			get { return timeCreated; }
+			set
+			{
+				if (timeCreated != value)
+				{
+					timeCreated = value;
+					OnPropertyChanged("TimeSent");
+				}
+			}
+		}
+
 		public bool IsValid
 		{
 			get { return isValid; }
@@ -233,15 +245,16 @@ namespace Borgarverk
 
 		async Task SaveEntry()
 		{
-				EntryModel model = new EntryModel();
-				model.Car = Car.Num;
-				model.Station = Station.Name;
-				model.RoadWidht = RoadWidth;
-				model.RoadLength = RoadLength;
-				model.RoadArea = RoadArea;
-				model.TarQty = TarQty;
-				model.Rate = Rate;
-				dataService.AddEntry(model);
+			EntryModel model = new EntryModel();
+			model.Car = Car.Num;
+			model.Station = Station.Name;
+			model.RoadWidht = RoadWidth;
+			model.RoadLength = RoadLength;
+			model.RoadArea = RoadArea;
+			model.TarQty = TarQty;
+			model.Rate = Rate;
+			model.TimeCreated = DateTime.Now;
+			dataService.AddEntry(model);
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

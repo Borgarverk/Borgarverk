@@ -35,7 +35,7 @@ namespace Borgarverk.Views
 
 		public void AllEntries(object sender, EventArgs e)
 		{
-			// TODO: Implement
+			Navigation.PushAsync(new EntryListPage());
 		}
 	}
 }
