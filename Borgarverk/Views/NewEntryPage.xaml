@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		x:Class="Borgarverk.NewEntryPage"
@@ -44,12 +44,12 @@
 					<Label Text="Veldu bíl" VerticalOptions="Center"></Label>
 					
 				</StackLayout>
-					<ListView x:Name="carList" ItemsSource="{Binding CarItems}" SelectedItem="{Binding Car, Mode=TwoWay}" HasUnevenRows="true" HeightRequest="350" Grid.Row="1" Grid.Column="0">
+					<ListView x:Name="carList" ItemsSource="{Binding Cars}" SelectedItem="{Binding Car, Mode=TwoWay}" HasUnevenRows="true" HeightRequest="350" Grid.Row="1" Grid.Column="0">
 						<ListView.ItemTemplate>
      				 		<DataTemplate>
         						<ViewCell>
           							<ViewCell.View>
-            							<Label Text="{Binding}" HorizontalOptions="CenterAndExpand" Margin="5"/>
+            							<Label Text="{Binding Num}" HorizontalOptions="CenterAndExpand" Margin="5"/>
           							</ViewCell.View>
         						</ViewCell>
      						 </DataTemplate>
@@ -61,12 +61,12 @@
 					<Label Text="Veldu Stöð" VerticalOptions="Center"></Label>
 					
 				</StackLayout>
-					<ListView x:Name="stationList" ItemsSource="{Binding StationItems}" SelectedItem="{Binding Station, Mode=TwoWay}" HasUnevenRows="true" HeightRequest="350" Grid.Row="1" Grid.Column="1">
+					<ListView x:Name="stationList" ItemsSource="{Binding Stations}" SelectedItem="{Binding Station, Mode=TwoWay}" HasUnevenRows="true" HeightRequest="350" Grid.Row="1" Grid.Column="1">
 						<ListView.ItemTemplate>
      				 		<DataTemplate>
         						<ViewCell>
           							<ViewCell.View>
-            							<Label Text="{Binding}" HorizontalOptions="CenterAndExpand" Margin="5" />
+            							<Label Text="{Binding Name}" HorizontalOptions="CenterAndExpand" Margin="5" />
           							</ViewCell.View>
         						</ViewCell>
      						 </DataTemplate>

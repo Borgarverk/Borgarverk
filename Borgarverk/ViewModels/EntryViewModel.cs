@@ -11,25 +11,29 @@ namespace Borgarverk
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "", car = "", station = "";
+		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
+		private CarModel car;
+		private StationModel station;
 		private DateTime timeSent;
 		private bool isValid = false;
 		private readonly IDataService dataService;
-		private ObservableCollection<string> cars;
-		private ObservableCollection<string> stations = new ObservableCollection<string>();
+		private ObservableCollection<CarModel> cars;
+		private ObservableCollection<StationModel> stations;
 		#endregion
 
 		public EntryViewModel(IDataService service)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.dataService = service;
+			cars = new ObservableCollection<CarModel>(dataService.GetCars());
+			stations = new ObservableCollection<StationModel>(dataService.GetStations());
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
 
 		#region properties
-		public string Car
+		public CarModel Car
 		{
 			get { return car; }
 			set
@@ -43,7 +47,7 @@ namespace Borgarverk
 			}
 		}
 
-		public string Station
+		public StationModel Station
 		{
 			get { return station; }
 			set
@@ -179,7 +183,7 @@ namespace Borgarverk
 		#endregion
 
 
-		public ObservableCollection<string> CarItems
+		public ObservableCollection<CarModel> Cars
 		{
 			get
 			{
@@ -191,24 +195,15 @@ namespace Borgarverk
 			}
 		}
 
-		private ObservableCollection<string> stationItems = new ObservableCollection<string>()
-			{
-				"Akureyri",
-				"Ísafjörður",
-				"Reykjavík",
-				"Hlaðbær Colas",
-				"Reyðarfjörður"
-			};
-
-		public ObservableCollection<string> StationItems
+		public ObservableCollection<StationModel> Stations
 		{
 			get
 			{
-				return stationItems;
+				return stations;
 			}
 			set
 			{
-				stationItems = value;
+				stations = value;
 
 			}
 		}
@@ -221,8 +216,8 @@ namespace Borgarverk
 				(RoadArea.Length > 0) &&
 				(TarQty.Length > 0) &&
 				(Rate.Length > 0) &&
-				(Car.Length > 0) &&
-				(Station.Length > 0);
+				(Car != null) &&
+				(Station != null );
 			IsValid = valid;
 			if (IsValid)
 			{
@@ -238,15 +233,15 @@ namespace Borgarverk
 
 		async Task SaveEntry()
 		{
-			EntryModel model = new EntryModel();
-			model.Car = Car;
-			model.Station = Station;
-			model.RoadWidht = RoadWidth;
-			model.RoadLength = RoadLength;
-			model.RoadArea = RoadArea;
-			model.TarQty = TarQty;
-			model.Rate = Rate;
-			dataService.AddEntry(model);
+				EntryModel model = new EntryModel();
+				model.Car = Car.Num;
+				model.Station = Station.Name;
+				model.RoadWidht = RoadWidth;
+				model.RoadLength = RoadLength;
+				model.RoadArea = RoadArea;
+				model.TarQty = TarQty;
+				model.Rate = Rate;
+				dataService.AddEntry(model);
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
