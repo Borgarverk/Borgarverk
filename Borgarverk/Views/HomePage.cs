@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Borgarverk.Views
@@ -31,14 +32,27 @@ namespace Borgarverk.Views
 			Content = layout;
 		}
 
-		public void NewEntry(object sender, EventArgs e)
+		public async void NewEntry(object sender, EventArgs e)
 		{
-			Navigation.PushAsync(new NewEntryPage());
+			newEntryButton.SetValue(OpacityProperty, 0.2);
+			await Task.Delay(100);
+			await Navigation.PushAsync(new NewEntryPage());
 		}
 
-		public void AllEntries(object sender, EventArgs e)
+		public async void AllEntries(object sender, EventArgs e)
 		{
-			Navigation.PushAsync(new EntryListPage());
+			allEntriesButton.SetValue(OpacityProperty, 0.2);
+			await Task.Delay(100);
+			await Navigation.PushAsync(new EntryListPage());
 		}
+
+		#region OnAppearing()
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			newEntryButton.SetValue(OpacityProperty, 1);
+			allEntriesButton.SetValue(OpacityProperty, 1);
+		}
+		#endregion
 	}
 }
