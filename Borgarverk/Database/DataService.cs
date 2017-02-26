@@ -18,7 +18,7 @@ namespace Borgarverk
 			database = DependencyService.Get<ISQLite>().GetConnection();
 			database.CreateTable<EntryModel>();
 			database.CreateTable<CarModel>();
-			database.DeleteAll<EntryModel>();
+			//database.DeleteAll<EntryModel>();
 			//DeleteCars();
 			AddCar(new CarModel("ML-455"));
 			AddCar(new CarModel("MU-510"));

@@ -18,12 +18,14 @@ namespace Borgarverk
 		private readonly IDataService dataService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
+		private INavigation navigation;
 		#endregion
 
-		public EntryViewModel(IDataService service)
+		public EntryViewModel(IDataService service, INavigation navigation)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.dataService = service;
+			this.navigation = navigation;
 			cars = new ObservableCollection<CarModel>(dataService.GetCars());
 			stations = new ObservableCollection<StationModel>(dataService.GetStations());
 		}
@@ -255,6 +257,7 @@ namespace Borgarverk
 			model.Rate = Rate;
 			model.TimeCreated = DateTime.Now;
 			dataService.AddEntry(model);
+			navigation.PopAsync();
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
