@@ -9,16 +9,19 @@ namespace Borgarverk.Views
 		private StackLayout layout;
 		private Button newEntryButton;
 		private Button allEntriesButton;
+		private Image borgarverkImage;
 		#endregion
 
 		public HomePage()
 		{
 			newEntryButton = new Button { Text = "Ný færsla" };
 			allEntriesButton = new Button { Text = "Allar færslur" };
+			borgarverkImage = new Image { Source = "Borgarverk_clearbackground.png" };
 			layout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
 				Children = {
+					borgarverkImage,
 					newEntryButton,
 					allEntriesButton
 				}
