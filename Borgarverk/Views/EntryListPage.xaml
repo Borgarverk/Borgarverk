@@ -3,7 +3,7 @@
 	<ContentPage.Content>
 		<ListView ItemsSource="{Binding Entries}">
 			 <ListView.Header>
-				<Grid>
+				<Grid Margin="10">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="0.2*" />
 						<ColumnDefinition Width="0.4*" />
@@ -11,9 +11,9 @@
 						<ColumnDefinition Width="0.2*" />
 					</Grid.ColumnDefinitions>
 					<Label Text="Bíll" FontAttributes="Bold" />
-						<Label Grid.Column="1" Text="Staður" />
-						<Label Grid.Column="2" Text="Gerð"/>
-						<Label Grid.Column="3" Text="Sent"/>
+						<Label Grid.Column="1" Text="Staður" FontAttributes="Bold"/>
+						<Label Grid.Column="2" Text="Gerð" FontAttributes="Bold"/>
+						<Label Grid.Column="3" Text="Sent" FontAttributes="Bold"/>
 				</Grid>
 			</ListView.Header>
 			<ListView.ItemTemplate>
@@ -26,7 +26,7 @@
 								<ColumnDefinition Width="0.2*" />
 								<ColumnDefinition Width="0.2*" />
 							</Grid.ColumnDefinitions>
-							<Label Text="{Binding Car}" FontAttributes="Bold" />
+							<Label Text="{Binding Car}" />
 							<Label Grid.Column="1" Text="{Binding Station}" />
 							<Label Grid.Column="2" Text="{Binding TimeCreated}"/>
 							<Label Grid.Column="3" Text="{Binding TimeSent}"/>
