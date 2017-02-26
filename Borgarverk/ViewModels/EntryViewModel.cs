@@ -18,12 +18,14 @@ namespace Borgarverk
 		private readonly IDataService dataService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
+		private INavigation navigation;
 		#endregion
 
-		public EntryViewModel(IDataService service)
+		public EntryViewModel(IDataService service, INavigation navigation)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.dataService = service;
+			this.navigation = navigation;
 			cars = new ObservableCollection<CarModel>(dataService.GetCars());
 			stations = new ObservableCollection<StationModel>(dataService.GetStations());
 		}
@@ -245,17 +247,31 @@ namespace Borgarverk
 
 		async Task SaveEntry()
 		{
-			EntryModel model = new EntryModel();
-			model.Car = Car.Num;
-			model.Station = Station.Name;
-			model.RoadWidht = RoadWidth;
-			model.RoadLength = RoadLength;
-			model.RoadArea = RoadArea;
-			model.TarQty = TarQty;
-			model.Rate = Rate;
-			model.TimeCreated = DateTime.Now;
-			dataService.AddEntry(model);
+			var confirmed = await App.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
+			if (confirmed)
+			{
+				EntryModel model = new EntryModel();
+				model.Car = Car.Num;
+				model.Station = Station.Name;
+				model.RoadWidht = RoadWidth;
+				model.RoadLength = RoadLength;
+				model.RoadArea = RoadArea;
+				model.TarQty = TarQty;
+				model.Rate = Rate;
+				model.TimeCreated = DateTime.Now;
+				dataService.AddEntry(model);
+				await navigation.PopAsync();
+			}
 		}
+
+		//async void OnSubmission(object sender, EventArgs e)
+		//{
+		//	var confirmed = await DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
+		//	if (confirmed)
+		//	{
+		//		await SaveEntry();
+		//	}
+		//}
 
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
