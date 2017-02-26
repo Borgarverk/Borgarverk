@@ -247,18 +247,31 @@ namespace Borgarverk
 
 		async Task SaveEntry()
 		{
-			EntryModel model = new EntryModel();
-			model.Car = Car.Num;
-			model.Station = Station.Name;
-			model.RoadWidht = RoadWidth;
-			model.RoadLength = RoadLength;
-			model.RoadArea = RoadArea;
-			model.TarQty = TarQty;
-			model.Rate = Rate;
-			model.TimeCreated = DateTime.Now;
-			dataService.AddEntry(model);
-			navigation.PopAsync();
+			var confirmed = await App.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
+			if (confirmed)
+			{
+				EntryModel model = new EntryModel();
+				model.Car = Car.Num;
+				model.Station = Station.Name;
+				model.RoadWidht = RoadWidth;
+				model.RoadLength = RoadLength;
+				model.RoadArea = RoadArea;
+				model.TarQty = TarQty;
+				model.Rate = Rate;
+				model.TimeCreated = DateTime.Now;
+				dataService.AddEntry(model);
+				await navigation.PopAsync();
+			}
 		}
+
+		//async void OnSubmission(object sender, EventArgs e)
+		//{
+		//	var confirmed = await DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
+		//	if (confirmed)
+		//	{
+		//		await SaveEntry();
+		//	}
+		//}
 
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
