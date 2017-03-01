@@ -1,56 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.EntryListPage" xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 x:Class="Borgarverk.EntryListPage" xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk" 
+			 xmlns:dxGrid="clr-namespace:DevExpress.Mobile.DataGrid;assembly=DevExpress.Mobile.Grid.v16.2"
+			 Title="Allar Færslur">
 	<ContentPage.Resources>
-        <ResourceDictionary>
-            <local:NegateBooleanConverter x:Key="cnvInvert"></local:NegateBooleanConverter>
-        </ResourceDictionary>
-      </ContentPage.Resources>
+		<ResourceDictionary>
+			<local:NegateBooleanConverter x:Key="cnvInvert">
+			</local:NegateBooleanConverter>
+		</ResourceDictionary>
+	</ContentPage.Resources>
 	<ContentPage.Content>
-		<ListView ItemsSource="{Binding Entries}" RowHeight="45">
-			 <ListView.Header>
-				<StackLayout>
-					<Grid Padding="10,5,10,5" HeightRequest="45">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="2*"/>
-							<ColumnDefinition Width="2*"/>
-							<ColumnDefinition Width="2*"/>
-							<ColumnDefinition Width="2*"/>
-						</Grid.ColumnDefinitions>
-						<Label Text="Car" Grid.Column="0" HorizontalOptions="StartAndExpand" FontAttributes="Bold" VerticalOptions="End"/>
-						<Label Text="Station" Grid.Column="1" HorizontalOptions="StartAndExpand" FontAttributes="Bold" VerticalOptions="End"/>
-						<Label Text="Time Created" Grid.Column="2" HorizontalOptions="StartAndExpand" FontAttributes="Bold" VerticalOptions="End"/>
-						<Label Text="Sent" Grid.Column="3" HorizontalOptions="StartAndExpand" FontAttributes="Bold" VerticalOptions="End"/>
-					</Grid>
-					<BoxView HeightRequest="1" Color="Blue" VerticalOptions="Start"></BoxView>
-				</StackLayout>			
-			</ListView.Header>
-			<ListView.ItemTemplate>
-     			<DataTemplate>
-       				<ViewCell>
-        				<ViewCell.View>
-           					<Grid Padding="10,5,10,5" HorizontalOptions="CenterAndExpand">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="2*"/>
-									<ColumnDefinition Width="2*"/>
-									<ColumnDefinition Width="2*"/>
-									<ColumnDefinition Width="2*"/>
-								</Grid.ColumnDefinitions>
-        						<Label Text="{Binding Car}" Grid.Column="0" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-        						<Label Text="{Binding Station}" Grid.Column="1" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-								<Label Text="{Binding TimeCreated}" Grid.Column="2" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-								<Label Text="{Binding TimeSent}" Grid.Column="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center" IsVisible="{Binding Sent}"/>
-								<Button Text="Senda" Grid.Column="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center" IsVisible="{Binding Sent, Converter={StaticResource cnvInvert}}"/>
-								<StackLayout Orientation="Horizontal" Spacing="3" Grid.Column="4" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
-									<Button Text="Edit"></Button>
-									<Button Text="Delete"></Button>
-								</StackLayout>
-    						</Grid>
-        				</ViewCell.View>
-        			</ViewCell>
-     			</DataTemplate>
-   			</ListView.ItemTemplate>
-		</ListView>
+		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing" AllowHorizontalScrollingVirtualization="true">
+			<dxGrid:GridControl.Columns>
+				<dxGrid:TextColumn FieldName="No" MinWidth="110" Caption="Númer" />
+				<dxGrid:TextColumn FieldName="Car" MinWidth="80" Caption="Bíll" />
+				<dxGrid:TextColumn FieldName="Station" MinWidth="130" Caption="Stöð" />
+				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" />
+				<dxGrid:DateColumn FieldName="TimeSent" Caption="Send" DisplayFormat="d"/>
+				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="50" />
+				<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd" IsVisible="false" />
+				<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd" IsVisible="false" />
+				<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm" IsVisible="false" />
+				<dxGrid:NumberColumn FieldName="TarQty" Caption="Lítrar" IsVisible="false" />
+				<dxGrid:NumberColumn FieldName="Rate" Caption="l/fm" IsVisible="false" />
+			</dxGrid:GridControl.Columns>
+			<dxGrid:GridControl.RightSwipeButtons>
+				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Delete" BackgroundColor="Red" Width="80"/>
+				<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
+			</dxGrid:GridControl.RightSwipeButtons>
+		</dxGrid:GridControl>
 	</ContentPage.Content>
 </ContentPage>

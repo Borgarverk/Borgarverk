@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+using DevExpress.Mobile.DataGrid;
+using DevExpress.Mobile.DataGrid.Theme;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -11,6 +13,17 @@ namespace Borgarverk
 		{
 			InitializeComponent();
 			BindingContext = new EntryListViewModel(new DataService());
+			ThemeManager.ThemeName = Themes.Light;
+			ThemeManager.RefreshTheme();
+		}
+
+		void OnSwipeButtonShowing(object sender, SwipeButtonShowingEventArgs e)
+		{
+			if (((Boolean)grid.GetCellValue(e.RowHandle, "Sent")) && (e.ButtonInfo.ButtonName == "SendButton"))
+			{
+
+				e.IsVisible = false;
+			}
 		}
 	}
 }

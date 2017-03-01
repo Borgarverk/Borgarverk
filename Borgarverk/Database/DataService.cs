@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using SQLite;
 using Xamarin.Forms;
 
@@ -20,6 +21,7 @@ namespace Borgarverk
 			database.CreateTable<CarModel>();
 			database.CreateTable<StationModel>();
 			//database.DeleteAll<EntryModel>();
+			//database.DropTable<EntryModel>();
 			DeleteCars();
 			AddCar(new CarModel("ML-455"));
 			AddCar(new CarModel("MU-510"));
@@ -41,7 +43,7 @@ namespace Borgarverk
 			lock(locker)
 			{
 				return (from t in database.Table<EntryModel>()
-						select t).ToList();
+				        select t).ToList();
 			}
 		}
 
@@ -65,12 +67,11 @@ namespace Borgarverk
 		public void AddEntry(EntryModel model)
 		{
 			model.TimeSent = DateTime.Now;
-			model.Sent = false;
+			model.Sent = true;
 			lock(locker)
 			{
 				database.Insert(model);
-			}
-
+			} 	
 		}
 
 		public void DeleteEntries()
@@ -78,6 +79,15 @@ namespace Borgarverk
 			lock (locker)
 			{
 				database.DeleteAll<EntryModel>();
+			}
+		}
+
+		public IEnumerable<EntryModel> SortList(string par)
+		{
+			lock(locker)
+			{
+				return (from t in database.Table<EntryModel>()
+						select t).ToList();
 			}
 		}
 		#endregion

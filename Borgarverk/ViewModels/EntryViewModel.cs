@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -19,6 +20,7 @@ namespace Borgarverk
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
 		private INavigation navigation;
+		private EntryModel model;
 		#endregion
 
 		public EntryViewModel(IDataService service, INavigation navigation)
@@ -28,6 +30,7 @@ namespace Borgarverk
 			this.navigation = navigation;
 			cars = new ObservableCollection<CarModel>(dataService.GetCars());
 			stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			model = new EntryModel();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -42,6 +45,7 @@ namespace Borgarverk
 				if (car != value)
 				{
 					car = value;
+					model.Car = car.Num;
 					ValidEntry();
 					OnPropertyChanged("Car");
 				}
@@ -56,6 +60,7 @@ namespace Borgarverk
 				if (station != value)
 				{
 					station = value;
+					model.Station = station.Name;
 					ValidEntry();
 					OnPropertyChanged("Station");
 				}
@@ -70,6 +75,7 @@ namespace Borgarverk
 				if (no != value)
 				{
 					no = value;
+					model.No = no;
 					ValidEntry();
 					OnPropertyChanged("No");
 				}
@@ -84,6 +90,7 @@ namespace Borgarverk
 				if (roadWidth != value)
 				{
 					roadWidth = value;
+					model.RoadWidth = roadWidth;
 					ValidEntry();
 					OnPropertyChanged("RoadWidth");
 				}
@@ -98,6 +105,7 @@ namespace Borgarverk
 				if (roadLength != value)
 				{
 					roadLength = value;
+					model.RoadLength = roadLength;
 					ValidEntry();
 					OnPropertyChanged("RoadLength");
 				}
@@ -112,6 +120,7 @@ namespace Borgarverk
 				if (roadArea != value)
 				{
 					roadArea = value;
+					model.RoadArea = roadArea;
 					ValidEntry();
 					OnPropertyChanged("RoadArea");
 				}
@@ -126,6 +135,7 @@ namespace Borgarverk
 				if (tarQty != value)
 				{
 					tarQty = value;
+					model.TarQty = tarQty;
 					ValidEntry();
 					OnPropertyChanged("TarQty");
 				}
@@ -140,6 +150,7 @@ namespace Borgarverk
 				if (rate != value)
 				{
 					rate = value;
+					model.Rate = rate;
 					ValidEntry();
 					OnPropertyChanged("Rate");
 				}
@@ -181,21 +192,24 @@ namespace Borgarverk
 				{
 					isValid = value;
 					OnPropertyChanged("IsValid");
-					if (IsValid)
-					{
-						Debug.WriteLine("true");
-					}
-					else
-					{
-						Debug.WriteLine("false");
-					}
 					ConfirmOneCommand.ChangeCanExecute();
 				}
 			}
 		}
 
-		#endregion
-
+		public EntryModel Model
+		{
+			get { return model; }
+			set
+			{
+				if (model != value)
+				{
+					model = value;
+					ValidEntry();
+					OnPropertyChanged("Model");
+				}
+			}
+		}
 
 		public ObservableCollection<CarModel> Cars
 		{
@@ -222,6 +236,8 @@ namespace Borgarverk
 			}
 		}
 
+		#endregion
+
 		bool ValidEntry()
 		{
 			bool valid = (No.Length > 0) &&
@@ -233,14 +249,6 @@ namespace Borgarverk
 				(Car != null) &&
 				(Station != null );
 			IsValid = valid;
-			if (IsValid)
-			{
-				Debug.WriteLine("true func");
-			}
-			else
-			{
-				Debug.WriteLine("false func");
-			}
 			OnPropertyChanged("IsValid");
 			return valid;
 		}
@@ -250,20 +258,21 @@ namespace Borgarverk
 			var confirmed = await App.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
 			if (confirmed)
 			{
-				EntryModel model = new EntryModel();
-				model.Car = Car.Num;
-				model.Station = Station.Name;
-				model.RoadWidht = RoadWidth;
-				model.RoadLength = RoadLength;
-				model.RoadArea = RoadArea;
-				model.TarQty = TarQty;
-				model.Rate = Rate;
 				model.TimeCreated = DateTime.Now;
 				dataService.AddEntry(model);
+				EntryToJsonToEntryExample();
 				await navigation.PopAsync();
 			}
 		}
 
+		void EntryToJsonToEntryExample()
+		{
+			var entry = this.Model;
+			var json = JsonConvert.SerializeObject(entry);
+			Debug.WriteLine("JSON representation of person: {0}", json);
+			var model2 = JsonConvert.DeserializeObject<EntryModel>(json);
+			Debug.WriteLine("{0} - {1}", model2.Car, model2.Station);
+		}
 		//async void OnSubmission(object sender, EventArgs e)
 		//{
 		//	var confirmed = await DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
