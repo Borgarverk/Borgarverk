@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -14,19 +12,21 @@ namespace Borgarverk
 		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
 		private CarModel car;
 		private StationModel station;
-		private DateTime timeSent, timeCreated;
+		private DateTime? timeSent, timeCreated;
 		private bool isValid = false;
 		private readonly IDataService dataService;
+		private readonly ISendService sendService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
 		private INavigation navigation;
 		private EntryModel model;
 		#endregion
 
-		public EntryViewModel(IDataService service, INavigation navigation)
+		public EntryViewModel(IDataService dService, INavigation navigation, ISendService sService)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			this.dataService = service;
+			this.dataService = dService;
+			this.sendService = sService;
 			this.navigation = navigation;
 			cars = new ObservableCollection<CarModel>(dataService.GetCars());
 			stations = new ObservableCollection<StationModel>(dataService.GetStations());
@@ -157,7 +157,7 @@ namespace Borgarverk
 			}
 		}
 
-		public DateTime TimeSent
+		public DateTime? TimeSent
 		{
 			get { return timeSent; }
 			set
@@ -170,7 +170,7 @@ namespace Borgarverk
 			}
 		}
 
-		public DateTime TimeCreated
+		public DateTime? TimeCreated
 		{
 			get { return timeCreated; }
 			set
@@ -255,32 +255,29 @@ namespace Borgarverk
 
 		async Task SaveEntry()
 		{
-			var confirmed = await App.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
 			if (confirmed)
 			{
 				model.TimeCreated = DateTime.Now;
-				dataService.AddEntry(model);
-				EntryToJsonToEntryExample();
+
+				if (sendService.SendEntry(model))
+				{
+					model.TimeSent = DateTime.Now;
+					model.Sent = true;
+					// Var það þannig að ef að það er entry i database-inum 
+					//með sama ID þá er ekki insertað heldur update-að?
+					dataService.AddEntry(model);
+				}
+				else
+				{
+					model.TimeSent = null;
+					model.Sent = false;
+					dataService.AddEntry(model);
+				}
+
 				await navigation.PopAsync();
 			}
 		}
-
-		void EntryToJsonToEntryExample()
-		{
-			var entry = this.Model;
-			var json = JsonConvert.SerializeObject(entry);
-			Debug.WriteLine("JSON representation of person: {0}", json);
-			var model2 = JsonConvert.DeserializeObject<EntryModel>(json);
-			Debug.WriteLine("{0} - {1}", model2.Car, model2.Station);
-		}
-		//async void OnSubmission(object sender, EventArgs e)
-		//{
-		//	var confirmed = await DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
-		//	if (confirmed)
-		//	{
-		//		await SaveEntry();
-		//	}
-		//}
 
 		protected virtual void OnPropertyChanged(string propertyName)
 		{

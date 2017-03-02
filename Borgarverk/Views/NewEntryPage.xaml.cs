@@ -12,7 +12,7 @@ namespace Borgarverk
 		public NewEntryPage()
 		{
 			InitializeComponent();
-			BindingContext = new EntryViewModel(new DataService(), this.Navigation);
+			BindingContext = new EntryViewModel(new DataService(), this.Navigation, new SendService());
 
 		}
 	}

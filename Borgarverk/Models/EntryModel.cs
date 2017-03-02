@@ -15,7 +15,7 @@ namespace Borgarverk
 		public string RoadArea { get; set; }
 		public string TarQty { get; set; }
 		public string Rate { get; set; }
-		public DateTime TimeSent { get; set; }
+		public DateTime? TimeSent { get; set; }
 		public DateTime TimeCreated { get; set; }
 		public bool Sent { get; set; }
 

@@ -55,58 +55,65 @@ namespace Borgarverk
 			}
 		}
 
-		public void DeleteEntry(int id)
+		public int DeleteEntry(int id)
 		{
 			lock(locker)
 			{
-				database.Delete<EntryModel>(id);
+				return database.Delete<EntryModel>(id);
 			}
 
 		}
 
-		public void AddEntry(EntryModel model)
+		public int AddEntry(EntryModel model)
 		{
-			model.TimeSent = DateTime.Now;
-			model.Sent = true;
 			lock(locker)
 			{
-				database.Insert(model);
+				return database.Insert(model);
 			} 	
 		}
 
-		public void DeleteEntries()
+		public int UpdateEntry(EntryModel model)
+		{
+			var currModel = database.Table<EntryModel>().FirstOrDefault(t => t.ID == model.ID);
+			currModel.Car = model.Car;
+			currModel.Station = model.Station;
+			currModel.No = model.No;
+			currModel.RoadWidth = model.RoadArea;
+			currModel.RoadLength = model.RoadLength;
+			currModel.RoadArea = model.RoadArea;
+			currModel.TarQty = model.TarQty;
+			currModel.Rate = model.Rate;
+			currModel.TimeCreated = model.TimeCreated;
+			currModel.Sent = model.Sent;
+			currModel.TimeSent = model.TimeSent;
+			return database.Update(currModel);
+		}
+
+		public int DeleteEntries()
 		{
 			lock (locker)
 			{
-				database.DeleteAll<EntryModel>();
+				return database.DeleteAll<EntryModel>();
 			}
 		}
 
-		public IEnumerable<EntryModel> SortList(string par)
-		{
-			lock(locker)
-			{
-				return (from t in database.Table<EntryModel>()
-						select t).ToList();
-			}
-		}
 		#endregion
 
 		#region car functions
-		public void AddCar(CarModel car)
+		public int  AddCar(CarModel car)
 		{
 			lock(locker)
 			{
-				database.Insert(car);
+				return database.Insert(car);
 			}
 			
 		}
 
-		public void DeleteCar(int id)
+		public int DeleteCar(int id)
 		{
 			lock (locker)
 			{
-				database.Delete<CarModel>(id);			
+				return database.Delete<CarModel>(id);			
 			}
 
 		}
@@ -128,30 +135,30 @@ namespace Borgarverk
 			}
 		}
 
-		public void DeleteCars()
+		public int DeleteCars()
 		{
 			lock(locker)
 			{
-				database.DeleteAll<CarModel>();
+				return database.DeleteAll<CarModel>();
 			}
 		}
 		#endregion
 
 		#region station functions
-		public void AddStation(StationModel station)
+		public int AddStation(StationModel station)
 		{
 			lock (locker)
 			{
-				database.Insert(station);
+				return database.Insert(station);
 			}
 
 		}
 
-		public void DeleteStation(int id)
+		public int DeleteStation(int id)
 		{
 			lock (locker)
 			{
-				database.Delete<StationModel>(id);
+				return database.Delete<StationModel>(id);
 			}
 
 		}
@@ -173,11 +180,11 @@ namespace Borgarverk
 			}
 		}
 
-		public void DeleteStations()
+		public int DeleteStations()
 		{
 			lock (locker)
 			{
-				database.DeleteAll<StationModel>();
+				return database.DeleteAll<StationModel>();
 			}
 		}
 		#endregion

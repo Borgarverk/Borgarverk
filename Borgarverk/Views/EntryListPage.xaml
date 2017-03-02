@@ -11,7 +11,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing" AllowHorizontalScrollingVirtualization="true">
+		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing">
 			<dxGrid:GridControl.Columns>
 				<dxGrid:TextColumn FieldName="No" MinWidth="110" Caption="Númer" />
 				<dxGrid:TextColumn FieldName="Car" MinWidth="80" Caption="Bíll" />

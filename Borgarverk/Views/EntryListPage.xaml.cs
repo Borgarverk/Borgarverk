@@ -12,7 +12,7 @@ namespace Borgarverk
 		public EntryListPage()
 		{
 			InitializeComponent();
-			BindingContext = new EntryListViewModel(new DataService());
+			BindingContext = new EntryListViewModel(new DataService(), new SendService());
 			ThemeManager.ThemeName = Themes.Light;
 			ThemeManager.RefreshTheme();
 		}
@@ -21,7 +21,6 @@ namespace Borgarverk
 		{
 			if (((Boolean)grid.GetCellValue(e.RowHandle, "Sent")) && (e.ButtonInfo.ButtonName == "SendButton"))
 			{
-
 				e.IsVisible = false;
 			}
 		}

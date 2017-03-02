@@ -7,18 +7,19 @@ namespace Borgarverk
 	{
 		IEnumerable<EntryModel> GetEntries();
 		EntryModel GetEntry(int id);
-		void DeleteEntry(int id);
-		void AddEntry(EntryModel model);
-		void DeleteEntries();
-		void AddCar(CarModel car);
-		void DeleteCar(int id);
+		int DeleteEntry(int id);
+		int AddEntry(EntryModel model);
+		int DeleteEntries();
+		int UpdateEntry(EntryModel model);
+		int AddCar(CarModel car);
+		int DeleteCar(int id);
 		IEnumerable<CarModel> GetCars();
 		CarModel GetCar(int id);
-		void DeleteCars();
-		void AddStation(StationModel car);
-		void DeleteStation(int id);
+		int DeleteCars();
+		int AddStation(StationModel car);
+		int DeleteStation(int id);
 		IEnumerable<StationModel> GetStations();
 		StationModel GetStation(int id);
-		void DeleteStations();
+		int DeleteStations();
 	}
 }
