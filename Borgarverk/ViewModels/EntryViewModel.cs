@@ -2,9 +2,10 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Borgarverk.Models;
 using Xamarin.Forms;
 
-namespace Borgarverk
+namespace Borgarverk.ViewModels
 {
 	public class EntryViewModel : INotifyPropertyChanged
 	{
@@ -28,6 +29,17 @@ namespace Borgarverk
 			this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
+			cars = new ObservableCollection<CarModel>(dataService.GetCars());
+			stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			model = new EntryModel();
+		}
+
+		// TODO Constructor only used for Unit testing
+		public EntryViewModel(IDataService dService, ISendService sService)
+		{
+			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
+			this.dataService = dService;
+			this.sendService = sService;
 			cars = new ObservableCollection<CarModel>(dataService.GetCars());
 			stations = new ObservableCollection<StationModel>(dataService.GetStations());
 			model = new EntryModel();
@@ -238,7 +250,7 @@ namespace Borgarverk
 
 		#endregion
 
-		bool ValidEntry()
+		public bool ValidEntry()
 		{
 			bool valid = (No.Length > 0) &&
 				(RoadLength.Length > 0) &&

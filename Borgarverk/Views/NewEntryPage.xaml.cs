@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Borgarverk.ViewModels;
 using DevExpress.Mobile.DataGrid;
 using DevExpress.Mobile.DataGrid.Theme;
 using Xamarin.Forms;

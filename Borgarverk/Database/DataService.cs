@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Borgarverk.Models;
 using SQLite;
 using Xamarin.Forms;
 

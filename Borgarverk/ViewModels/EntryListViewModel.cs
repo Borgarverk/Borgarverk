@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Borgarverk.Models;
 using DevExpress.Mobile.DataGrid;
 using Xamarin.Forms;
 
-namespace Borgarverk
+namespace Borgarverk.ViewModels
 {
 	public class EntryListViewModel : INotifyPropertyChanged
 	{

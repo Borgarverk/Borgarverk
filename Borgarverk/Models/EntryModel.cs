@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace Borgarverk
+namespace Borgarverk.Models
 {
 	public class EntryModel
 	{

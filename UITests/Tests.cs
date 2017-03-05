@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Borgarverk.ViewModels;
 using NUnit.Framework;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
@@ -8,7 +9,6 @@ using Xamarin.UITest.Queries;
 namespace Borgarverk.UITests
 {
 	[TestFixture(Platform.Android)]
-	[TestFixture(Platform.iOS)]
 	public class Tests
 	{
 		IApp app;
@@ -23,15 +23,6 @@ namespace Borgarverk.UITests
 		public void BeforeEachTest()
 		{
 			app = AppInitializer.StartApp(platform);
-		}
-
-		[Test]
-		public void WelcomeTextIsDisplayed()
-		{
-			AppResult[] results = app.WaitForElement(c => c.Marked("Welcome to Xamarin Forms!"));
-			app.Screenshot("Welcome screen.");
-
-			Assert.IsTrue(results.Any());
 		}
 	}
 }
