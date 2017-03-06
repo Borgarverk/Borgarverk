@@ -36,5 +36,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Borgarverk\Borgarverk.csproj">
+      <Project>{19783A7F-7351-454C-8E6C-226492326788}</Project>
+      <Name>Borgarverk</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
