@@ -11,9 +11,9 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing">
+		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing" AllowEditRows="false">
 			<dxGrid:GridControl.Columns>
-				<dxGrid:TextColumn FieldName="No" MinWidth="110" Caption="Númer" />
+				<dxGrid:TextColumn FieldName="No" MinWidth="110" Caption="Númer"/>
 				<dxGrid:TextColumn FieldName="Car" MinWidth="80" Caption="Bíll" />
 				<dxGrid:TextColumn FieldName="Station" MinWidth="130" Caption="Stöð" />
 				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" />

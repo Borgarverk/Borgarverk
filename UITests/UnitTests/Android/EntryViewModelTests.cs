@@ -6,12 +6,20 @@ using Xamarin.UITest;
 
 namespace Borgarverk.UITests
 {
-	[TestFixture]
+	[TestFixture(Platform.Android)]
 	public class EntryViewModelTests
 	{
-
-		public EntryViewModelTests()
+		IApp app;
+		Platform platform;
+		public EntryViewModelTests(Platform platform)
 		{
+			this.platform = platform;
+		}
+
+		[SetUp]
+		public void BeforeEachTest()
+		{
+			app = AppInitializer.StartApp(platform);
 		}
 
 		[Test]

@@ -41,6 +41,10 @@
       <Project>{19783A7F-7351-454C-8E6C-226492326788}</Project>
       <Name>Borgarverk</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UITests\Borgarverk.UITests.csproj">
+      <Project>{999BB8D0-54B0-4593-A6D8-73CD5B5C8D92}</Project>
+      <Name>Borgarverk.UITests</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

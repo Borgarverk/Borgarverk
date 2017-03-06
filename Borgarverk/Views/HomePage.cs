@@ -15,13 +15,17 @@ namespace Borgarverk.Views
 
 		public HomePage()
 		{
-			newEntryButton = new Button { Text = "Ný færsla" };
-			allEntriesButton = new Button { Text = "Allar færslur" };
-			borgarverkImage = new Image { Source = "Borgarverk_clearbackground.png" };
+			newEntryButton = new Button { Text = "Ný færsla", HeightRequest = 70, WidthRequest = 200};
+			allEntriesButton = new Button { Text = "Allar færslur", HeightRequest = 70, WidthRequest = 200 };
+			borgarverkImage = new Image { Source = "Borgarverk_clearbackground.png", HeightRequest = 200, WidthRequest = 300 };
+
 			layout = new StackLayout
 			{
 				Orientation = StackOrientation.Vertical,
-				Children = {
+				Padding = new Thickness(60, 60, 60, 60),
+				BackgroundColor = Color.FromRgb(255, 252, 242),
+				Children =
+				{
 					borgarverkImage,
 					newEntryButton,
 					allEntriesButton
