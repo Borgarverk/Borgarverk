@@ -105,13 +105,22 @@ namespace Borgarverk
 		{
 			lock(locker)
 			{
-				return database.Insert(car);
+				var carCheck = database.Table<CarModel>().FirstOrDefault(t => t.Num == car.Num);
+				if (carCheck == null)
+				{
+					return database.Insert(car);
+				}
+				else
+				{
+					return 0;
+				}
 			}
 			
 		}
 
 		public int DeleteCar(int id)
 		{
+			Debug.WriteLine("TO DELETE: " + id);
 			lock (locker)
 			{
 				return database.Delete<CarModel>(id);			

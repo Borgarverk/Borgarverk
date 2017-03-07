@@ -160,6 +160,21 @@
     <AndroidResource Include="Resources\drawable-hdpi\success.png" />
     <AndroidResource Include="Resources\drawable\Borgarverk_clearbackground.png" />
     <AndroidResource Include="Resources\drawable\Borgarverk_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_input_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_input_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_input_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_input_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_input_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_settings_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_settings_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_settings_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_settings_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_view_list_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_view_list_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_view_list_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_view_list_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_view_list_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

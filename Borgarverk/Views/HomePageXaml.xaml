@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.HomePageXaml">
+	<ContentPage.Content>
+		<Grid Padding="10,80,10,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="200"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="150"/>
+		</Grid.RowDefinitions>
+		<Image Source="Borgarverk_clearbackground" Grid.Row="0"/>
+		<Grid Grid.Row="1" ColumnSpacing="30" HorizontalOptions="CenterAndExpand"
+              RowSpacing="20" VerticalOptions="Center">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Button x:Name="newEntryButton" Image="ic_input_white_24dp" Text="Ný Færsla" TextColor="White" BackgroundColor="#008ead" Grid.Row="0" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="NewEntryButtonClicked"/>
+			<Button x:Name="allEntriesButton" Image="ic_view_list_white_24dp" Text="Allar Færslur" TextColor="White" BackgroundColor="#00447b" Grid.Row="1" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="AllEntriesButtonClicked"/>
+			<Button x:Name="settingsButton" Image="ic_settings_white_24dp" Text="Stillingar" TextColor="White" BackgroundColor="#eca400" Grid.Row="2" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="SettingsButtonClicked"/>
+		</Grid>
+	</Grid>
+	</ContentPage.Content>
+</ContentPage>
