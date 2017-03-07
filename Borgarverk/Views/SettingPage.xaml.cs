@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Borgarverk.ViewModels;
-using DevExpress.Mobile.DataGrid;
-using DevExpress.Mobile.DataGrid.Theme;
 using Xamarin.Forms;
 
 namespace Borgarverk
 {
-	public partial class NewEntryPage : ContentPage
+	public partial class SettingPage : ContentPage
 	{
-		private EntryViewModel viewModel;
-		public NewEntryPage()
+		private SettingsViewModel viewModel; 
+		public SettingPage()
 		{
 			InitializeComponent();
 		}
 
 		protected override void OnAppearing()
 		{
+
 			base.OnAppearing();
-			viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
+			viewModel = new SettingsViewModel(new DataService());
 			BindingContext = viewModel;
 		}
 
 		protected override void OnDisappearing()
 		{
+
 			base.OnDisappearing();
 			viewModel = null;
 			BindingContext = null;

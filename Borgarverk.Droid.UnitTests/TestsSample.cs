@@ -1,25 +1,44 @@
 ﻿using System;
-using Borgarverk.Models;
 using Borgarverk.ViewModels;
 using NUnit.Framework;
-using Xamarin.UITest;
 
-namespace Borgarverk.UITests
+namespace Borgarverk.Droid.UnitTests
 {
-	[TestFixture(Platform.Android)]
-	public class EntryViewModelTests
+	[TestFixture]
+	public class TestsSample
 	{
-		IApp app;
-		Platform platform;
-		public EntryViewModelTests(Platform platform)
-		{
-			this.platform = platform;
-		}
 
 		[SetUp]
-		public void BeforeEachTest()
+		public void Setup() { }
+
+
+		[TearDown]
+		public void Tear() { }
+
+		[Test]
+		public void Pass()
 		{
-			app = AppInitializer.StartApp(platform);
+			Console.WriteLine("test1");
+			Assert.True(true);
+		}
+
+		[Test]
+		public void Fail()
+		{
+			Assert.False(true);
+		}
+
+		[Test]
+		[Ignore("another time")]
+		public void Ignore()
+		{
+			Assert.True(false);
+		}
+
+		[Test]
+		public void Inconclusive()
+		{
+			Assert.Inconclusive("Inconclusive");
 		}
 
 		[Test]

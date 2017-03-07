@@ -29,19 +29,8 @@ namespace Borgarverk.ViewModels
 			this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
-			cars = new ObservableCollection<CarModel>(dataService.GetCars());
-			stations = new ObservableCollection<StationModel>(dataService.GetStations());
-			model = new EntryModel();
-		}
-
-		// TODO Constructor only used for Unit testing
-		public EntryViewModel(IDataService dService, ISendService sService)
-		{
-			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			this.dataService = dService;
-			this.sendService = sService;
-			cars = new ObservableCollection<CarModel>(dataService.GetCars());
-			stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			this.cars = new ObservableCollection<CarModel>(dataService.GetCars());
+			this.stations = new ObservableCollection<StationModel>(dataService.GetStations());
 			model = new EntryModel();
 		}
 

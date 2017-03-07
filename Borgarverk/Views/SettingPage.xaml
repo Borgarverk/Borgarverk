@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.SettingPage" xmlns:local="clr-namespace:Borgarverk.Views;assembly=Borgarverk" Title="Stillingar">
+	<ContentPage.Content>
+		<ScrollView>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="300"/>
+				<RowDefinition Height="45"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="300"/>
+				<RowDefinition Height="45"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+			<BoxView Color="#D3D3D3" Grid.Row="0"></BoxView>
+			<BoxView Color="#D3D3D3" Grid.Row="2"></BoxView>
+			<BoxView Color="#D3D3D3" Grid.Row="5"></BoxView>
+			<BoxView Color="#D3D3D3" Grid.Row="7"></BoxView>
+			<Label Text="Bæta við bíl" FontAttributes="Bold" Grid.Row="0" Margin="30,0,0,0" VerticalOptions="Center"/>
+			<Label Text="Eyða bíl" FontAttributes="Bold" Grid.Row="2" Margin="30,0,0,0" VerticalOptions="Center"/>
+			<Label Text="Bæta við stöð" FontAttributes="Bold" Grid.Row="5" Margin="30,0,0,0" VerticalOptions="Center"/>
+			<Label Text="Eyða stöð" FontAttributes="Bold" Grid.Row="7" Margin="30,0,0,0" VerticalOptions="Center"/>
+			<Grid Grid.Row="1" Padding="30,0,0,0">
+				<Grid.ColumnDefinitions>
+	    			<ColumnDefinition Width="*"></ColumnDefinition>
+	   		 		<ColumnDefinition Width="150"></ColumnDefinition>
+    			</Grid.ColumnDefinitions>
+				<Entry Placeholder="Sláðu inn Bílnúmer" Grid.Column="0" Text="{Binding NewCar}"/>
+				<Button Text="Bæta við" WidthRequest="150" BackgroundColor="#00447b" TextColor="White" HorizontalOptions="Center" Grid.Column="1" Command="{Binding AddCarCommand}"/>
+			</Grid>
+			<ListView ItemsSource="{Binding Cars}" Grid.Row="3" SeparatorVisibility="None">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+      					<Grid Padding="5">
+		    				<Grid.ColumnDefinitions>
+				    			<ColumnDefinition Width="*"></ColumnDefinition>
+				   		 		<ColumnDefinition Width="40"></ColumnDefinition>
+			    			</Grid.ColumnDefinitions>
+			    			<Label Grid.Column="0" Text="{Binding Item.Num}" LineBreakMode="TailTruncation" Margin="30,0,0,0"></Label>
+							<Switch IsToggled="{Binding IsSelected}"/>
+						</Grid>
+      				</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Button Text="Eyða" WidthRequest="150" Grid.Row="4" BackgroundColor="#00447b" TextColor="White" HorizontalOptions="Center" Command="{Binding DeleteCarsCommand}"/>
+		<ListView ItemsSource="{Binding Stations}" Grid.Row="8" SeparatorVisibility="None">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+      					<Grid Padding="5">
+		    				<Grid.ColumnDefinitions>
+				    			<ColumnDefinition Width="*"></ColumnDefinition>
+				   		 		<ColumnDefinition Width="40"></ColumnDefinition>
+			    			</Grid.ColumnDefinitions>
+			    			<Label Grid.Column="0" Text="{Binding Item.Name}" LineBreakMode="TailTruncation" Margin="30,0,0,0"></Label>
+							<Switch IsToggled="{Binding IsSelected}"/>
+						</Grid>
+      				</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Button Text="Eyða" WidthRequest="150" Grid.Row="9" BackgroundColor="#00447b" TextColor="White" HorizontalOptions="Center" Command="{Binding DeleteStationsCommand}"/>
+		<Grid Grid.Row="6" Padding="30,0,0,0">
+				<Grid.ColumnDefinitions>
+	    			<ColumnDefinition Width="*"></ColumnDefinition>
+	   		 		<ColumnDefinition Width="150"></ColumnDefinition>
+    			</Grid.ColumnDefinitions>
+				<Entry Placeholder="Sláðu inn nafn á stöð" Grid.Column="0" Text="{Binding NewStation}"/>
+				<Button Text="Bæta við" WidthRequest="150" BackgroundColor="#00447b" TextColor="White" HorizontalOptions="Center" Grid.Column="1" Command="{Binding AddStationCommand}"/>
+			</Grid>
+		</Grid>
+		<BoxView Color="#00447b" Grid.Row="10"></BoxView>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

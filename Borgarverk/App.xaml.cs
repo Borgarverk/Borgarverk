@@ -10,7 +10,9 @@ namespace Borgarverk
 		public App()
 		{
 			InitializeComponent();
-			MainPage = new NavigationPage(new HomePage());
+			var homepage = new HomePageXaml();
+			NavigationPage.SetHasNavigationBar(homepage, false);
+			MainPage = new NavigationPage(homepage);
 		}
 
 		protected override void OnStart()
