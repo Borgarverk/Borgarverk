@@ -75,7 +75,8 @@
 				<Button Text="Bæta við" WidthRequest="150" BackgroundColor="#00447b" TextColor="White" HorizontalOptions="Center" Grid.Column="1" Command="{Binding AddStationCommand}"/>
 			</Grid>
 		</Grid>
-		<BoxView Color="#00447b" Grid.Row="10"></BoxView>
+<!--			ATH eg varð að kommenta þetta ut annars sest ekkert á skjánum... -->
+<!--		<BoxView Color="#00447b" Grid.Row="10"></BoxView> -->		
 		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

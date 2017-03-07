@@ -13,12 +13,12 @@
 	<ContentPage.Content>
 		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing" AllowEditRows="false">
 			<dxGrid:GridControl.Columns>
-				<dxGrid:TextColumn FieldName="No" MinWidth="110" Caption="Númer"/>
-				<dxGrid:TextColumn FieldName="Car" MinWidth="80" Caption="Bíll" />
+				<dxGrid:TextColumn FieldName="No" MinWidth="100" Caption="Númer"/>
+				<dxGrid:TextColumn FieldName="Car" MinWidth="75" Caption="Bíll" />
 				<dxGrid:TextColumn FieldName="Station" MinWidth="130" Caption="Stöð" />
 				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" />
 				<dxGrid:DateColumn FieldName="TimeSent" Caption="Send" DisplayFormat="d"/>
-				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="50" />
+				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" />
 				<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd" IsVisible="false" />
 				<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd" IsVisible="false" />
 				<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm" IsVisible="false" />
