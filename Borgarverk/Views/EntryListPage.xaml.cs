@@ -10,12 +10,26 @@ namespace Borgarverk
 {
 	public partial class EntryListPage : ContentPage
 	{
+		private EntryListViewModel viewModel;
 		public EntryListPage()
 		{
 			InitializeComponent();
-			BindingContext = new EntryListViewModel(new DataService(), new SendService());
 			ThemeManager.ThemeName = Themes.Light;
 			ThemeManager.RefreshTheme();
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			viewModel = new EntryListViewModel(new DataService(), new SendService());
+			BindingContext = viewModel;
+		}
+
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+			viewModel = null;
+			BindingContext = null;
 		}
 
 		void OnSwipeButtonShowing(object sender, SwipeButtonShowingEventArgs e)

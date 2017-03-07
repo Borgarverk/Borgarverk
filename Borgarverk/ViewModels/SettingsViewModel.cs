@@ -15,8 +15,6 @@ namespace Borgarverk.ViewModels
 		#region private properties
 		private ObservableCollection<SelectableItemWrapper<CarModel>> cars;
 		private ObservableCollection<SelectableItemWrapper<StationModel>> stations;
-		private ObservableCollection<CarModel> selectedCars;
-		private ObservableCollection<StationModel> selectedStations;
 		private string newStation, newCar;
 		private readonly IDataService dataService;
 		#endregion
@@ -24,13 +22,18 @@ namespace Borgarverk.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command DeleteCarsCommand { get; }
 		public Command DeleteStationsCommand { get; }
+		public Command AddCarCommand { get; }
+		public Command AddStationCommand { get; }
 
 		public SettingsViewModel(IDataService dService)
 		{
 			this.dataService = dService;
 			GetCars();
 			GetStations();
-			DeleteCarsCommand = new Command(async () => await DeleteCars());
+			DeleteCarsCommand = new Command(() => DeleteCars());
+			DeleteStationsCommand = new Command(() => DeleteStations());
+			AddCarCommand = new Command(() => AddCar());
+			AddStationCommand = new Command(() => AddStation());
 		}
 
 		#region public properties
@@ -66,22 +69,10 @@ namespace Borgarverk.ViewModels
 			set { cars = value; OnPropertyChanged("Cars"); }
 		}
 
-		public ObservableCollection<CarModel> SelectedCars
-		{
-			get { return selectedCars; }
-			private set { selectedCars = value; OnPropertyChanged("SelectedCars"); }
-		}
-
 		public ObservableCollection<SelectableItemWrapper<StationModel>> Stations
 		{
 			get { return stations; }
 			set { stations = value; OnPropertyChanged("Stations"); }
-		}
-
-		public ObservableCollection<StationModel> SelectedStations
-		{
-			get { return selectedStations; }
-			private set { selectedStations = value; OnPropertyChanged("SelectedStations"); }
 		}
 		#endregion
 
@@ -99,10 +90,6 @@ namespace Borgarverk.ViewModels
 			var carsToConvert = new List<CarModel>(dataService.GetCars());
 			Cars = new ObservableCollection<SelectableItemWrapper<CarModel>>
 				(carsToConvert.Select(car => new SelectableItemWrapper<CarModel>(car)));
-			foreach (var i in Cars)
-			{
-				Debug.WriteLine(i.Item.ID);
-			}
 		}
 
 		private void GetStations()
@@ -112,7 +99,8 @@ namespace Borgarverk.ViewModels
 				(stationsToConvert.Select(station => new SelectableItemWrapper<StationModel>(station)));
 		}
 
-		ObservableCollection<CarModel> GetSelectedCars()
+		// TODO Eyða ef ekki notað
+		/*ObservableCollection<CarModel> GetSelectedCars()
 		{
 			var selected = Cars
 				.Where(p => p.IsSelected)
@@ -128,16 +116,56 @@ namespace Borgarverk.ViewModels
 				.Select(p => p.Item)
 				.ToList();
 			return new ObservableCollection<StationModel>(selected);
+		}*/
+
+		private void DeleteCars()
+		{
+			for (var i = Cars.Count - 1; i >= 0; i--)
+			{
+				if (Cars[i].IsSelected)
+				{
+					dataService.DeleteCar(Cars[i].Item.ID);
+					Cars.RemoveAt(i);
+				}
+			}
 		}
 
-		async Task DeleteCars()
+		private void DeleteStations()
 		{
-			Debug.WriteLine("IN DELETE CARS!!");
-			foreach (var car in GetSelectedCars())
+			for (var i = Stations.Count - 1; i >= 0; i--)
 			{
-				Debug.WriteLine(car.ID);
-				Debug.WriteLine("Deleted? " + dataService.DeleteCar(car.ID).ToString());
+				if (Stations[i].IsSelected)
+				{
+					dataService.DeleteStation(Stations[i].Item.ID);
+					Stations.RemoveAt(i);
+				}
 			}
+		}
+
+		private void AddCar()
+		{
+			// If AddCarButton is clicked when entry is empty, nothing happens
+			if (NewCar.Length == 0)
+			{
+				return;
+			}
+			var nCar = new CarModel(NewCar);
+			dataService.AddCar(nCar);
+			Cars.Add(new SelectableItemWrapper<CarModel>(nCar));
+			NewCar = ""; // Clear entry after saving
+		}
+
+		private void AddStation()
+		{
+			// If AddStationButton is clicked when entry is empty, nothing happens
+			if (NewCar.Length == 0)
+			{
+				return;
+			}
+			var nStation = new StationModel(NewStation);
+			dataService.AddStation(nStation);
+			Stations.Add(new SelectableItemWrapper<StationModel>(nStation));
+			newStation = ""; //Clear entry after saving
 		}
 	}
 }

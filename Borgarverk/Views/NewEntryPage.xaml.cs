@@ -10,11 +10,24 @@ namespace Borgarverk
 {
 	public partial class NewEntryPage : ContentPage
 	{
+		private EntryViewModel viewModel;
 		public NewEntryPage()
 		{
 			InitializeComponent();
-			BindingContext = new EntryViewModel(new DataService(), this.Navigation, new SendService());
+		}
 
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
+			BindingContext = viewModel;
+		}
+
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+			viewModel = null;
+			BindingContext = null;
 		}
 	}
 }
