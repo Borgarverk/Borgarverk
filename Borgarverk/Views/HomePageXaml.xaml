@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.HomePageXaml">
 	<ContentPage.Content>
-		<Grid Padding="10,80,10,0">
+		<Grid Padding="10,60,10,0">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="200"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="150"/>
 		</Grid.RowDefinitions>
 		<Image Source="Borgarverk_clearbackground" Grid.Row="0"/>
 		<Grid Grid.Row="1" ColumnSpacing="30" HorizontalOptions="CenterAndExpand"
-              RowSpacing="20" VerticalOptions="Center">
+              RowSpacing="20" VerticalOptions="Center" Padding="30,30,30,30">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="*"/>

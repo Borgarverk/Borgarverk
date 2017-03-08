@@ -48,7 +48,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\EntryViewModel.cs" />
-    <Compile Include="Views\HomePage.cs" />
     <Compile Include="Views\NewEntryPage.xaml.cs">
       <DependentUpon>NewEntryPage.xaml</DependentUpon>
     </Compile>
