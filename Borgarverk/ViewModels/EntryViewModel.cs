@@ -34,6 +34,17 @@ namespace Borgarverk.ViewModels
 			model = new EntryModel();
 		}
 
+		public EntryViewModel(IDataService dService, INavigation navigation, ISendService sService, EntryModel m)
+		{
+			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
+			this.dataService = dService;
+			this.sendService = sService;
+			this.navigation = navigation;
+			this.cars = new ObservableCollection<CarModel>(dataService.GetCars());
+			this.stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			model = m;
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
 

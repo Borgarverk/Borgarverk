@@ -13,18 +13,20 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<EntryModel> entries;
 		private IDataService dataService;
 		private ISendService sendService;
+		private INavigation navigation;
 		#endregion
 
 		#region events
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		public EntryListViewModel(IDataService dService, ISendService sService)
+		public EntryListViewModel(IDataService dService, ISendService sService, INavigation navigation)
 		{
 			this.dataService = dService;
 			this.sendService = sService;
 			entries = new ObservableCollection<EntryModel>(dataService.GetEntries());
 			SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
+			this.navigation = navigation;
 		}
 
 		#region commands
@@ -73,6 +75,10 @@ namespace Borgarverk.ViewModels
 					{
 						Application.Current.MainPage.DisplayAlert("Tókst ekki að senda færslu", "Reyndu aftur síðar", "Í lagi");
 					}
+				}
+				else if (arg.ButtonInfo.ButtonName == "EditButton")
+				{
+					navigation.PushAsync(new NewEntryPage());
 				}
 			}
 		}

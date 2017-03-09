@@ -11,7 +11,14 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<dxGrid:GridControl x:Name="grid" ItemsSource="{Binding Entries}" SortMode="Multiple" SwipeButtonCommand="{Binding SwipeButtonCommand}" SwipeButtonShowing="OnSwipeButtonShowing" AllowEditRows="false">
+		<dxGrid:GridControl x:Name="grid" 
+			ItemsSource="{Binding Entries}" 
+			SortMode="Multiple" 
+			SwipeButtonCommand="{Binding SwipeButtonCommand}" 
+			SwipeButtonShowing="OnSwipeButtonShowing" 
+			AllowEditRows="false" 
+			ColumnsAutoWidth="false" 
+			AllowDeleteRows="false">
 			<dxGrid:GridControl.Columns>
 				<dxGrid:TextColumn FieldName="No" MinWidth="100" Caption="Númer"/>
 				<dxGrid:TextColumn FieldName="Car" MinWidth="75" Caption="Bíll" />
@@ -28,6 +35,7 @@
 			<dxGrid:GridControl.RightSwipeButtons>
 				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Delete" BackgroundColor="Red" Width="80"/>
 				<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
+				<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
 			</dxGrid:GridControl.RightSwipeButtons>
 		</dxGrid:GridControl>
 	</ContentPage.Content>

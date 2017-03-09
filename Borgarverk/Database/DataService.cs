@@ -23,7 +23,7 @@ namespace Borgarverk
 			database.CreateTable<StationModel>();
 			//database.DeleteAll<EntryModel>();
 			//database.DropTable<EntryModel>();
-			DeleteCars();
+			/*DeleteCars();
 			AddCar(new CarModel("ML-455"));
 			AddCar(new CarModel("MU-510"));
 			AddCar(new CarModel("BZ-963"));
@@ -35,7 +35,7 @@ namespace Borgarverk
 			AddStation(new StationModel("Höfði"));
 			AddStation(new StationModel("Ísafjörður"));
 			AddStation(new StationModel("Reyðarfjörður"));
-			AddStation(new StationModel("Sauðárkrókur"));
+			AddStation(new StationModel("Sauðárkrókur"));*/
 		}
 
 		#region Entry functons
