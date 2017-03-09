@@ -14,13 +14,22 @@ namespace Borgarverk
 		public NewEntryPage()
 		{
 			InitializeComponent();
+			viewModel = new EntryViewModel(this.Navigation, new SendService());
+			BindingContext = viewModel;
+		}
+
+		public NewEntryPage(EntryViewModel viewModel)
+		{
+			InitializeComponent();
+			this.viewModel = viewModel;
+			BindingContext = viewModel;
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
-			BindingContext = viewModel;
+			//viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
+			//BindingContext = viewModel;
 		}
 
 		protected override void OnDisappearing()

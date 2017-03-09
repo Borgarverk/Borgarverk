@@ -16,7 +16,7 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<SelectableItemWrapper<CarModel>> cars;
 		private ObservableCollection<SelectableItemWrapper<StationModel>> stations;
 		private string newStation, newCar;
-		private readonly IDataService dataService;
+		//private readonly IDataService dataService;
 		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -25,9 +25,9 @@ namespace Borgarverk.ViewModels
 		public Command AddCarCommand { get; }
 		public Command AddStationCommand { get; }
 
-		public SettingsViewModel(IDataService dService)
+		public SettingsViewModel()
 		{
-			this.dataService = dService;
+			//this.dataService = dService;
 			GetCars();
 			GetStations();
 			DeleteCarsCommand = new Command(() => DeleteCars());
@@ -87,14 +87,14 @@ namespace Borgarverk.ViewModels
 
 		private void GetCars()
 		{
-			var carsToConvert = new List<CarModel>(dataService.GetCars());
+			var carsToConvert = new List<CarModel>(DataService.GetCars());
 			Cars = new ObservableCollection<SelectableItemWrapper<CarModel>>
 				(carsToConvert.Select(car => new SelectableItemWrapper<CarModel>(car)));
 		}
 
 		private void GetStations()
 		{
-			var stationsToConvert = new List<StationModel>(dataService.GetStations());
+			var stationsToConvert = new List<StationModel>(DataService.GetStations());
 			Stations = new ObservableCollection<SelectableItemWrapper<StationModel>>
 				(stationsToConvert.Select(station => new SelectableItemWrapper<StationModel>(station)));
 		}
@@ -124,7 +124,7 @@ namespace Borgarverk.ViewModels
 			{
 				if (Cars[i].IsSelected)
 				{
-					dataService.DeleteCar(Cars[i].Item.ID);
+					DataService.DeleteCar(Cars[i].Item.ID);
 					Cars.RemoveAt(i);
 				}
 			}
@@ -136,7 +136,7 @@ namespace Borgarverk.ViewModels
 			{
 				if (Stations[i].IsSelected)
 				{
-					dataService.DeleteStation(Stations[i].Item.ID);
+					DataService.DeleteStation(Stations[i].Item.ID);
 					Stations.RemoveAt(i);
 				}
 			}
@@ -150,7 +150,7 @@ namespace Borgarverk.ViewModels
 				return;
 			}
 			var nCar = new CarModel(NewCar);
-			dataService.AddCar(nCar);
+			DataService.AddCar(nCar);
 			Cars.Add(new SelectableItemWrapper<CarModel>(nCar));
 			NewCar = ""; // Clear entry after saving
 		}
@@ -163,7 +163,7 @@ namespace Borgarverk.ViewModels
 				return;
 			}
 			var nStation = new StationModel(NewStation);
-			dataService.AddStation(nStation);
+			DataService.AddStation(nStation);
 			Stations.Add(new SelectableItemWrapper<StationModel>(nStation));
 			newStation = ""; //Clear entry after saving
 		}

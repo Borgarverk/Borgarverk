@@ -33,7 +33,7 @@
 				<dxGrid:NumberColumn FieldName="Rate" Caption="l/fm" IsVisible="false" />
 			</dxGrid:GridControl.Columns>
 			<dxGrid:GridControl.RightSwipeButtons>
-				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Delete" BackgroundColor="Red" Width="80"/>
+				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Eyða" BackgroundColor="Red" Width="80"/>
 				<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
 				<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
 			</dxGrid:GridControl.RightSwipeButtons>
