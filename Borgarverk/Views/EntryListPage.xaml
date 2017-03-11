@@ -16,16 +16,17 @@
 			SortMode="Multiple" 
 			SwipeButtonCommand="{Binding SwipeButtonCommand}" 
 			SwipeButtonShowing="OnSwipeButtonShowing" 
-			AllowEditRows="false" 
+			AllowEditRows="true" 
 			ColumnsAutoWidth="false" 
-			AllowDeleteRows="false">
+			AllowDeleteRows="false"
+			RowEditMode="Popup">
 			<dxGrid:GridControl.Columns>
-				<dxGrid:TextColumn FieldName="No" MinWidth="100" Caption="Númer"/>
-				<dxGrid:TextColumn FieldName="Car" MinWidth="75" Caption="Bíll" />
-				<dxGrid:TextColumn FieldName="Station" MinWidth="130" Caption="Stöð" />
-				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" />
-				<dxGrid:DateColumn FieldName="TimeSent" Caption="Send" DisplayFormat="d"/>
-				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" />
+				<dxGrid:TextColumn FieldName="No" Width="150" Caption="Númer"/>
+				<dxGrid:TextColumn FieldName="Car" Width="100" Caption="Bíll" />
+				<dxGrid:TextColumn FieldName="Station" Width="140" Caption="Stöð" />
+				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" IsReadOnly="true"/>
+				<dxGrid:DateColumn FieldName="TimeSent" Caption="Send" DisplayFormat="d" IsReadOnly="true"/>
+				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" IsReadOnly="true"/>
 				<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd" IsVisible="false" />
 				<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd" IsVisible="false" />
 				<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm" IsVisible="false" />

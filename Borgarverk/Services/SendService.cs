@@ -27,7 +27,7 @@ namespace Borgarverk
 		{
 			entry.TimeSent = DateTime.Now;
 			entry.Sent = true;
-			return false;
+			return true;
 		}
 
 		public bool SendEntries(List<EntryModel> entries)
