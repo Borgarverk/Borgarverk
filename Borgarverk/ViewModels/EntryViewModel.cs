@@ -287,7 +287,7 @@ namespace Borgarverk.ViewModels
 					DataService.AddEntry(model);
 				}
 
-				await navigation.PopAsync();
+				await navigation.PopAsync(false);
 			}
 		}
 
