@@ -17,10 +17,30 @@ namespace Borgarverk
 		// TODO: Setja inn kóða þannig að ef búinn er til db í fyrsta skiptið fylla þessi gildi inn
 		public static void OpenConnection()
 		{
-			database = DependencyService.Get<ISQLite>().GetConnection();
-			database.CreateTable<EntryModel>();
-			database.CreateTable<CarModel>();
-			database.CreateTable<StationModel>();
+			if (database == null)
+			{
+				database = DependencyService.Get<ISQLite>().GetConnection();
+				database.CreateTable<EntryModel>();
+				database.CreateTable<CarModel>();
+				database.CreateTable<StationModel>();
+				if (GetCars().Count() == 0)
+				{
+					AddCar(new CarModel("ML-455"));
+					AddCar(new CarModel("MU-510"));
+					AddCar(new CarModel("BZ-963"));
+					AddCar(new CarModel("US-553"));
+					AddCar(new CarModel("AZ-R93"));
+				}
+				if (GetStations().Count() == 0)
+				{
+					AddStation(new StationModel("Akureyri"));
+					AddStation(new StationModel("Hlaðbær Colas"));
+					AddStation(new StationModel("Höfði"));
+					AddStation(new StationModel("Ísafjörður"));
+					AddStation(new StationModel("Reyðarfjörður"));
+					AddStation(new StationModel("Sauðárkrókur"));
+				}
+			}
 			//database.DeleteAll<EntryModel>();
 			//database.DropTable<EntryModel>();
 			/*DeleteCars();

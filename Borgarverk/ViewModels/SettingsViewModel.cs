@@ -145,7 +145,7 @@ namespace Borgarverk.ViewModels
 		private void AddCar()
 		{
 			// If AddCarButton is clicked when entry is empty, nothing happens
-			if (NewCar.Length == 0)
+			if (NewCar != null && NewCar.Length == 0)
 			{
 				return;
 			}
@@ -158,14 +158,14 @@ namespace Borgarverk.ViewModels
 		private void AddStation()
 		{
 			// If AddStationButton is clicked when entry is empty, nothing happens
-			if (NewCar.Length == 0)
+			if (NewStation != null && NewStation.Length == 0)
 			{
 				return;
 			}
 			var nStation = new StationModel(NewStation);
 			DataService.AddStation(nStation);
 			Stations.Add(new SelectableItemWrapper<StationModel>(nStation));
-			newStation = ""; //Clear entry after saving
+			NewStation = ""; //Clear entry after saving
 		}
 	}
 }
