@@ -77,19 +77,19 @@ namespace Borgarverk.ViewModels
 				}
 				else if (arg.ButtonInfo.ButtonName == "EditButton")
 				{
-					EntryViewModel vm = new EntryViewModel(navigation, sendService);
-					vm.Car = new CarModel(Entries[arg.SourceRowIndex].Car);
-					vm.Station = new StationModel(Entries[arg.SourceRowIndex].Station);
-					vm.No = Entries[arg.SourceRowIndex].ID.ToString();
-					vm.RoadArea = Entries[arg.SourceRowIndex].RoadArea;
-					vm.RoadWidth = Entries[arg.SourceRowIndex].RoadWidth;
-					vm.RoadLength = (Entries[arg.SourceRowIndex].RoadLength == null ? Entries[arg.SourceRowIndex].RoadLength : ""); // verður null annars...
-					vm.Rate = Entries[arg.SourceRowIndex].Rate;
-					vm.TarQty = Entries[arg.SourceRowIndex].TarQty;
-					vm.TimeCreated = Entries[arg.SourceRowIndex].TimeCreated;
-					vm.TimeSent = Entries[arg.SourceRowIndex].TimeSent;
-					// Entries[arg.SourceRowIndex] 
-					navigation.PushAsync(new NewEntryPage(vm));
+					//EntryViewModel vm = new EntryViewModel(navigation, sendService);
+					//vm.Car = new CarModel(entries[arg.SourceRowIndex].Car);
+					//vm.Station = new StationModel(entries[arg.SourceRowIndex].Station);
+					//vm.No = entries[arg.SourceRowIndex].No;
+					//vm.RoadArea = entries[arg.SourceRowIndex].RoadArea;
+					//vm.RoadWidth = entries[arg.SourceRowIndex].RoadWidth;
+					//vm.RoadLength = (entries[arg.SourceRowIndex].RoadLength == null ? entries[arg.SourceRowIndex].RoadLength : ""); // verður null annars...
+					//vm.Rate = entries[arg.SourceRowIndex].Rate;
+					//vm.TarQty = entries[arg.SourceRowIndex].TarQty;
+					//vm.TimeCreated = entries[arg.SourceRowIndex].TimeCreated;
+					//vm.TimeSent = entries[arg.SourceRowIndex].TimeSent;
+					//// Entries[arg.SourceRowIndex] 
+					//navigation.PushAsync(new NewEntryPage(vm));
 				}
 			}
 		}
