@@ -9,13 +9,13 @@ using Xamarin.Forms;
 
 namespace Borgarverk
 {
-	public class DataService : IDataService
+	public static class DataService // : IDataService
 	{
 		static object locker = new object();
-		private SQLiteConnection database;
+		private static SQLiteConnection database;
 
 		// TODO: Setja inn kóða þannig að ef búinn er til db í fyrsta skiptið fylla þessi gildi inn
-		public DataService()
+		public static void OpenConnection()
 		{
 			database = DependencyService.Get<ISQLite>().GetConnection();
 			database.CreateTable<EntryModel>();
@@ -38,8 +38,8 @@ namespace Borgarverk
 			AddStation(new StationModel("Sauðárkrókur"));*/
 		}
 
-		#region Entry functons
-		public IEnumerable<EntryModel> GetEntries()
+		#region Entry functions
+		public static IEnumerable<EntryModel> GetEntries()
 		{
 			lock(locker)
 			{
@@ -48,7 +48,7 @@ namespace Borgarverk
 			}
 		}
 
-		public EntryModel GetEntry(int id)
+		public static EntryModel GetEntry(int id)
 		{
 			lock (locker)
 			{
@@ -56,7 +56,7 @@ namespace Borgarverk
 			}
 		}
 
-		public int DeleteEntry(int id)
+		public static int DeleteEntry(int id)
 		{
 			lock(locker)
 			{
@@ -65,7 +65,7 @@ namespace Borgarverk
 
 		}
 
-		public int AddEntry(EntryModel model)
+		public static int AddEntry(EntryModel model)
 		{
 			lock(locker)
 			{
@@ -73,7 +73,7 @@ namespace Borgarverk
 			} 	
 		}
 
-		public int UpdateEntry(EntryModel model)
+		public static int UpdateEntry(EntryModel model)
 		{
 			var currModel = database.Table<EntryModel>().FirstOrDefault(t => t.ID == model.ID);
 			currModel.Car = model.Car;
@@ -90,7 +90,7 @@ namespace Borgarverk
 			return database.Update(currModel);
 		}
 
-		public int DeleteEntries()
+		public static int DeleteEntries()
 		{
 			lock (locker)
 			{
@@ -101,7 +101,7 @@ namespace Borgarverk
 		#endregion
 
 		#region car functions
-		public int  AddCar(CarModel car)
+		public static int  AddCar(CarModel car)
 		{
 			lock(locker)
 			{
@@ -118,7 +118,7 @@ namespace Borgarverk
 			
 		}
 
-		public int DeleteCar(int id)
+		public static int DeleteCar(int id)
 		{
 			Debug.WriteLine("TO DELETE: " + id);
 			lock (locker)
@@ -128,7 +128,7 @@ namespace Borgarverk
 
 		}
 
-		public IEnumerable<CarModel> GetCars()
+		public static IEnumerable<CarModel> GetCars()
 		{
 			lock(locker)
 			{
@@ -137,7 +137,7 @@ namespace Borgarverk
 			}
 		}
 
-		public CarModel GetCar(int id)
+		public static CarModel GetCar(int id)
 		{
 			lock (locker)
 			{
@@ -145,7 +145,7 @@ namespace Borgarverk
 			}
 		}
 
-		public int DeleteCars()
+		public static int DeleteCars()
 		{
 			lock(locker)
 			{
@@ -155,7 +155,7 @@ namespace Borgarverk
 		#endregion
 
 		#region station functions
-		public int AddStation(StationModel station)
+		public static int AddStation(StationModel station)
 		{
 			lock (locker)
 			{
@@ -164,7 +164,7 @@ namespace Borgarverk
 
 		}
 
-		public int DeleteStation(int id)
+		public static int DeleteStation(int id)
 		{
 			lock (locker)
 			{
@@ -173,7 +173,7 @@ namespace Borgarverk
 
 		}
 
-		public IEnumerable<StationModel> GetStations()
+		public static IEnumerable<StationModel> GetStations()
 		{
 			lock(locker)
 			{
@@ -182,7 +182,7 @@ namespace Borgarverk
 			}
 		}
 
-		public StationModel GetStation(int id)
+		public static StationModel GetStation(int id)
 		{
 			lock (locker)
 			{
@@ -190,7 +190,7 @@ namespace Borgarverk
 			}
 		}
 
-		public int DeleteStations()
+		public static int DeleteStations()
 		{
 			lock (locker)
 			{

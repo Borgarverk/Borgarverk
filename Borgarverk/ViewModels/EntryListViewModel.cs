@@ -11,7 +11,7 @@ namespace Borgarverk.ViewModels
 	{
 		#region private variables
 		private ObservableCollection<EntryModel> entries;
-		private IDataService dataService;
+		//private IDataService dataService;
 		private ISendService sendService;
 		private INavigation navigation;
 		#endregion
@@ -20,11 +20,10 @@ namespace Borgarverk.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		public EntryListViewModel(IDataService dService, ISendService sService, INavigation navigation)
+		public EntryListViewModel(ISendService sService, INavigation navigation)
 		{
-			this.dataService = dService;
 			this.sendService = sService;
-			entries = new ObservableCollection<EntryModel>(dataService.GetEntries());
+			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 			SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
 			this.navigation = navigation;
 		}
@@ -56,7 +55,7 @@ namespace Borgarverk.ViewModels
 			{
 				if (arg.ButtonInfo.ButtonName == "DeleteButton")
 				{
-					dataService.DeleteEntry(Entries[arg.SourceRowIndex].ID);
+					DataService.DeleteEntry(Entries[arg.SourceRowIndex].ID);
 					this.Entries.RemoveAt(arg.SourceRowIndex);
 				}
 				else if (arg.ButtonInfo.ButtonName == "SendButton")
@@ -66,7 +65,7 @@ namespace Borgarverk.ViewModels
 						var model = Entries[arg.SourceRowIndex];
 						model.TimeSent = DateTime.Now;
 						model.Sent = true;
-						dataService.UpdateEntry(model);
+						DataService.UpdateEntry(model);
 						OnPropertyChanged("Entries");
 						Entries.RemoveAt(arg.SourceRowIndex);
 						Entries.Insert(arg.SourceRowIndex, model);
@@ -78,7 +77,19 @@ namespace Borgarverk.ViewModels
 				}
 				else if (arg.ButtonInfo.ButtonName == "EditButton")
 				{
-					navigation.PushAsync(new NewEntryPage());
+					//EntryViewModel vm = new EntryViewModel(navigation, sendService);
+					//vm.Car = new CarModel(entries[arg.SourceRowIndex].Car);
+					//vm.Station = new StationModel(entries[arg.SourceRowIndex].Station);
+					//vm.No = entries[arg.SourceRowIndex].No;
+					//vm.RoadArea = entries[arg.SourceRowIndex].RoadArea;
+					//vm.RoadWidth = entries[arg.SourceRowIndex].RoadWidth;
+					//vm.RoadLength = (entries[arg.SourceRowIndex].RoadLength == null ? entries[arg.SourceRowIndex].RoadLength : ""); // verður null annars...
+					//vm.Rate = entries[arg.SourceRowIndex].Rate;
+					//vm.TarQty = entries[arg.SourceRowIndex].TarQty;
+					//vm.TimeCreated = entries[arg.SourceRowIndex].TimeCreated;
+					//vm.TimeSent = entries[arg.SourceRowIndex].TimeSent;
+					//// Entries[arg.SourceRowIndex] 
+					//navigation.PushAsync(new NewEntryPage(vm));
 				}
 			}
 		}

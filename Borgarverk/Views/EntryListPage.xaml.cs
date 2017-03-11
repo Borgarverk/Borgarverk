@@ -21,7 +21,7 @@ namespace Borgarverk
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			viewModel = new EntryListViewModel(new DataService(), new SendService(), this.Navigation);
+			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
 			BindingContext = viewModel;
 		}
 

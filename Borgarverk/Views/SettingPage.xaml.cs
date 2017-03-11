@@ -17,13 +17,12 @@ namespace Borgarverk
 		{
 
 			base.OnAppearing();
-			viewModel = new SettingsViewModel(new DataService());
+			viewModel = new SettingsViewModel();
 			BindingContext = viewModel;
 		}
 
 		protected override void OnDisappearing()
 		{
-
 			base.OnDisappearing();
 			viewModel = null;
 			BindingContext = null;

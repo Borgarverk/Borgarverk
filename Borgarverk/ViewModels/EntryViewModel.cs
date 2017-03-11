@@ -15,7 +15,7 @@ namespace Borgarverk.ViewModels
 		private StationModel station;
 		private DateTime? timeSent, timeCreated;
 		private bool isValid = false;
-		private readonly IDataService dataService;
+		//private readonly IDataService dataService;
 		private readonly ISendService sendService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
@@ -23,25 +23,25 @@ namespace Borgarverk.ViewModels
 		private EntryModel model;
 		#endregion
 
-		public EntryViewModel(IDataService dService, INavigation navigation, ISendService sService)
+		public EntryViewModel(INavigation navigation, ISendService sService)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			this.dataService = dService;
+			//this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
-			this.cars = new ObservableCollection<CarModel>(dataService.GetCars());
-			this.stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
+			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			model = new EntryModel();
 		}
 
-		public EntryViewModel(IDataService dService, INavigation navigation, ISendService sService, EntryModel m)
+		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			this.dataService = dService;
+			//this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
-			this.cars = new ObservableCollection<CarModel>(dataService.GetCars());
-			this.stations = new ObservableCollection<StationModel>(dataService.GetStations());
+			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
+			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			model = m;
 		}
 
@@ -278,13 +278,13 @@ namespace Borgarverk.ViewModels
 					model.Sent = true;
 					// Var það þannig að ef að það er entry i database-inum 
 					//með sama ID þá er ekki insertað heldur update-að?
-					dataService.AddEntry(model);
+					DataService.AddEntry(model);
 				}
 				else
 				{
 					model.TimeSent = null;
 					model.Sent = false;
-					dataService.AddEntry(model);
+					DataService.AddEntry(model);
 				}
 
 				await navigation.PopAsync();
