@@ -19,7 +19,9 @@
 			AllowEditRows="true" 
 			ColumnsAutoWidth="false" 
 			AllowDeleteRows="false"
-			RowEditMode="Popup">
+			RowEditMode="Popup"
+			IsPullToRefreshEnabled="true"
+			PullToRefreshCommand="{Binding PullToRefreshCommand}">
 			<dxGrid:GridControl.Columns>
 				<dxGrid:TextColumn FieldName="No" Width="150" Caption="Númer"/>
 				<dxGrid:TextColumn FieldName="Car" Width="100" Caption="Bíll" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Borgarverk.Models;
 using Xamarin.Forms;
@@ -15,7 +16,6 @@ namespace Borgarverk.ViewModels
 		private StationModel station;
 		private DateTime? timeSent, timeCreated;
 		private bool isValid = false;
-		//private readonly IDataService dataService;
 		private readonly ISendService sendService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
@@ -34,7 +34,7 @@ namespace Borgarverk.ViewModels
 			model = new EntryModel();
 		}
 
-		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
+		/*public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			//this.dataService = dService;
@@ -43,7 +43,7 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			model = m;
-		}
+		}*/
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
@@ -278,13 +278,15 @@ namespace Borgarverk.ViewModels
 					model.Sent = true;
 					// Var það þannig að ef að það er entry i database-inum 
 					//með sama ID þá er ekki insertað heldur update-að?
-					DataService.AddEntry(model);
+					//DataService.AddEntry(model);
+
+					await AzureDataService.Instance.AddItemAsync(model);
 				}
 				else
 				{
 					model.TimeSent = null;
 					model.Sent = false;
-					DataService.AddEntry(model);
+					//DataService.AddEntry(model);
 				}
 
 				await navigation.PopAsync(false);

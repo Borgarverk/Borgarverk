@@ -1,4 +1,5 @@
 ﻿using UIKit;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace Borgarverk.iOS
 {

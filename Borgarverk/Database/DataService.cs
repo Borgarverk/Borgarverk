@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Borgarverk.Models;
 using SQLite;
 using Xamarin.Forms;
@@ -68,13 +67,13 @@ namespace Borgarverk
 			}
 		}
 
-		public static EntryModel GetEntry(int id)
+		/*public static EntryModel GetEntry(int id)
 		{
 			lock (locker)
 			{
 				return database.Table<EntryModel>().FirstOrDefault(t => t.ID == id);
 			}
-		}
+		}*/
 
 		public static int DeleteEntry(int id)
 		{

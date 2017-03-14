@@ -6,7 +6,7 @@ namespace Borgarverk.Models
 	public class EntryModel
 	{
 		[PrimaryKey, AutoIncrement]
-		public int ID { get; set; }
+		public string ID { get; set; }
 		public string Car { get; set; }
 		public string Station { get; set; }
 		public string No { get; set; }

@@ -4,6 +4,9 @@ using System.ComponentModel;
 using Borgarverk.Models;
 using DevExpress.Mobile.DataGrid;
 using Xamarin.Forms;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Borgarverk.ViewModels
 {
@@ -13,7 +16,6 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<EntryModel> entries;
 		//private IDataService dataService;
 		private ISendService sendService;
-		private INavigation navigation;
 		#endregion
 
 		#region events
@@ -23,15 +25,24 @@ namespace Borgarverk.ViewModels
 		public EntryListViewModel(ISendService sService, INavigation navigation)
 		{
 			this.sendService = sService;
-			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
+			AzureDataService.Instance.GetEntries().ContinueWith(entry =>
+			{
+				if (entry.Status == TaskStatus.RanToCompletion)
+				{
+					entries = new ObservableCollection<EntryModel>(entry.Result);
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext());
+
+			//entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 			SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
-			this.navigation = navigation;
+			PullToRefreshCommand = new Command(async () => await OnPageRefresh());
 		}
 
 		#region commands
 		public Command SwipeButtonCommand { get; }
 		public Command EditEntryCommand { get; }
 		public Command SendEntryCommand { get; }
+		public Command PullToRefreshCommand { get; }
 		#endregion
 
 		#region properties
@@ -43,6 +54,10 @@ namespace Borgarverk.ViewModels
 				if (Entries != value)
 				{
 					entries = value;
+					foreach (var e in entries)
+					{ 
+						Debug.WriteLine(e.Car);
+					}
 				}
 			}
 		}
@@ -55,7 +70,7 @@ namespace Borgarverk.ViewModels
 			{
 				if (arg.ButtonInfo.ButtonName == "DeleteButton")
 				{
-					DataService.DeleteEntry(Entries[arg.SourceRowIndex].ID);
+					//DataService.DeleteEntry(Entries[arg.SourceRowIndex].ID);
 					this.Entries.RemoveAt(arg.SourceRowIndex);
 				}
 				else if (arg.ButtonInfo.ButtonName == "SendButton")
@@ -92,6 +107,12 @@ namespace Borgarverk.ViewModels
 					//navigation.PushAsync(new NewEntryPage(vm));
 				}
 			}
+		}
+
+		async Task OnPageRefresh()
+		{
+			Debug.WriteLine("PULLED");
+			Entries = Entries;
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
