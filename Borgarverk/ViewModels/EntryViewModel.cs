@@ -23,6 +23,18 @@ namespace Borgarverk.ViewModels
 		private EntryModel model;
 		#endregion
 
+		// For Testing
+		public EntryViewModel(ISendService sService)
+		{
+			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
+			//this.dataService = dService;
+			this.sendService = sService;
+			//this.navigation = navigation;
+			this.cars = new ObservableCollection<CarModel>();
+			this.stations = new ObservableCollection<StationModel>();
+			model = new EntryModel();
+		}
+
 		public EntryViewModel(INavigation navigation, ISendService sService)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
