@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.CustomEditRowView">
+	<ContentView.Content>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Label Text="Færslunúmer" Grid.Row="0" Grid.Column="0" ></Label>
+			<Label Text="Bíll" Grid.Row="1" Grid.Column="0"></Label>
+			<Label Text="Stöð" Grid.Row="2" Grid.Column="0"></Label>
+			<Label Text="Breidd" Grid.Row="3" Grid.Column="0"></Label>
+			<Label Text="Lengd" Grid.Row="4" Grid.Column="0"></Label>
+			<Label Text="Flatarmál" Grid.Row="5" Grid.Column="0"></Label>
+			<Label Text="Lítrar" Grid.Row="6" Grid.Column="0"></Label>
+			<Label Text="Lítar/fm" Grid.Row="7" Grid.Column="0"></Label>
+			<Entry Placeholder="Sláðu inn nýtt færslunúmer" Grid.Row="0" Grid.Column="1"></Entry>
+			<Picker Grid.Row="1" Grid.Column="1"></Picker>
+			<Picker Grid.Row="2" Grid.Column="1"></Picker>
+			<Entry Text="{Binding BindingContext.GetBindingPath}" CommandParameter="No" Placeholder="Sláðu inn nýja breidd" Grid.Row="3" Grid.Column="1"></Entry>
+			<Entry Placeholder="Sláðu inn nýja lengd" Grid.Row="4" Grid.Column="1"></Entry>
+			<Entry Placeholder="Sláðu inn nýjan fermetrafjölda" Grid.Row="5" Grid.Column="1"></Entry>
+			<Entry Placeholder="Sláðu inn nýjan lítrafjölda" Grid.Row="6" Grid.Column="1"></Entry>
+			<Entry Placeholder="Sláðu inn lítra/fm" Grid.Row="7" Grid.Column="1"></Entry>
+		</Grid>
+	</ContentView.Content>
+</ContentView>

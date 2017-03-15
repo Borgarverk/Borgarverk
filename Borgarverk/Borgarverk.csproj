@@ -41,6 +41,9 @@
     <EmbeddedResource Include="Views\SettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CustomEditRowView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -72,6 +75,10 @@
     </Compile>
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Wrapper\SelectableItemWrapper.cs" />
+    <Compile Include="Views\CustomEditRowView.xaml.cs">
+      <DependentUpon>CustomEditRowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomEditRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLitePCLRaw.core">

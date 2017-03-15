@@ -16,15 +16,16 @@
 			SortMode="Multiple" 
 			SwipeButtonCommand="{Binding SwipeButtonCommand}" 
 			SwipeButtonShowing="OnSwipeButtonShowing" 
-			AllowEditRows="false" 
+			AllowEditRows="true" 
 			ColumnsAutoWidth="false" 
-			AllowDeleteRows="false">
+			AllowDeleteRows="false"
+			RowEditMode="Popup"
+			EndRowEdit="OnRowEdit">
 			<dxGrid:GridControl.Columns>
 				<dxGrid:TextColumn FieldName="No" MinWidth="100" Caption="Númer"/>
 				<dxGrid:TextColumn FieldName="Car" MinWidth="75" Caption="Bíll" />
 				<dxGrid:TextColumn FieldName="Station" MinWidth="130" Caption="Stöð" />
 				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" />
-				<dxGrid:DateColumn FieldName="TimeSent" Caption="Send" DisplayFormat="d"/>
 				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" />
 				<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd" IsVisible="false" />
 				<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd" IsVisible="false" />
@@ -35,7 +36,6 @@
 			<dxGrid:GridControl.RightSwipeButtons>
 				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Eyða" BackgroundColor="Red" Width="80"/>
 				<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
-				<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
 			</dxGrid:GridControl.RightSwipeButtons>
 		</dxGrid:GridControl>
 	</ContentPage.Content>

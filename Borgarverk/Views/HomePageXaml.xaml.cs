@@ -16,21 +16,21 @@ namespace Borgarverk
 		{
 			newEntryButton.SetValue(OpacityProperty, 0.2);
 			await Task.Delay(100);
-			await Navigation.PushAsync(new NewEntryPage());
+			await Navigation.PushAsync(new NewEntryPage(), false);
 		}
 
 		public async void AllEntriesButtonClicked(object sender, EventArgs e)
 		{
 			allEntriesButton.SetValue(OpacityProperty, 0.2);
 			await Task.Delay(100);
-			await Navigation.PushAsync(new EntryListPage());
+			await Navigation.PushAsync(new EntryListPage(), false);
 		}
 
 		public async void SettingsButtonClicked(object sender, EventArgs e)
 		{
 			settingsButton.SetValue(OpacityProperty, 0.2);
 			await Task.Delay(100);
-			await Navigation.PushAsync(new SettingPage());
+			await Navigation.PushAsync(new SettingPage(), false);
 		}
 
 		#region OnAppearing()
