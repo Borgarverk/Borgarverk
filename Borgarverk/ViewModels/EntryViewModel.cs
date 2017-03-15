@@ -266,10 +266,15 @@ namespace Borgarverk.ViewModels
 		{
 			bool valid = (No.Length > 0) &&
 				(RoadLength.Length > 0) &&
+				(Int32.Parse(RoadLength) > 0) &&
 				(RoadWidth.Length > 0) &&
+				(Int32.Parse(RoadWidth) > 0) &&
 				(RoadArea.Length > 0) &&
+				(Int32.Parse(RoadArea) > 0) &&
 				(TarQty.Length > 0) &&
+				(Int32.Parse(TarQty) > 0) &&
 				(Rate.Length > 0) &&
+				(Int32.Parse(Rate) > 0) &&
 				(Car != null) &&
 				(Station != null );
 			IsValid = valid;
