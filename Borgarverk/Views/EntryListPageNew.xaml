@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="Borgarverk.EntryListPageNew"
+	Title="Allar Færslur" 
+	BackgroundColor="White">
+<StackLayout VerticalOptions="FillAndExpand">
+		<Grid BackgroundColor="#0075c1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0" Text="Nótunúmer:" TextColor="White" HorizontalOptions="Center"/>
+			<Label Grid.Column="1" Text="Bíll:" TextColor="White" HorizontalOptions="Center"/>
+			<Label Grid.Column="2" Text="Staður:" TextColor="White"  HorizontalOptions="Center"/>
+			<Label Grid.Column="3" Text="Flatarmál:" TextColor="White"  HorizontalOptions="Center"/>
+			<Label Grid.Column="4" Text="Forskrift:" TextColor="White"  HorizontalOptions="Center"/>
+		</Grid>
+
+		<ListView Grid.Column="0" ItemsSource="{Binding Entries}" HorizontalOptions="Center">
+			<ListView.ItemTemplate>
+        <DataTemplate>
+					<ViewCell>
+						<ViewCell.View>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
+
+<!--								<Frame OutlineColor="Accent" Grid.Row="0" Grid.Column="1"  HorizontalOptions="Center">
+									<Frame.Content>
+										<Label  Text="{Binding DisplayName}" />
+
+									</Frame.Content>
+								</Frame>-->
+
+								<Label Grid.Column="0" Text="{Binding No}" HorizontalOptions="Center"/>
+				                <Label Grid.Column="1" Text="{Binding Car}"  HorizontalOptions="Center"/>
+				                <Label Grid.Column="2" Text="{Binding Station}"  HorizontalOptions="Center"/>
+				                <Label Grid.Column="3" Text="{Binding RoadArea}"  HorizontalOptions="Center"/>
+				                <Label Grid.Column="4" Text="{Binding TarQty}"  HorizontalOptions="Center"/>
+
+							</Grid>
+						</ViewCell.View>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<StackLayout BackgroundColor="#0075c1" VerticalOptions="FillAndExpand">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding DeleteSelectedEntriesCommand}"/>
+			</StackLayout.GestureRecognizers>
+			<Label Text="Eyða völdum færslum "
+			TextColor="White" />
+			<Label Text="&#xE107;" 
+				TextColor="White"
+			FontSize="Large"
+			FontFamily="Segoe UI Symbol"/>
+		</StackLayout>
+
+		<StackLayout BackgroundColor="#0075c1" VerticalOptions="FillAndExpand">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding ModifySelectedEntryCommand}"/>
+			</StackLayout.GestureRecognizers>
+			<Label Text="Breyta færslu "
+			TextColor="White"/>
+			<Label Text="&#xE104;"
+				TextColor="White"
+			FontSize="Large"
+			FontFamily="Segoe UI Symbol"/>
+		</StackLayout>
+	</StackLayout>
+</ContentPage>
