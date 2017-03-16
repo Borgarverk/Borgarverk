@@ -21,6 +21,7 @@ namespace Borgarverk.Models
 
 		public EntryModel()
 		{
+			No = "";
 		}
 	}
 }

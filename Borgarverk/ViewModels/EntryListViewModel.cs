@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using Borgarverk.Models;
 using DevExpress.Mobile.DataGrid;
 using Xamarin.Forms;
@@ -13,25 +15,23 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<EntryModel> entries;
 		//private IDataService dataService;
 		private ISendService sendService;
-		private INavigation navigation;
 		#endregion
 
 		#region events
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		public EntryListViewModel(ISendService sService, INavigation navigation)
+		public EntryListViewModel(ISendService sService)
 		{
 			this.sendService = sService;
 			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 			SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
-			this.navigation = navigation;
+			SendAllEntriesCommand = new Command(() => SendAllEntries());
 		}
 
 		#region commands
 		public Command SwipeButtonCommand { get; }
-		public Command EditEntryCommand { get; }
-		public Command SendEntryCommand { get; }
+		public Command SendAllEntriesCommand { get; }
 		#endregion
 
 		#region properties
@@ -55,8 +55,20 @@ namespace Borgarverk.ViewModels
 			{
 				if (arg.ButtonInfo.ButtonName == "DeleteButton")
 				{
-					DataService.DeleteEntry(Entries[arg.SourceRowIndex].ID);
-					this.Entries.RemoveAt(arg.SourceRowIndex);
+					Debug.WriteLine(Entries.Count);
+					Debug.WriteLine(arg.SourceRowIndex);
+					var delEntry = Entries[arg.SourceRowIndex];
+					Debug.WriteLine(delEntry.No);
+					Entries.Remove(delEntry);
+					Debug.WriteLine(Entries.Count);
+					try
+					{
+						DataService.DeleteEntry(delEntry.ID);
+					}
+					catch
+					{
+						Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
+					}
 				}
 				else if (arg.ButtonInfo.ButtonName == "SendButton")
 				{
@@ -75,21 +87,32 @@ namespace Borgarverk.ViewModels
 						Application.Current.MainPage.DisplayAlert("Tókst ekki að senda færslu", "Reyndu aftur síðar", "Í lagi");
 					}
 				}
-				else if (arg.ButtonInfo.ButtonName == "EditButton")
+			}
+		}
+
+		void SendAllEntries()
+		{
+			List<EntryModel> del = new List<EntryModel>();
+			foreach (var entry in Entries)
+			{
+				if (!entry.Sent)
 				{
-					//EntryViewModel vm = new EntryViewModel(navigation, sendService);
-					//vm.Car = new CarModel(entries[arg.SourceRowIndex].Car);
-					//vm.Station = new StationModel(entries[arg.SourceRowIndex].Station);
-					//vm.No = entries[arg.SourceRowIndex].No;
-					//vm.RoadArea = entries[arg.SourceRowIndex].RoadArea;
-					//vm.RoadWidth = entries[arg.SourceRowIndex].RoadWidth;
-					//vm.RoadLength = (entries[arg.SourceRowIndex].RoadLength == null ? entries[arg.SourceRowIndex].RoadLength : ""); // verður null annars...
-					//vm.Rate = entries[arg.SourceRowIndex].Rate;
-					//vm.TarQty = entries[arg.SourceRowIndex].TarQty;
-					//vm.TimeCreated = entries[arg.SourceRowIndex].TimeCreated;
-					//vm.TimeSent = entries[arg.SourceRowIndex].TimeSent;
-					//// Entries[arg.SourceRowIndex] 
-					//navigation.PushAsync(new NewEntryPage(vm));
+					del.Add(entry);
+				}
+			}
+			// Setjum timesent breytuna bæði hér og í sendservice gæti þá verið mismatch á tíma
+			// Er betra að setja það hér, reyna að senda og ef ekki tekst að senda þá breyta því til baka?
+			if (sendService.SendEntries(del))
+			{
+				Debug.WriteLine(del.Count);
+				for (var i = del.Count - 1; i >= 0; i--)
+				{
+					var tmpEntry = Entries[Entries.IndexOf(del[i])];
+					tmpEntry.Sent = true;
+					tmpEntry.TimeSent = DateTime.Now;
+					DataService.UpdateEntry(tmpEntry);
+					Entries.Insert(Entries.IndexOf(tmpEntry), tmpEntry);
+					Entries.Remove(tmpEntry);
 				}
 			}
 		}

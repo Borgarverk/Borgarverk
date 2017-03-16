@@ -65,9 +65,10 @@ namespace Borgarverk
 		{
 			lock(locker)
 			{
-				return database.Delete<EntryModel>(id);
+				var ret = database.Delete<EntryModel>(id);
+				Debug.WriteLine(ret);
+				return ret;
 			}
-
 		}
 
 		public static int AddEntry(EntryModel model)

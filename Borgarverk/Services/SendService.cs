@@ -27,12 +27,21 @@ namespace Borgarverk
 		{
 			entry.TimeSent = DateTime.Now;
 			entry.Sent = true;
-			return true;
+			string sendString = EntryToJSon(entry);
+			return false;
 		}
 
 		public bool SendEntries(List<EntryModel> entries)
 		{
-			return false;
+			foreach (var entry in entries)
+			{
+				entry.TimeSent = DateTime.Now;
+				entry.Sent = true;
+			}
+
+			string sendString = EntriesToJson(entries);
+
+			return true;
 		}
 	}
 }

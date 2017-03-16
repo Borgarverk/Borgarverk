@@ -27,7 +27,6 @@ namespace Borgarverk.ViewModels
 
 		public SettingsViewModel()
 		{
-			//this.dataService = dService;
 			GetCars();
 			GetStations();
 			DeleteCarsCommand = new Command(() => DeleteCars());

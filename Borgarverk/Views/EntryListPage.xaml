@@ -3,7 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 x:Class="Borgarverk.EntryListPage" xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk" 
 			 xmlns:dxGrid="clr-namespace:DevExpress.Mobile.DataGrid;assembly=DevExpress.Mobile.Grid.v16.2"
-			 Title="Allar Færslur">
+			 Title="Allar Færslur" 
+			 BackgroundColor="White">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<local:NegateBooleanConverter x:Key="cnvInvert">
@@ -11,32 +12,39 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<dxGrid:GridControl x:Name="grid" 
-			ItemsSource="{Binding Entries}" 
-			SortMode="Multiple" 
-			SwipeButtonCommand="{Binding SwipeButtonCommand}" 
-			SwipeButtonShowing="OnSwipeButtonShowing" 
-			AllowEditRows="true" 
-			ColumnsAutoWidth="false" 
-			AllowDeleteRows="false"
-			RowEditMode="Popup">
-			<dxGrid:GridControl.Columns>
-				<dxGrid:TextColumn FieldName="No" Width="150" Caption="Númer"/>
-				<dxGrid:TextColumn FieldName="Car" Width="100" Caption="Bíll" />
-				<dxGrid:TextColumn FieldName="Station" Width="140" Caption="Stöð" />
-				<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" IsReadOnly="true"/>
-				<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" IsReadOnly="true"/>
-				<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd"/>
-				<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd"/>
-				<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm"/>
-				<dxGrid:NumberColumn FieldName="TarQty" Caption="Lítrar"/>
-				<dxGrid:NumberColumn FieldName="Rate" Caption="l/fm"/>
-			</dxGrid:GridControl.Columns>
-			<dxGrid:GridControl.RightSwipeButtons>
-				<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Eyða" BackgroundColor="Red" Width="80"/>
-				<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
-				<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
-			</dxGrid:GridControl.RightSwipeButtons>
-		</dxGrid:GridControl>
+		<ScrollView>
+			<StackLayout>
+				<dxGrid:GridControl x:Name="grid" 
+					ItemsSource="{Binding Entries}" 
+					SortMode="Multiple" 
+					SwipeButtonCommand="{Binding SwipeButtonCommand}" 
+					SwipeButtonShowing="OnSwipeButtonShowing" 
+					AllowEditRows="true" 
+					ColumnsAutoWidth="false" 
+					AllowDeleteRows="false"
+					RowEditMode="Popup">
+					<dxGrid:GridControl.Columns>
+						<dxGrid:TextColumn FieldName="No" Width="150" Caption="Númer"/>
+						<dxGrid:TextColumn FieldName="Car" Width="100" Caption="Bíll" />
+						<dxGrid:TextColumn FieldName="Station" Width="140" Caption="Stöð" />
+						<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" IsReadOnly="true"/>
+						<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" IsReadOnly="true"/>
+						<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd"/>
+						<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd"/>
+						<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm"/>
+						<dxGrid:NumberColumn FieldName="TarQty" Caption="Lítrar"/>
+						<dxGrid:NumberColumn FieldName="Rate" Caption="l/fm"/>
+					</dxGrid:GridControl.Columns>
+					<dxGrid:GridControl.RightSwipeButtons>
+						<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Eyða" BackgroundColor="Red" Width="80"/>
+						<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
+						<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
+					</dxGrid:GridControl.RightSwipeButtons>
+				</dxGrid:GridControl>
+				<StackLayout Orientation="Horizontal">
+					<Button Text="Senda allar ósendar færslur" TextColor="White" HorizontalOptions="CenterAndExpand" HeightRequest="80" WidthRequest="300" Command="{Binding SendAllEntriesCommand}" BackgroundColor="#00447b" Margin="5"/>
+				</StackLayout>
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>
