@@ -13,7 +13,6 @@ namespace Borgarverk.ViewModels
 	{
 		#region private variables
 		private ObservableCollection<EntryModel> entries;
-		//private IDataService dataService;
 		private ISendService sendService;
 		#endregion
 
