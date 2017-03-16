@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Borgarverk.Models;
 using Xamarin.Forms;
 
@@ -11,42 +14,37 @@ namespace Borgarverk.ViewModels
 	{
 		#region private variables
 		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
-		private CarModel car;
-		private StationModel station;
+		private CarModel car = null;
+		private StationModel station = null;
 		private DateTime? timeSent, timeCreated;
 		private bool isValid = false;
-		//private readonly IDataService dataService;
 		private readonly ISendService sendService;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
 		private INavigation navigation;
-		private EntryModel model;
 		#endregion
 
 		// For Testing
 		public EntryViewModel(ISendService sService)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			//this.dataService = dService;
 			this.sendService = sService;
 			//this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>();
 			this.stations = new ObservableCollection<StationModel>();
-			model = new EntryModel();
 		}
 
 		public EntryViewModel(INavigation navigation, ISendService sService)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			//this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-			model = new EntryModel();
 		}
 
-		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
+		// TODO Er þetta nauðsynlegt?
+		/*public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			//this.dataService = dService;
@@ -55,7 +53,7 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			model = m;
-		}
+		}*/
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
@@ -69,7 +67,6 @@ namespace Borgarverk.ViewModels
 				if (car != value)
 				{
 					car = value;
-					model.Car = car.Num;
 					ValidEntry();
 					OnPropertyChanged("Car");
 				}
@@ -84,7 +81,6 @@ namespace Borgarverk.ViewModels
 				if (station != value)
 				{
 					station = value;
-					model.Station = station.Name;
 					ValidEntry();
 					OnPropertyChanged("Station");
 				}
@@ -99,7 +95,6 @@ namespace Borgarverk.ViewModels
 				if (no != value)
 				{
 					no = value;
-					model.No = no;
 					ValidEntry();
 					OnPropertyChanged("No");
 				}
@@ -114,7 +109,6 @@ namespace Borgarverk.ViewModels
 				if (roadWidth != value)
 				{
 					roadWidth = value;
-					model.RoadWidth = roadWidth;
 					ValidEntry();
 					OnPropertyChanged("RoadWidth");
 				}
@@ -129,7 +123,6 @@ namespace Borgarverk.ViewModels
 				if (roadLength != value)
 				{
 					roadLength = value;
-					model.RoadLength = roadLength;
 					ValidEntry();
 					OnPropertyChanged("RoadLength");
 				}
@@ -144,7 +137,6 @@ namespace Borgarverk.ViewModels
 				if (roadArea != value)
 				{
 					roadArea = value;
-					model.RoadArea = roadArea;
 					ValidEntry();
 					OnPropertyChanged("RoadArea");
 				}
@@ -159,7 +151,6 @@ namespace Borgarverk.ViewModels
 				if (tarQty != value)
 				{
 					tarQty = value;
-					model.TarQty = tarQty;
 					ValidEntry();
 					OnPropertyChanged("TarQty");
 				}
@@ -174,7 +165,6 @@ namespace Borgarverk.ViewModels
 				if (rate != value)
 				{
 					rate = value;
-					model.Rate = rate;
 					ValidEntry();
 					OnPropertyChanged("Rate");
 				}
@@ -221,20 +211,6 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		public EntryModel Model
-		{
-			get { return model; }
-			set
-			{
-				if (model != value)
-				{
-					model = value;
-					ValidEntry();
-					OnPropertyChanged("Model");
-				}
-			}
-		}
-
 		public ObservableCollection<CarModel> Cars
 		{
 			get
@@ -262,6 +238,7 @@ namespace Borgarverk.ViewModels
 
 		#endregion
 
+		// No entry can be empty and numeric values cannot be less then or equal to 0
 		public bool ValidEntry()
 		{
 			bool valid = (No.Length > 0) &&
@@ -287,6 +264,15 @@ namespace Borgarverk.ViewModels
 			var confirmed = await Application.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
 			if (confirmed)
 			{
+				EntryModel model = new EntryModel();
+				model.Car = Car.Num;
+				model.Station = Station.Name;
+				model.No = No;
+				model.RoadWidth = RoadWidth;
+				model.RoadLength = RoadLength;
+				model.RoadArea = RoadArea;
+				model.TarQty = TarQty;
+				model.Rate = Rate;
 				model.TimeCreated = DateTime.Now;
 
 				if (sendService.SendEntry(model))

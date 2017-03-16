@@ -41,21 +41,6 @@ namespace Borgarverk
 					AddStation(new StationModel("Sauðárkrókur"));
 				}
 			}
-			//database.DeleteAll<EntryModel>();
-			//database.DropTable<EntryModel>();
-			/*DeleteCars();
-			AddCar(new CarModel("ML-455"));
-			AddCar(new CarModel("MU-510"));
-			AddCar(new CarModel("BZ-963"));
-			AddCar(new CarModel("US-553"));
-			AddCar(new CarModel("AZ-R93"));
-			DeleteStations();
-			AddStation(new StationModel("Akureyri"));
-			AddStation(new StationModel("Hlaðbær Colas"));
-			AddStation(new StationModel("Höfði"));
-			AddStation(new StationModel("Ísafjörður"));
-			AddStation(new StationModel("Reyðarfjörður"));
-			AddStation(new StationModel("Sauðárkrókur"));*/
 		}
 
 		#region Entry functions

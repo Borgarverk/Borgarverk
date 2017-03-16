@@ -15,8 +15,6 @@ namespace Borgarverk.UnitTests
 		[Test]
 		public void ValidEntryTrueTest()
 		{
-			// TODO: testa þetta rétt
-
 			EntryViewModel viewModel = new EntryViewModel(new SendService());
 			viewModel.Car = new Models.CarModel("Name");
 			viewModel.Station = new Models.StationModel("Name");
