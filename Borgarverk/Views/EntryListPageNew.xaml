@@ -6,50 +6,51 @@
 	Title="Allar Færslur" 
 	BackgroundColor="White">
 <StackLayout VerticalOptions="FillAndExpand">
-		<Grid BackgroundColor="#0075c1">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-			<Label Grid.Column="0" Text="Nótunúmer:" TextColor="White" HorizontalOptions="Center"/>
-			<Label Grid.Column="1" Text="Bíll:" TextColor="White" HorizontalOptions="Center"/>
-			<Label Grid.Column="2" Text="Staður:" TextColor="White"  HorizontalOptions="Center"/>
-			<Label Grid.Column="3" Text="Flatarmál:" TextColor="White"  HorizontalOptions="Center"/>
-			<Label Grid.Column="4" Text="Forskrift:" TextColor="White"  HorizontalOptions="Center"/>
-		</Grid>
 
-		<ListView Grid.Column="0" ItemsSource="{Binding Entries}" HorizontalOptions="Center">
+		<ListView Grid.Column="0" ItemsSource="{Binding Entries}" HorizontalOptions="Center" RowHeight="50">
 			<ListView.ItemTemplate>
         <DataTemplate>
 					<ViewCell>
 						<ViewCell.View>
 							<Grid>
 								<Grid.RowDefinitions>
-									<RowDefinition/>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="*"/>
 								</Grid.RowDefinitions>
 								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="4*"/>
+									<ColumnDefinition Width="4*"/>
+									<ColumnDefinition Width="3*"/>
+									<ColumnDefinition Width="3*"/>
 								</Grid.ColumnDefinitions>
-
-<!--								<Frame OutlineColor="Accent" Grid.Row="0" Grid.Column="1"  HorizontalOptions="Center">
-									<Frame.Content>
-										<Label  Text="{Binding DisplayName}" />
-
-									</Frame.Content>
-								</Frame>-->
-
-								<Label Grid.Column="0" Text="{Binding No}" HorizontalOptions="Center"/>
-				                <Label Grid.Column="1" Text="{Binding Car}"  HorizontalOptions="Center"/>
-				                <Label Grid.Column="2" Text="{Binding Station}"  HorizontalOptions="Center"/>
-				                <Label Grid.Column="3" Text="{Binding RoadArea}"  HorizontalOptions="Center"/>
-				                <Label Grid.Column="4" Text="{Binding TarQty}"  HorizontalOptions="Center"/>
+								<StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+									<Label FontAttributes="Bold">Dags: </Label>
+									<Label Text="{Binding TimeCreated}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+									<Label FontAttributes="Bold">Nótunúmer: </Label>
+									<Label Text="{Binding No}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+									<Label FontAttributes="Bold">Bíll: </Label>
+									<Label Text="{Binding Car}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+									<Label FontAttributes="Bold">Stöð: </Label>
+									<Label Text="{Binding Station}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+									<Label FontAttributes="Bold">Flatarmál: </Label>
+				                	<Label Text="{Binding RoadArea}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+									<Label FontAttributes="Bold">Lítrar: </Label>
+				                	<Label Text="{Binding TarQty}"/>
+								</StackLayout>
+								<StackLayout Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+									<Label FontAttributes="Bold">L/m^3: </Label>
+				                	<Label Text="{Binding Rate}"/>
+								</StackLayout>
 
 							</Grid>
 						</ViewCell.View>
@@ -58,16 +59,15 @@
 			</ListView.ItemTemplate>
 		</ListView>
 
+		
+		<!-- bráðabirðamyndir þessir iconar -->
 		<StackLayout BackgroundColor="#0075c1" VerticalOptions="FillAndExpand">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer Command="{Binding DeleteSelectedEntriesCommand}"/>
 			</StackLayout.GestureRecognizers>
 			<Label Text="Eyða völdum færslum "
 			TextColor="White" />
-			<Label Text="&#xE107;" 
-				TextColor="White"
-			FontSize="Large"
-			FontFamily="Segoe UI Symbol"/>
+			<Image Source="remove_icon.png" WidthRequest="20"/>
 		</StackLayout>
 
 		<StackLayout BackgroundColor="#0075c1" VerticalOptions="FillAndExpand">
@@ -76,10 +76,7 @@
 			</StackLayout.GestureRecognizers>
 			<Label Text="Breyta færslu "
 			TextColor="White"/>
-			<Label Text="&#xE104;"
-				TextColor="White"
-			FontSize="Large"
-			FontFamily="Segoe UI Symbol"/>
+			<Image Source="edit_icon.png" WidthRequest="20"/>
 		</StackLayout>
 	</StackLayout>
 </ContentPage>
