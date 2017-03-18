@@ -26,7 +26,7 @@
 			<Label Grid.Column="5">Sent</Label>
 		</Grid>
 		
-		<ListView ItemsSource="{Binding Entries}" HorizontalOptions="Center" RowHeight="50" SelectedItem="{Binding SelectedItem}">
+		<ListView ItemsSource="{Binding Entries}" HorizontalOptions="Center" RowHeight="50" SelectedItem="{Binding SelectedEntry}">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
@@ -57,14 +57,16 @@
 		<StackLayout Orientation="Horizontal">
 			<Button x:Name="DeleteSelectedEntriesButton" 
 				Image="icon_delete.png" 
-				Text="Eyða völdum færslum" 
+				Text="Eyða færslu" 
 				TextColor="White" 
 				BackgroundColor="#008ead" 
 				Grid.Row="0" 
 				WidthRequest="165" 
 				HeightRequest="80" 
 				HorizontalOptions="CenterAndExpand" 
-				Command="{Binding DeleteSelectedEntriesCommand}"/>
+				IsEnabled="{Binding DeleteButtonActive}"
+				Command="{Binding DeleteSelectedEntriesCommand}"
+			/>
 
 			<Button x:Name="ModifySelectedEntryButton" 
 				Image="icon_edit.png" 

@@ -14,6 +14,7 @@ namespace Borgarverk.ViewModels
 		#region private variables
 		private ObservableCollection<EntryModel> entries;
 		private ISendService sendService;
+		private EntryModel selectedEntry;
 		#endregion
 
 		#region events
@@ -28,6 +29,7 @@ namespace Borgarverk.ViewModels
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
 			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
 			DeleteSelectedEntriesCommand = new Command(() => DeleteSelectedEntries());
+			DeleteButtonActive = false;
 		}
 
 		#region commands
@@ -50,8 +52,24 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		public EntryModel SelectedItem { get; set; }
+		public EntryModel SelectedEntry { 
+			get { return selectedEntry; }
+			set
+			{
+				if (value == null)
+				{
+					selectedEntry = null;
+					DeleteButtonActive = false;
+				}
+				else
+				{
+					selectedEntry = value;
+					DeleteButtonActive = true;
+				}
+			}
+		}
 
+		public bool DeleteButtonActive { get; set; }
 		#endregion
 
 		//void OnSwipeButtonClick(object parameter)
@@ -100,7 +118,21 @@ namespace Borgarverk.ViewModels
 		// frekar að vera með það í línunni sem þú velur, takkarnir birtast þegar lína valin?
 		void DeleteSelectedEntries()
 		{
-			System.Diagnostics.Debug.WriteLine("DeleteSelectedEntriesCommand");
+			if (!DeleteButtonActive)
+			{
+				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
+				return;
+			}
+
+			try
+			{
+				DataService.DeleteEntry(SelectedEntry.ID);
+				Entries.Remove(SelectedEntry);
+			}
+			catch
+			{
+				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
+			}
 		}
 
 		// Ath mögulega er þetta ekki sniðugasta leiðin að hafa svona takka neðst til að eyða og breyta,
