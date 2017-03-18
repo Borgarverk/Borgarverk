@@ -32,6 +32,7 @@ namespace Borgarverk.ViewModels
 		#region commands
 		public Command SwipeButtonCommand { get; }
 		public Command SendAllEntriesCommand { get; }
+		public Command DeleteAllEntries { get; }
 		#endregion
 
 		#region properties

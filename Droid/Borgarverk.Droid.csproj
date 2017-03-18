@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Borgarverk.Droid</RootNamespace>
     <AssemblyName>Borgarverk.Droid</AssemblyName>
-    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -179,6 +179,16 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_view_list_white_24dp.png" />
     <AndroidResource Include="Resources\drawable\edit_icon.png" />
     <AndroidResource Include="Resources\drawable\remove_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_delete_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_delete_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

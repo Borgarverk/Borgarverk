@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Borgarverk.ViewModels;
 using DevExpress.Mobile.DataGrid;
 using DevExpress.Mobile.DataGrid.Theme;
+using DevExpress.Mobile.DataGrid.Internal;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -17,6 +18,7 @@ namespace Borgarverk
 			viewModel = new EntryListViewModel(new SendService());
 			ThemeManager.ThemeName = Themes.Light;
 			ThemeManager.RefreshTheme();
+
 		}
 
 		protected override void OnAppearing()

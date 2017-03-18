@@ -48,5 +48,11 @@ namespace Borgarverk
 			System.Diagnostics.Debug.WriteLine("CreateNewEntriesCommand");
 		}
 
+
+		private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			
+		}
+
 	}
 }
