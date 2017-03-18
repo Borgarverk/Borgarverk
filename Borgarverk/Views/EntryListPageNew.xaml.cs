@@ -37,16 +37,5 @@ namespace Borgarverk
 		{
 			System.Diagnostics.Debug.WriteLine("OnListViewItemSelected");
 		}
-
-		public void DeleteSelectedEntriesCommand(object sender, EventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine("DeleteSelectedEntriesCommand");
-		}
-
-		public void ModifySelectedEntryCommand(object sender, EventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine("CreateNewEntriesCommand");
-		}
-
 	}
 }

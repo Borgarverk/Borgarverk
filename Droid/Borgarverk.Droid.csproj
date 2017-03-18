@@ -177,8 +177,28 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_view_list_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_view_list_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_view_list_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable\edit_icon.png" />
-    <AndroidResource Include="Resources\drawable\remove_icon.png" />
+    <AndroidResource Include="Resources\drawable\.DS_Store" />
+    <AndroidResource Include="Resources\drawable\icon_delete.png" />
+    <AndroidResource Include="Resources\drawable\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable\icon_send.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\.DS_Store" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon_delete.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon_send.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\.DS_Store" />
+    <AndroidResource Include="Resources\drawable-mdpi\icon_delete.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\icon_send.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\.DS_Store" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon_delete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon_send.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\.DS_Store" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon_delete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon_send.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\icon_edit.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\icon_send.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

@@ -24,13 +24,17 @@ namespace Borgarverk.ViewModels
 		{
 			this.sendService = sService;
 			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
-			SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
+			//SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
+			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
+			DeleteSelectedEntriesCommand = new Command(() => DeleteSelectedEntries());
 		}
 
 		#region commands
 		public Command SwipeButtonCommand { get; }
 		public Command SendAllEntriesCommand { get; }
+		public Command ModifySelectedEntryCommand { get; }
+		public Command DeleteSelectedEntriesCommand { get; }
 		#endregion
 
 		#region properties
@@ -45,48 +49,65 @@ namespace Borgarverk.ViewModels
 				}
 			}
 		}
+
+		public EntryModel SelectedItem { get; set; }
+
 		#endregion
 
-		void OnSwipeButtonClick(object parameter)
+		//void OnSwipeButtonClick(object parameter)
+		//{
+		//	SwipeButtonEventArgs arg = parameter as SwipeButtonEventArgs;
+		//	if (arg != null)
+		//	{
+		//		if (arg.ButtonInfo.ButtonName == "DeleteButton")
+		//		{
+		//			Debug.WriteLine(Entries.Count);
+		//			Debug.WriteLine(arg.SourceRowIndex);
+		//			var delEntry = Entries[arg.SourceRowIndex];
+		//			Debug.WriteLine(delEntry.No);
+		//			Entries.Remove(delEntry);
+		//			Debug.WriteLine(Entries.Count);
+		//			try
+		//			{
+		//				DataService.DeleteEntry(delEntry.ID);
+		//			}
+		//			catch
+		//			{
+		//				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
+		//			}
+		//		}
+		//		else if (arg.ButtonInfo.ButtonName == "SendButton")
+		//		{
+		//			if (sendService.SendEntry(Entries[arg.SourceRowIndex]))
+		//			{
+		//				var model = Entries[arg.SourceRowIndex];
+		//				model.TimeSent = DateTime.Now;
+		//				model.Sent = true;
+		//				DataService.UpdateEntry(model);
+		//				OnPropertyChanged("Entries");
+		//				Entries.RemoveAt(arg.SourceRowIndex);
+		//				Entries.Insert(arg.SourceRowIndex, model);
+		//			}
+		//			else
+		//			{
+		//				Application.Current.MainPage.DisplayAlert("Tókst ekki að senda færslu", "Reyndu aftur síðar", "Í lagi");
+		//			}
+		//		}
+		//	}
+		//}
+
+		// Ath mögulega er þetta ekki sniðugasta leiðin að hafa svona takka neðst til að eyða og breyta,
+		// frekar að vera með það í línunni sem þú velur, takkarnir birtast þegar lína valin?
+		void DeleteSelectedEntries()
 		{
-			SwipeButtonEventArgs arg = parameter as SwipeButtonEventArgs;
-			if (arg != null)
-			{
-				if (arg.ButtonInfo.ButtonName == "DeleteButton")
-				{
-					Debug.WriteLine(Entries.Count);
-					Debug.WriteLine(arg.SourceRowIndex);
-					var delEntry = Entries[arg.SourceRowIndex];
-					Debug.WriteLine(delEntry.No);
-					Entries.Remove(delEntry);
-					Debug.WriteLine(Entries.Count);
-					try
-					{
-						DataService.DeleteEntry(delEntry.ID);
-					}
-					catch
-					{
-						Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
-					}
-				}
-				else if (arg.ButtonInfo.ButtonName == "SendButton")
-				{
-					if (sendService.SendEntry(Entries[arg.SourceRowIndex]))
-					{
-						var model = Entries[arg.SourceRowIndex];
-						model.TimeSent = DateTime.Now;
-						model.Sent = true;
-						DataService.UpdateEntry(model);
-						OnPropertyChanged("Entries");
-						Entries.RemoveAt(arg.SourceRowIndex);
-						Entries.Insert(arg.SourceRowIndex, model);
-					}
-					else
-					{
-						Application.Current.MainPage.DisplayAlert("Tókst ekki að senda færslu", "Reyndu aftur síðar", "Í lagi");
-					}
-				}
-			}
+			System.Diagnostics.Debug.WriteLine("DeleteSelectedEntriesCommand");
+		}
+
+		// Ath mögulega er þetta ekki sniðugasta leiðin að hafa svona takka neðst til að eyða og breyta,
+		// frekar að vera með það í línunni sem þú velur, takkarnir birtast þegar lína valin?
+		void ModifySelectedEntry()
+		{
+			System.Diagnostics.Debug.WriteLine("ModifySelectedEntryCommand");
 		}
 
 		void SendAllEntries()
