@@ -7,8 +7,8 @@
 	BackgroundColor="White">
 
 	<StackLayout VerticalOptions="FillAndExpand">
-		<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" TextChanged="SearchBar_OnTextChanged" HeightRequest="30"></SearchBar>
-		<Grid BackgroundColor="#bfbfbf" HeightRequest="30">
+		<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" TextChanged="SearchBar_OnTextChanged" HeightRequest="35"></SearchBar>
+		<Grid BackgroundColor="#bfbfbf" HeightRequest="35">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="3*"/>
              	<ColumnDefinition Width="2*"/>

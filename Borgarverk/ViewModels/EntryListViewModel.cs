@@ -17,17 +17,18 @@ namespace Borgarverk.ViewModels
 		private EntryModel selectedEntry;
 		private EntryModel unfocusedEntry;
 		private bool deleteButtonActive;
+		private INavigation navigation;
 		#endregion
 
 		#region events
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		public EntryListViewModel(ISendService sService)
+		public EntryListViewModel(ISendService sService, INavigation navigation)
 		{
 			this.sendService = sService;
+			this.navigation = navigation;
 			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
-			//SwipeButtonCommand = new Command((o) => OnSwipeButtonClick(o));
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
 			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
 			DeleteSelectedEntriesCommand = new Command(() => DeleteSelectedEntries());
@@ -153,14 +154,26 @@ namespace Borgarverk.ViewModels
 		}
 
 		// TODO: implement
+		// spurja hvort þetta sé mögulega óþarfi fítus...
 		void ModifySelectedEntry()
 		{
-			if (!DeleteButtonActive)
+			if (!DeleteButtonActive || selectedEntry == null)
 			{
 				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
 				return;
 			}
-			System.Diagnostics.Debug.WriteLine("ModifySelectedEntryCommand");
+			//EntryViewModel vm = new EntryViewModel(navigation, sendService);
+			//vm.Car = new CarModel(selectedEntry.Car);
+			//vm.Station = new StationModel(selectedEntry.Station);
+			//vm.No = selectedEntry.ID.ToString();
+			//vm.RoadArea = selectedEntry.RoadArea;
+			//vm.RoadWidth = selectedEntry.RoadWidth;
+			//vm.RoadLength = (selectedEntry.RoadLength == null ? selectedEntry..RoadLength : ""); // verður null annars...
+			//vm.Rate = selectedEntry.Rate;
+			//vm.TarQty = selectedEntry.TarQty;
+			//vm.TimeCreated = selectedEntry.TimeCreated;
+			//vm.TimeSent = selectedEntry.TimeSent;
+			//navigation.PushAsync(new NewEntryPage(vm));
 		}
 		
 		void SendAllEntries()

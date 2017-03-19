@@ -13,7 +13,7 @@ namespace Borgarverk
 		public EntryListPageNew()
 		{
 			InitializeComponent();
-			viewModel = new EntryListViewModel(new SendService());
+			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
 		}
 
 		// TODO: implement (async or not?)

@@ -14,7 +14,7 @@ namespace Borgarverk
 		public EntryListPage()
 		{
 			InitializeComponent();
-			viewModel = new EntryListViewModel(new SendService());
+			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
 			ThemeManager.ThemeName = Themes.Light;
 			ThemeManager.RefreshTheme();
 		}
