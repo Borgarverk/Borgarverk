@@ -10,7 +10,7 @@ namespace Borgarverk
 		{
 			InitializeComponent();
 			var homepage = new HomePageXaml();
-			NavigationPage.SetHasNavigationBar(homepage, false);
+			//NavigationPage.SetHasNavigationBar(homepage, false);
 			MainPage = new NavigationPage(homepage);
 			DataService.OpenConnection();
 		}

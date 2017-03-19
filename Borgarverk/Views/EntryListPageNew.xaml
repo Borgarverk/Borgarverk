@@ -7,7 +7,8 @@
 	BackgroundColor="White">
 
 	<StackLayout VerticalOptions="FillAndExpand">
-		<Grid BackgroundColor="#bfbfbf">
+		<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" TextChanged="SearchBar_OnTextChanged" HeightRequest="30"></SearchBar>
+		<Grid BackgroundColor="#bfbfbf" HeightRequest="30">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="3*"/>
              	<ColumnDefinition Width="2*"/>
@@ -15,9 +16,7 @@
              	<ColumnDefinition Width="3*"/>
              	<ColumnDefinition Width="2*"/>
              	<ColumnDefinition Width="2*"/>
-             	<ColumnDefinition Width="2*"/>
 			</Grid.ColumnDefinitions>
-			
 			<Label Grid.Column="0">Dags</Label>
 			<Label Grid.Column="1">Nótunúmer</Label>
 			<Label Grid.Column="2">Bíll</Label>
@@ -39,7 +38,6 @@
 									<ColumnDefinition Width="3*"/>
 									<ColumnDefinition Width="2*"/>
 									<ColumnDefinition Width="2*"/>
-									<ColumnDefinition Width="2*"/>
 								</Grid.ColumnDefinitions>
 									<Label Grid.Column="0" Text="{Binding TimeCreated}"/>
 									<Label Grid.Column="1" Text="{Binding No}"/>
@@ -59,12 +57,11 @@
 				Image="icon_delete.png" 
 				Text="Eyða færslu" 
 				TextColor="White" 
-				BackgroundColor="#008ead" 
+				BackgroundColor="{Binding ButtonColor}" 
 				Grid.Row="0" 
 				WidthRequest="165" 
 				HeightRequest="80" 
 				HorizontalOptions="CenterAndExpand" 
-				IsEnabled="{Binding DeleteButtonActive}"
 				Command="{Binding DeleteSelectedEntriesCommand}"
 			/>
 
@@ -72,12 +69,13 @@
 				Image="icon_edit.png" 
 				Text="Breyta færslu" 
 				TextColor="White" 
-				BackgroundColor="#008ead" 
+				BackgroundColor="{Binding ButtonColor}" 
 				Grid.Row="0" 
 				WidthRequest="165" 
 				HeightRequest="80" 
 				HorizontalOptions="CenterAndExpand" 
-				Command="{Binding ModifySelectedEntryCommand}"/>
+				Command="{Binding ModifySelectedEntryCommand}"
+			/>
 
 			<Button x:Name="SendAllEntriesButton" 
 				Image="icon_send.png" 
@@ -88,7 +86,8 @@
 				WidthRequest="165" 
 				HeightRequest="80" 
 				HorizontalOptions="CenterAndExpand" 
-				Command="{Binding SendAllEntriesCommand}"/>
+				Command="{Binding SendAllEntriesCommand}"
+			/>
 		</StackLayout>
 
 	</StackLayout>

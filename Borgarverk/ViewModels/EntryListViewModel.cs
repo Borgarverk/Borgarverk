@@ -15,6 +15,8 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<EntryModel> entries;
 		private ISendService sendService;
 		private EntryModel selectedEntry;
+		private EntryModel unfocusedEntry;
+		private bool deleteButtonActive;
 		#endregion
 
 		#region events
@@ -29,7 +31,10 @@ namespace Borgarverk.ViewModels
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
 			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
 			DeleteSelectedEntriesCommand = new Command(() => DeleteSelectedEntries());
-			DeleteButtonActive = false;
+			deleteButtonActive = false;
+			ButtonColor = "#d0cccc";
+			selectedEntry = null;
+			unfocusedEntry = null;
 		}
 
 		#region commands
@@ -59,17 +64,29 @@ namespace Borgarverk.ViewModels
 				if (value == null)
 				{
 					selectedEntry = null;
-					DeleteButtonActive = false;
+					deleteButtonActive = false;
+					ButtonColor = "#d0cccc";
+				}
+				else if (value == selectedEntry)
+				{
+					selectedEntry = null;
 				}
 				else
 				{
 					selectedEntry = value;
-					DeleteButtonActive = true;
+					deleteButtonActive = true;
+					ButtonColor = "#008ead";
+					OnPropertyChanged("ButtonColor");
 				}
 			}
 		}
 
-		public bool DeleteButtonActive { get; set; }
+		public bool DeleteButtonActive { 
+			get { return deleteButtonActive; } 
+			set { deleteButtonActive = value; }
+		}
+
+		public string ButtonColor { get; set; }
 		#endregion
 
 		//void OnSwipeButtonClick(object parameter)
@@ -114,8 +131,8 @@ namespace Borgarverk.ViewModels
 		//	}
 		//}
 
-		// Ath mögulega er þetta ekki sniðugasta leiðin að hafa svona takka neðst til að eyða og breyta,
-		// frekar að vera með það í línunni sem þú velur, takkarnir birtast þegar lína valin?
+
+		// TODO: implement
 		void DeleteSelectedEntries()
 		{
 			if (!DeleteButtonActive)
@@ -135,13 +152,17 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		// Ath mögulega er þetta ekki sniðugasta leiðin að hafa svona takka neðst til að eyða og breyta,
-		// frekar að vera með það í línunni sem þú velur, takkarnir birtast þegar lína valin?
+		// TODO: implement
 		void ModifySelectedEntry()
 		{
+			if (!DeleteButtonActive)
+			{
+				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
+				return;
+			}
 			System.Diagnostics.Debug.WriteLine("ModifySelectedEntryCommand");
 		}
-
+		
 		void SendAllEntries()
 		{
 			List<EntryModel> del = new List<EntryModel>();
@@ -177,6 +198,5 @@ namespace Borgarverk.ViewModels
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-
 	}
 }
