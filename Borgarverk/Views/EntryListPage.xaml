@@ -1,50 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			 x:Class="Borgarverk.EntryListPage" xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk" 
-			 xmlns:dxGrid="clr-namespace:DevExpress.Mobile.DataGrid;assembly=DevExpress.Mobile.Grid.v16.2"
-			 Title="Allar Færslur" 
-			 BackgroundColor="White">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<local:NegateBooleanConverter x:Key="cnvInvert">
-			</local:NegateBooleanConverter>
-		</ResourceDictionary>
-	</ContentPage.Resources>
-	<ContentPage.Content>
-		<ScrollView>
-			<StackLayout>
-				<dxGrid:GridControl x:Name="grid" 
-					ItemsSource="{Binding Entries}" 
-					SortMode="Multiple" 
-					SwipeButtonCommand="{Binding SwipeButtonCommand}" 
-					SwipeButtonShowing="OnSwipeButtonShowing" 
-					AllowEditRows="true" 
-					ColumnsAutoWidth="false" 
-					AllowDeleteRows="false"
-					RowEditMode="Popup">
-					<dxGrid:GridControl.Columns>
-						<dxGrid:TextColumn FieldName="No" Width="150" Caption="Númer"/>
-						<dxGrid:TextColumn FieldName="Car" Width="100" Caption="Bíll" />
-						<dxGrid:TextColumn FieldName="Station" Width="140" Caption="Stöð" />
-						<dxGrid:DateColumn FieldName="TimeCreated" Caption="Búin til" DisplayFormat="d" SortOrder="Descending" SortIndex="0" IsReadOnly="true"/>
-						<dxGrid:SwitchColumn FieldName="Sent" Caption="Send" MinWidth="45" IsReadOnly="true"/>
-						<dxGrid:NumberColumn FieldName="RoadWidth" Caption="Breidd"/>
-						<dxGrid:NumberColumn FieldName="RoadLength" Caption="Lengd"/>
-						<dxGrid:NumberColumn FieldName="RoadArea" Caption="Fm"/>
-						<dxGrid:NumberColumn FieldName="TarQty" Caption="Lítrar"/>
-						<dxGrid:NumberColumn FieldName="Rate" Caption="l/fm"/>
-					</dxGrid:GridControl.Columns>
-					<dxGrid:GridControl.RightSwipeButtons>
-						<dxGrid:SwipeButtonInfo ButtonName="DeleteButton" Caption="Eyða" BackgroundColor="Red" Width="80"/>
-						<dxGrid:SwipeButtonInfo ButtonName="SendButton" Caption="Senda" BackgroundColor="Blue" Width="80"/>
-						<dxGrid:SwipeButtonInfo ButtonName="EditButton" Caption="Breyta" BackgroundColor="Green" Width="80"/>
-					</dxGrid:GridControl.RightSwipeButtons>
-				</dxGrid:GridControl>
-				<StackLayout Orientation="Horizontal">
-					<Button Text="Senda allar ósendar færslur" TextColor="White" HorizontalOptions="CenterAndExpand" HeightRequest="80" WidthRequest="300" Command="{Binding SendAllEntriesCommand}" BackgroundColor="#00447b" Margin="5"/>
-				</StackLayout>
-			</StackLayout>
-		</ScrollView>
-	</ContentPage.Content>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="Borgarverk.EntryListPage"
+	Title="Allar Færslur" 
+	BackgroundColor="White">
+
+	<StackLayout VerticalOptions="FillAndExpand">
+		<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" TextChanged="SearchBar_OnTextChanged" HeightRequest="35"></SearchBar>
+		<Grid BackgroundColor="#bfbfbf" HeightRequest="35">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="3*"/>
+             	<ColumnDefinition Width="2*"/>
+             	<ColumnDefinition Width="2*"/>
+             	<ColumnDefinition Width="3*"/>
+             	<ColumnDefinition Width="2*"/>
+             	<ColumnDefinition Width="2*"/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0">Dags</Label>
+			<Label Grid.Column="1">Nótunúmer</Label>
+			<Label Grid.Column="2">Bíll</Label>
+			<Label Grid.Column="3">Stöð</Label>
+			<Label Grid.Column="4">Flatarmál</Label>
+			<Label Grid.Column="5">Sent</Label>
+		</Grid>
+		
+		<ListView ItemsSource="{Binding Entries}" HorizontalOptions="Center" RowHeight="50" SelectedItem="{Binding SelectedEntry}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<ViewCell.View>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="3*"/>
+									<ColumnDefinition Width="2*"/>
+									<ColumnDefinition Width="2*"/>
+									<ColumnDefinition Width="3*"/>
+									<ColumnDefinition Width="2*"/>
+									<ColumnDefinition Width="2*"/>
+								</Grid.ColumnDefinitions>
+									<Label Grid.Column="0" Text="{Binding TimeCreated}"/>
+									<Label Grid.Column="1" Text="{Binding No}"/>
+									<Label Grid.Column="2" Text="{Binding Car}"/>
+									<Label Grid.Column="3" Text="{Binding Station}"/>
+				                	<Label Grid.Column="4" Text="{Binding RoadArea}"/>
+<!--				                <Label Grid.Column="5" Text="{Binding Sent}"/>-->
+				                	<Image Grid.Column="5" Source="icon_done.png"  IsVisible="{Binding Sent}" HeightRequest="15" HorizontalOptions="Start" Margin="10"/>
+								
+							</Grid>
+						</ViewCell.View>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<StackLayout Orientation="Horizontal">
+			<Button x:Name="DeleteSelectedEntriesButton" 
+				Image="icon_delete.png" 
+				Text="Eyða færslu" 
+				TextColor="White" 
+				BackgroundColor="{Binding ButtonColor}" 
+				Grid.Row="0" 
+				WidthRequest="165" 
+				HeightRequest="80" 
+				HorizontalOptions="CenterAndExpand" 
+				Command="{Binding DeleteSelectedEntriesCommand}"
+			/>
+
+			<Button x:Name="ModifySelectedEntryButton" 
+				Image="icon_edit.png" 
+				Text="Breyta færslu" 
+				TextColor="White" 
+				BackgroundColor="{Binding ButtonColor}" 
+				Grid.Row="0" 
+				WidthRequest="165" 
+				HeightRequest="80" 
+				HorizontalOptions="CenterAndExpand" 
+				Command="{Binding ModifySelectedEntryCommand}"
+			/>
+
+			<Button x:Name="SendAllEntriesButton" 
+				Image="icon_send.png" 
+				Text="Senda ósendar færslur" 
+				TextColor="White" 
+				BackgroundColor="#008ead" 
+				Grid.Row="0" 
+				WidthRequest="165" 
+				HeightRequest="80" 
+				HorizontalOptions="CenterAndExpand" 
+				Command="{Binding SendAllEntriesCommand}"
+			/>
+		</StackLayout>
+
+	</StackLayout>
 </ContentPage>

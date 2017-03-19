@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using Borgarverk.Models;
 using Borgarverk.ViewModels;
-using DevExpress.Mobile.DataGrid;
-using DevExpress.Mobile.DataGrid.Theme;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -11,12 +9,17 @@ namespace Borgarverk
 	public partial class EntryListPage : ContentPage
 	{
 		private EntryListViewModel viewModel;
+		
 		public EntryListPage()
 		{
 			InitializeComponent();
 			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
-			ThemeManager.ThemeName = Themes.Light;
-			ThemeManager.RefreshTheme();
+		}
+
+		// TODO: implement (async or not?)
+		public /*async*/ void SendButtonClicked(object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.WriteLine(sender);
 		}
 
 		protected override void OnAppearing()
@@ -32,12 +35,25 @@ namespace Borgarverk
 			BindingContext = null;
 		}
 
-		void OnSwipeButtonShowing(object sender, SwipeButtonShowingEventArgs e)
+		// TODO: implement
+		private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (((Boolean)grid.GetCellValue(e.RowHandle, "Sent")) && (e.ButtonInfo.ButtonName == "SendButton"))
-			{
-				e.IsVisible = false;
-			}
+			System.Diagnostics.Debug.WriteLine("SearchBar_OnTextChanged");
 		}
+
+
+
+		// TODO: reyna að gera þetta í entrylistviewmodel frekar
+		//private void onEntryTapped(object sender, ItemTappedEventArgs e)
+		//{
+		//	EntryModel entry = e.Item as EntryModel;
+		//	System.Diagnostics.Debug.WriteLine("onEntryTapped");
+		//	viewModel.SelectedEntry = entry;
+			
+		//	//if (viewModel.SelectedEntry == null)
+		//	//{
+		//	//	viewModel.SelectedEntry = entry;
+		//	//}
+		//}
 	}
 }

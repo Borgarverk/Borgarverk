@@ -24,6 +24,8 @@ namespace Borgarverk.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
+		// Ath þurfum navigation ef við ætlum að geta editað færslu
+		// en kannski vilja þeir það ekki? spyrjum á fundinum
 		public EntryListViewModel(ISendService sService, INavigation navigation)
 		{
 			this.sendService = sService;

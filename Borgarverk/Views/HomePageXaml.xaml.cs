@@ -24,7 +24,7 @@ namespace Borgarverk
 			allEntriesButton.SetValue(OpacityProperty, 0.2);
 			//await Task.Delay(100);
 			//await Navigation.PushAsync(new EntryListPage(), false);
-			await Navigation.PushAsync(new EntryListPageNew(), false);
+			await Navigation.PushAsync(new EntryListPage(), false);
 		}
 
 		public async void SettingsButtonClicked(object sender, EventArgs e)

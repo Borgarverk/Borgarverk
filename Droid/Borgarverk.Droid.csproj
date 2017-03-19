@@ -199,6 +199,12 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon_send.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\icon_edit.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\icon_send.png" />
+    <AndroidResource Include="Resources\drawable\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\icon_done.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

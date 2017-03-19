@@ -32,16 +32,13 @@
     <EmbeddedResource Include="Views\NewEntryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\EntryListPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\HomePageXaml.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\EntryListPageNew.xaml">
+    <EmbeddedResource Include="Views\EntryListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -62,9 +59,6 @@
     <Compile Include="Converters\NegateBooleanConverter.cs" />
     <Compile Include="Database\ISQLite.cs" />
     <Compile Include="ViewModels\EntryListViewModel.cs" />
-    <Compile Include="Views\EntryListPage.xaml.cs">
-      <DependentUpon>EntryListPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\ISendService.cs" />
     <Compile Include="Services\SendService.cs" />
     <Compile Include="Views\HomePageXaml.xaml.cs">
@@ -75,8 +69,8 @@
     </Compile>
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Wrapper\SelectableItemWrapper.cs" />
-    <Compile Include="Views\EntryListPageNew.xaml.cs">
-      <DependentUpon>EntryListPageNew.xaml</DependentUpon>
+    <Compile Include="Views\EntryListPage.xaml.cs">
+      <DependentUpon>EntryListPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
