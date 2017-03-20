@@ -52,7 +52,6 @@ namespace Borgarverk.ViewModels
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-			model = m;
 		}*/
 
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Borgarverk.Droid</RootNamespace>
     <AssemblyName>Borgarverk.Droid</AssemblyName>
-    <TargetFrameworkVersion>v7.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -177,23 +177,18 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_view_list_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_view_list_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_view_list_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable\.DS_Store" />
     <AndroidResource Include="Resources\drawable\icon_delete.png" />
     <AndroidResource Include="Resources\drawable\icon_edit.png" />
     <AndroidResource Include="Resources\drawable\icon_send.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-hdpi\icon_delete.png" />
     <AndroidResource Include="Resources\drawable-hdpi\icon_edit.png" />
     <AndroidResource Include="Resources\drawable-hdpi\icon_send.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-mdpi\icon_delete.png" />
     <AndroidResource Include="Resources\drawable-mdpi\icon_edit.png" />
     <AndroidResource Include="Resources\drawable-mdpi\icon_send.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon_delete.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon_edit.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon_send.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\.DS_Store" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon_delete.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon_edit.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon_send.png" />
@@ -205,6 +200,16 @@
     <AndroidResource Include="Resources\drawable-xhdpi\icon_done.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon_done.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\icon_done.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_done_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_done_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_done_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_done_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_done_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_close_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_close_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_close_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_close_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_close_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

@@ -16,7 +16,6 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<SelectableItemWrapper<CarModel>> cars;
 		private ObservableCollection<SelectableItemWrapper<StationModel>> stations;
 		private string newStation, newCar;
-		//private readonly IDataService dataService;
 		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -97,25 +96,6 @@ namespace Borgarverk.ViewModels
 			Stations = new ObservableCollection<SelectableItemWrapper<StationModel>>
 				(stationsToConvert.Select(station => new SelectableItemWrapper<StationModel>(station)));
 		}
-
-		// TODO Eyða ef ekki notað
-		/*ObservableCollection<CarModel> GetSelectedCars()
-		{
-			var selected = Cars
-				.Where(p => p.IsSelected)
-				.Select(p => p.Item)
-				.ToList();
-			return new ObservableCollection<CarModel>(selected);
-		}
-
-		ObservableCollection<StationModel> GetSelectedStations()
-		{
-			var selected = Stations
-				.Where(p => p.IsSelected)
-				.Select(p => p.Item)
-				.ToList();
-			return new ObservableCollection<StationModel>(selected);
-		}*/
 
 		private void DeleteCars()
 		{

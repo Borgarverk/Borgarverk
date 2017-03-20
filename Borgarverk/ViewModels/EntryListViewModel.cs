@@ -12,11 +12,13 @@ namespace Borgarverk.ViewModels
 	public class EntryListViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private ObservableCollection<EntryModel> entries;
+		private ObservableCollection<EntryModel> allEntries;
+		private ObservableCollection<EntryModel> filteredEntries;
 		private ISendService sendService;
 		private EntryModel selectedEntry;
 		private EntryModel unfocusedEntry;
-		private bool deleteButtonActive;
+		private bool deleteButtonActive, isSelected;
+		private string searchString;
 		private INavigation navigation;
 		#endregion
 
@@ -30,10 +32,11 @@ namespace Borgarverk.ViewModels
 		{
 			this.sendService = sService;
 			this.navigation = navigation;
-			entries = new ObservableCollection<EntryModel>(DataService.GetEntries());
+			allEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
-			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
-			DeleteSelectedEntriesCommand = new Command(() => DeleteSelectedEntries());
+			ModifySelectedEntryCommand = new Command((object obj) => ModifySelectedEntry(obj));
+			DeleteSelectedEntryCommand = new Command((object obj) => DeleteSelectedEntry(obj));
+			CloseCommand = new Command(() => Close());
 			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
@@ -44,23 +47,30 @@ namespace Borgarverk.ViewModels
 		public Command SwipeButtonCommand { get; }
 		public Command SendAllEntriesCommand { get; }
 		public Command ModifySelectedEntryCommand { get; }
-		public Command DeleteSelectedEntriesCommand { get; }
+		public Command DeleteSelectedEntryCommand { get; }
+		public Command CloseCommand { get; }
 		#endregion
 
 		#region properties
-		public ObservableCollection<EntryModel> Entries
+		public ObservableCollection<EntryModel> AllEntries
 		{
-			get { return entries; }
+			get { return allEntries; }
 			set
 			{
-				if (Entries != value)
-				{
-					entries = value;
-				}
+				allEntries = value;	
 			}
 		}
 
-		public EntryModel SelectedEntry { 
+		public ObservableCollection<EntryModel> FilteredEntries
+		{
+			get { return filteredEntries; }
+			set
+			{
+				filteredEntries = value;
+			}
+		}
+
+		/*public EntryModel SelectedEntry { 
 			get { return selectedEntry; }
 			set
 			{
@@ -82,72 +92,63 @@ namespace Borgarverk.ViewModels
 					OnPropertyChanged("ButtonColor");
 				}
 			}
+		}*/
+		public EntryModel SelectedEntry { 
+			get { return selectedEntry; }
+			set
+			{
+				if (selectedEntry != value)
+				{
+					if (value == null)
+					{
+						IsSelected = false;
+						OnPropertyChanged("SelectedEntry");
+					}
+					else
+					{
+						IsSelected = true;
+						OnPropertyChanged("SelectedEntry");
+					}
+					selectedEntry = value;
+				}
+			}
 		}
 
 		public bool DeleteButtonActive { 
 			get { return deleteButtonActive; } 
-			set { deleteButtonActive = value; }
+			set 
+			{
+				if (deleteButtonActive != value)
+				{
+					deleteButtonActive = value;
+					OnPropertyChanged("DeleteButtonActive");
+				}
+			}
 		}
 
+		public bool IsSelected
+		{
+			get { return isSelected; }
+			set
+			{
+				if (isSelected != value)
+				{
+					isSelected = value;
+					OnPropertyChanged("IsSelected");
+				}
+			}
+		}
 		public string ButtonColor { get; set; }
 		#endregion
 
-		//void OnSwipeButtonClick(object parameter)
-		//{
-		//	SwipeButtonEventArgs arg = parameter as SwipeButtonEventArgs;
-		//	if (arg != null)
-		//	{
-		//		if (arg.ButtonInfo.ButtonName == "DeleteButton")
-		//		{
-		//			Debug.WriteLine(Entries.Count);
-		//			Debug.WriteLine(arg.SourceRowIndex);
-		//			var delEntry = Entries[arg.SourceRowIndex];
-		//			Debug.WriteLine(delEntry.No);
-		//			Entries.Remove(delEntry);
-		//			Debug.WriteLine(Entries.Count);
-		//			try
-		//			{
-		//				DataService.DeleteEntry(delEntry.ID);
-		//			}
-		//			catch
-		//			{
-		//				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
-		//			}
-		//		}
-		//		else if (arg.ButtonInfo.ButtonName == "SendButton")
-		//		{
-		//			if (sendService.SendEntry(Entries[arg.SourceRowIndex]))
-		//			{
-		//				var model = Entries[arg.SourceRowIndex];
-		//				model.TimeSent = DateTime.Now;
-		//				model.Sent = true;
-		//				DataService.UpdateEntry(model);
-		//				OnPropertyChanged("Entries");
-		//				Entries.RemoveAt(arg.SourceRowIndex);
-		//				Entries.Insert(arg.SourceRowIndex, model);
-		//			}
-		//			else
-		//			{
-		//				Application.Current.MainPage.DisplayAlert("Tókst ekki að senda færslu", "Reyndu aftur síðar", "Í lagi");
-		//			}
-		//		}
-		//	}
-		//}
-
-
-		// TODO: implement
-		void DeleteSelectedEntries()
+		void DeleteSelectedEntry(object sender)
 		{
-			if (!DeleteButtonActive)
-			{
-				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
-				return;
-			}
-
+			
 			try
 			{
-				DataService.DeleteEntry(SelectedEntry.ID);
-				Entries.Remove(SelectedEntry);
+				var delEntry = ((EntryModel)sender);
+				DataService.DeleteEntry(delEntry.ID);
+				allEntries.Remove(delEntry);
 			}
 			catch
 			{
@@ -157,13 +158,15 @@ namespace Borgarverk.ViewModels
 
 		// TODO: implement
 		// spurja hvort þetta sé mögulega óþarfi fítus...
-		void ModifySelectedEntry()
+		void ModifySelectedEntry(object sender)
 		{
-			if (!DeleteButtonActive || selectedEntry == null)
+			/*if (!DeleteButtonActive || selectedEntry == null)
 			{
 				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
 				return;
-			}
+			}*/
+
+			SelectedEntry = ((EntryModel)sender);
 			//EntryViewModel vm = new EntryViewModel(navigation, sendService);
 			//vm.Car = new CarModel(selectedEntry.Car);
 			//vm.Station = new StationModel(selectedEntry.Station);
@@ -177,11 +180,17 @@ namespace Borgarverk.ViewModels
 			//vm.TimeSent = selectedEntry.TimeSent;
 			//navigation.PushAsync(new NewEntryPage(vm));
 		}
+
+		void Close()
+		{
+			IsSelected = false;
+			SelectedEntry = null;
+		}
 		
 		void SendAllEntries()
 		{
 			List<EntryModel> del = new List<EntryModel>();
-			foreach (var entry in Entries)
+			foreach (var entry in AllEntries)
 			{
 				if (!entry.Sent)
 				{
@@ -195,12 +204,12 @@ namespace Borgarverk.ViewModels
 				Debug.WriteLine(del.Count);
 				for (var i = del.Count - 1; i >= 0; i--)
 				{
-					var tmpEntry = Entries[Entries.IndexOf(del[i])];
+					var tmpEntry = AllEntries[AllEntries.IndexOf(del[i])];
 					tmpEntry.Sent = true;
 					tmpEntry.TimeSent = DateTime.Now;
 					DataService.UpdateEntry(tmpEntry);
-					Entries.Insert(Entries.IndexOf(tmpEntry), tmpEntry);
-					Entries.Remove(tmpEntry);
+					AllEntries.Insert(AllEntries.IndexOf(tmpEntry), tmpEntry);
+					AllEntries.Remove(tmpEntry);
 				}
 			}
 		}
