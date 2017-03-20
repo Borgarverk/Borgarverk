@@ -17,7 +17,7 @@
 				<RowDefinition Height="150"/>
 				<RowDefinition Height="70"/>
 			</Grid.RowDefinitions>
-			<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" TextChanged="SearchBar_OnTextChanged" HeightRequest="35" Grid.Row="0"></SearchBar>
+			<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" Text="{Binding SearchString}" HeightRequest="35" Grid.Row="0"></SearchBar>
 			<BoxView BackgroundColor="#bfbfbf" Grid.Row="1"/>
 			<Grid HeightRequest="35" Grid.Row="1" Padding="30,0,30,0">
 				<Grid.ColumnDefinitions>
@@ -36,12 +36,11 @@
 				<Label Grid.Column="5" VerticalOptions="Center" HorizontalOptions="EndAndExpand">Sent</Label>
 			</Grid>
 			
-			<ListView ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" RowHeight="40" Grid.Row="2">
+			<ListView ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" SelectedItem="{Binding SelectedEntry}" RowHeight="40" Grid.Row="2">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>
 							<ViewCell.ContextActions>
-            					<MenuItem Command="{Binding Path=BindingContext.ModifySelectedEntryCommand, Source={x:Reference Name=EntryList}}" CommandParameter="{Binding .}" Text="Meira" />
             					<MenuItem Command="{Binding Path=BindingContext.DeleteSelectedEntryCommand, Source={x:Reference Name=EntryList}}" CommandParameter="{Binding .}" Text="Eyða"/>
          					</ViewCell.ContextActions>
 							<ViewCell.View>

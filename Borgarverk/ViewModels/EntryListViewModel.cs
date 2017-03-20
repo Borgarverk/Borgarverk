@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using Borgarverk.Models;
 using DevExpress.Mobile.DataGrid;
 using Xamarin.Forms;
@@ -18,7 +19,7 @@ namespace Borgarverk.ViewModels
 		private EntryModel selectedEntry;
 		private EntryModel unfocusedEntry;
 		private bool deleteButtonActive, isSelected;
-		private string searchString;
+		private string searchString = "";
 		private INavigation navigation;
 		#endregion
 
@@ -37,6 +38,7 @@ namespace Borgarverk.ViewModels
 			ModifySelectedEntryCommand = new Command((object obj) => ModifySelectedEntry(obj));
 			DeleteSelectedEntryCommand = new Command((object obj) => DeleteSelectedEntry(obj));
 			CloseCommand = new Command(() => Close());
+			//SearchCommand = new Command(() => Search());
 			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
@@ -49,6 +51,7 @@ namespace Borgarverk.ViewModels
 		public Command ModifySelectedEntryCommand { get; }
 		public Command DeleteSelectedEntryCommand { get; }
 		public Command CloseCommand { get; }
+		//public Command SearchCommand { get; }
 		#endregion
 
 		#region properties
@@ -138,6 +141,21 @@ namespace Borgarverk.ViewModels
 				}
 			}
 		}
+
+		public string SearchString
+		{
+			get { return searchString; }
+			set
+			{
+				if (searchString != value)
+				{
+					searchString = value;
+					OnPropertyChanged("SearchString");
+					this.Search();
+				}
+			}
+		}
+
 		public string ButtonColor { get; set; }
 		#endregion
 
@@ -185,6 +203,19 @@ namespace Borgarverk.ViewModels
 		{
 			IsSelected = false;
 			SelectedEntry = null;
+		}
+
+		void Search()
+		{
+			var temp = AllEntries;
+			Debug.WriteLine("KOMIN INN I SEARCH");
+			Debug.WriteLine(searchString);
+			if (searchString == "")
+			{
+				AllEntries = temp;
+			}
+			var match = AllEntries.Where(c => c.No.Contains(SearchString) || c.Car.Contains(searchString));
+			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 		
 		void SendAllEntries()
