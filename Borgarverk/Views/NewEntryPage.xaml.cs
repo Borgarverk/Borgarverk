@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Borgarverk.Models;
 using Borgarverk.ViewModels;
 using DevExpress.Mobile.DataGrid;
 using DevExpress.Mobile.DataGrid.Theme;
@@ -22,6 +23,13 @@ namespace Borgarverk
 		{
 			InitializeComponent();
 			this.viewModel = viewModel;
+			BindingContext = viewModel;
+		}
+
+		public NewEntryPage(ISendService service, EntryModel model)
+		{
+			InitializeComponent();
+			this.viewModel = viewModel = new EntryViewModel(this.Navigation, service, model);
 			BindingContext = viewModel;
 		}
 

@@ -72,7 +72,7 @@
     <Compile Include="Views\EntryListPage.xaml.cs">
       <DependentUpon>EntryListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Converters\DecimalConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLitePCLRaw.core">

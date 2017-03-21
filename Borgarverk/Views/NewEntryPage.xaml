@@ -7,8 +7,7 @@
 	Title="Ný Færsla">
 	<ContentPage.Resources>
 		<ResourceDictionary>
-			<local:NegateBooleanConverter x:Key="cnvInvert">
-			</local:NegateBooleanConverter>
+			<local:NegateBooleanConverter x:Key="cnvInvert"></local:NegateBooleanConverter>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
@@ -24,10 +23,20 @@
 					<RowDefinition Height="3*" />
 					<RowDefinition Height="150" />
 				</Grid.RowDefinitions>
-				<StackLayout Grid.Row="0">
-					<Label Text="Sláðu inn færslunúmer" VerticalOptions="End" TextColor="#00447b" FontAttributes="Bold"></Label>
-					<Entry HorizontalOptions="FillAndExpand" Text="{Binding No, Mode=TwoWay}" />
-				</StackLayout>
+				<Grid Grid.Row="0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="30" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Text="Verknúmer" Grid.Row="0" Grid.Column="0" TextColor="#00447b" FontAttributes="Bold"/>
+					<Label Text="Færslunúmer" Grid.Row="0" Grid.Column="1" TextColor="#00447b" FontAttributes="Bold"/>
+					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding JobNo, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding No, Mode=TwoWay}" />
+				</Grid>
 				<Grid Grid.Row="1">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -103,11 +112,14 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<Label Text="Lítrar" Grid.Row="0" Grid.Column="0" />
-					<Label Text="Lítrar/fermeter" Grid.Row="0" Grid.Column="1" />
+					<Label Text="Forskrift" Grid.Row="0" Grid.Column="1" />
+					<Label Text="Gráður" Grid.Row="0" Grid.Column="2" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding TarQty, Mode=TwoWay}" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding Rate, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="2" Text="{Binding Degrees, Mode=TwoWay}" />
 				</Grid>
 				<Button Text="Staðfesta" TextColor="White" HorizontalOptions="CenterAndExpand" Grid.Row="5" HeightRequest="80" WidthRequest="200" Command="{Binding ConfirmOneCommand}" BackgroundColor="#00447b">
 				</Button>

@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Borgarverk.Models;
 using Xamarin.Forms;
 
@@ -13,7 +12,8 @@ namespace Borgarverk.ViewModels
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", roadLength = "", roadArea = "", tarQty = "", rate = "";
+		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="";
+		private int id;
 		private CarModel car = null;
 		private StationModel station = null;
 		private DateTime? timeSent, timeCreated;
@@ -29,7 +29,6 @@ namespace Borgarverk.ViewModels
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.sendService = sService;
-			//this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>();
 			this.stations = new ObservableCollection<StationModel>();
 		}
@@ -44,20 +43,39 @@ namespace Borgarverk.ViewModels
 		}
 
 		// TODO Er þetta nauðsynlegt?
-		/*public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
+		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
-			//this.dataService = dService;
 			this.sendService = sService;
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-		}*/
+			ID = m.ID;
+			jobNo = m.JobNo;
+			no = m.No;
+			roadWidth = m.RoadWidth;
+			roadLength = m.RoadLength;
+			roadArea = m.RoadArea;
+			tarQty = m.TarQty;
+			rate = m.Rate;
+			degrees = m.Degrees;
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public Command ConfirmOneCommand { get; }
 
 		#region properties
+		public int ID
+		{
+			get { return id; }
+			set
+			{
+				if (id!= value)
+				{
+					id = value;
+				}
+			}
+		}
 		public CarModel Car
 		{
 			get { return car; }
@@ -79,6 +97,19 @@ namespace Borgarverk.ViewModels
 			{
 				if (station != value)
 				{
+					if (value.Name == "Hlaðbær Colas")
+					{
+						No = "VSB";
+						OnPropertyChanged("No");
+					}
+					else
+					{
+						if (No.Contains("VSB"))
+						{
+							No = "";
+							OnPropertyChanged("No");
+						}
+					}
 					station = value;
 					ValidEntry();
 					OnPropertyChanged("Station");
@@ -95,7 +126,20 @@ namespace Borgarverk.ViewModels
 				{
 					no = value;
 					ValidEntry();
-					OnPropertyChanged("No");
+				}
+			}
+		}
+
+		public string JobNo
+		{
+			get { return jobNo; }
+			set
+			{
+				if (jobNo != value)
+				{
+					jobNo = value;
+					ValidEntry();
+					OnPropertyChanged("JobNo");
 				}
 			}
 		}
@@ -108,6 +152,7 @@ namespace Borgarverk.ViewModels
 				if (roadWidth != value)
 				{
 					roadWidth = value;
+					Debug.WriteLine(RoadWidth);
 					ValidEntry();
 					OnPropertyChanged("RoadWidth");
 				}
@@ -119,14 +164,23 @@ namespace Borgarverk.ViewModels
 			get { return roadLength; }
 			set
 			{
-				if (roadLength != value)
+				try
 				{
-					roadLength = value;
-					ValidEntry();
-					OnPropertyChanged("RoadLength");
+					if (roadLength != value)
+					{
+						roadLength = value;
+						Debug.WriteLine(roadLength);
+						ValidEntry();
+						OnPropertyChanged("RoadLength");
+					}
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine(ex.InnerException.Message);
 				}
 			}
 		}
+
 
 		public string RoadArea
 		{
@@ -165,7 +219,23 @@ namespace Borgarverk.ViewModels
 				{
 					rate = value;
 					ValidEntry();
+					Debug.WriteLine("RATE");
 					OnPropertyChanged("Rate");
+				}
+			}
+		}
+
+		public string Degrees
+		{
+			get { return degrees; }
+			set
+			{
+				if (degrees != value)
+				{
+					degrees = value;
+					ValidEntry();
+					Debug.WriteLine("Degrees");
+					OnPropertyChanged("Degrees");
 				}
 			}
 		}
@@ -241,18 +311,23 @@ namespace Borgarverk.ViewModels
 		public bool ValidEntry()
 		{
 			bool valid = (No.Length > 0) &&
+				(JobNo.Length > 0) &&
+				(Double.Parse(JobNo) > 0) &&
 				(RoadLength.Length > 0) &&
-				(Int32.Parse(RoadLength) > 0) &&
+				(Double.Parse(RoadLength) > 0) &&
 				(RoadWidth.Length > 0) &&
-				(Int32.Parse(RoadWidth) > 0) &&
+				(Double.Parse(RoadWidth) > 0) &&
 				(RoadArea.Length > 0) &&
-				(Int32.Parse(RoadArea) > 0) &&
+				(Double.Parse(RoadArea) > 0) &&
 				(TarQty.Length > 0) &&
-				(Int32.Parse(TarQty) > 0) &&
+				(Double.Parse(TarQty) > 0) &&
 				(Rate.Length > 0) &&
-				(Int32.Parse(Rate) > 0) &&
+				(Double.Parse(Rate) > 0) &&
+				(Degrees.Length > 0) &&
+				(Double.Parse(Degrees) > 0) &&
 				(Car != null) &&
 				(Station != null );
+			Debug.WriteLine(Double.Parse("2."));
 			IsValid = valid;
 			OnPropertyChanged("IsValid");
 			return valid;
@@ -267,11 +342,13 @@ namespace Borgarverk.ViewModels
 				model.Car = Car.Num;
 				model.Station = Station.Name;
 				model.No = No;
-				model.RoadWidth = RoadWidth;
-				model.RoadLength = RoadLength;
-				model.RoadArea = RoadArea;
-				model.TarQty = TarQty;
-				model.Rate = Rate;
+				model.JobNo = JobNo;
+				model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
+				model.RoadLength = (Double.Parse(RoadLength)).ToString();
+				model.RoadArea = (Double.Parse(RoadArea)).ToString();
+				model.TarQty = (Double.Parse(TarQty)).ToString();
+				model.Rate = (Double.Parse(Rate)).ToString();
+				model.Degrees = (Double.Parse(Degrees)).ToString();
 				model.TimeCreated = DateTime.Now;
 
 				if (sendService.SendEntry(model))

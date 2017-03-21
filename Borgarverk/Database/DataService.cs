@@ -49,7 +49,7 @@ namespace Borgarverk
 			lock(locker)
 			{
 				return (from t in database.Table<EntryModel>()
-				        select t).ToList();
+				        select t).OrderByDescending(x => x.TimeCreated).ToList();
 			}
 		}
 

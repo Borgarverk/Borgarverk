@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Borgarverk.Models;
-using DevExpress.Mobile.DataGrid;
 using Xamarin.Forms;
 
 namespace Borgarverk.ViewModels
@@ -14,11 +13,13 @@ namespace Borgarverk.ViewModels
 	{
 		#region private variables
 		private ObservableCollection<EntryModel> allEntries;
-		private ObservableCollection<EntryModel> filteredEntries;
+		private ObservableCollection<EntryModel> entries;
+		private ObservableCollection<CarModel> cars;
+		private ObservableCollection<StationModel> stations;
 		private ISendService sendService;
 		private EntryModel selectedEntry;
 		private EntryModel unfocusedEntry;
-		private bool deleteButtonActive, isSelected;
+		private bool deleteButtonActive, isSelected, isEditing;
 		private string searchString = "";
 		private INavigation navigation;
 		#endregion
@@ -34,11 +35,13 @@ namespace Borgarverk.ViewModels
 			this.sendService = sService;
 			this.navigation = navigation;
 			allEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
+			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
+			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			Entries = AllEntries;
 			SendAllEntriesCommand = new Command(() => SendAllEntries());
-			ModifySelectedEntryCommand = new Command((object obj) => ModifySelectedEntry(obj));
-			DeleteSelectedEntryCommand = new Command((object obj) => DeleteSelectedEntry(obj));
+			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
+			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
-			//SearchCommand = new Command(() => Search());
 			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
@@ -60,42 +63,21 @@ namespace Borgarverk.ViewModels
 			get { return allEntries; }
 			set
 			{
-				allEntries = value;	
+				allEntries = value;
+				OnPropertyChanged("AllEntries");
 			}
 		}
 
-		public ObservableCollection<EntryModel> FilteredEntries
+		public ObservableCollection<EntryModel> Entries
 		{
-			get { return filteredEntries; }
+			get { return entries; }
 			set
 			{
-				filteredEntries = value;
+				entries = value;
+				OnPropertyChanged("Entries");
 			}
 		}
 
-		/*public EntryModel SelectedEntry { 
-			get { return selectedEntry; }
-			set
-			{
-				if (value == null)
-				{
-					selectedEntry = null;
-					deleteButtonActive = false;
-					ButtonColor = "#d0cccc";
-				}
-				else if (value == selectedEntry)
-				{
-					selectedEntry = null;
-				}
-				else
-				{
-					selectedEntry = value;
-					deleteButtonActive = true;
-					ButtonColor = "#008ead";
-					OnPropertyChanged("ButtonColor");
-				}
-			}
-		}*/
 		public EntryModel SelectedEntry { 
 			get { return selectedEntry; }
 			set
@@ -136,8 +118,29 @@ namespace Borgarverk.ViewModels
 			{
 				if (isSelected != value)
 				{
+					if (value == true)
+					{
+						IsEditing = false;
+					}
 					isSelected = value;
 					OnPropertyChanged("IsSelected");
+				}
+			}
+		}
+
+		public bool IsEditing
+		{
+			get { return isEditing; }
+			set
+			{
+				if (isEditing != value)
+				{
+					if (value == true)
+					{
+						IsSelected = false;
+					}
+					isEditing = value;
+					OnPropertyChanged("IsEditing");
 				}
 			}
 		}
@@ -157,16 +160,42 @@ namespace Borgarverk.ViewModels
 		}
 
 		public string ButtonColor { get; set; }
+
+		public ObservableCollection<CarModel> Cars
+		{
+			get
+			{
+				return cars;
+			}
+			set
+			{
+				cars = value;
+			}
+		}
+
+		public ObservableCollection<StationModel> Stations
+		{
+			get
+			{
+				return stations;
+			}
+			set
+			{
+				stations = value;
+
+			}
+		}
 		#endregion
 
-		void DeleteSelectedEntry(object sender)
+		void DeleteSelectedEntry()
 		{
 			
 			try
 			{
-				var delEntry = ((EntryModel)sender);
-				DataService.DeleteEntry(delEntry.ID);
-				allEntries.Remove(delEntry);
+				DataService.DeleteEntry(SelectedEntry.ID);
+				allEntries.Remove(selectedEntry);
+				IsSelected = false;
+				SelectedEntry = null;
 			}
 			catch
 			{
@@ -176,45 +205,30 @@ namespace Borgarverk.ViewModels
 
 		// TODO: implement
 		// spurja hvort þetta sé mögulega óþarfi fítus...
-		void ModifySelectedEntry(object sender)
+		void ModifySelectedEntry()
 		{
-			/*if (!DeleteButtonActive || selectedEntry == null)
-			{
-				Application.Current.MainPage.DisplayAlert("", "Engin færsla valin", "OK");
-				return;
-			}*/
-
-			SelectedEntry = ((EntryModel)sender);
-			//EntryViewModel vm = new EntryViewModel(navigation, sendService);
-			//vm.Car = new CarModel(selectedEntry.Car);
-			//vm.Station = new StationModel(selectedEntry.Station);
-			//vm.No = selectedEntry.ID.ToString();
-			//vm.RoadArea = selectedEntry.RoadArea;
-			//vm.RoadWidth = selectedEntry.RoadWidth;
-			//vm.RoadLength = (selectedEntry.RoadLength == null ? selectedEntry..RoadLength : ""); // verður null annars...
-			//vm.Rate = selectedEntry.Rate;
-			//vm.TarQty = selectedEntry.TarQty;
-			//vm.TimeCreated = selectedEntry.TimeCreated;
-			//vm.TimeSent = selectedEntry.TimeSent;
-			//navigation.PushAsync(new NewEntryPage(vm));
+			IsEditing = true;
+			//var page = new NewEntryPage(this.sendService, selectedEntry);
+			//this.navigation.PushModalAsync(page);
 		}
 
 		void Close()
 		{
 			IsSelected = false;
+			IsEditing = false;
 			SelectedEntry = null;
 		}
 
 		void Search()
 		{
 			var temp = AllEntries;
-			Debug.WriteLine("KOMIN INN I SEARCH");
-			Debug.WriteLine(searchString);
-			if (searchString == "")
+			if (String.IsNullOrEmpty(searchString))
 			{
-				AllEntries = temp;
+				AllEntries = entries;
 			}
-			var match = AllEntries.Where(c => c.No.Contains(SearchString) || c.Car.Contains(searchString));
+			var match = entries.Where(c => c.No.ToLower().Contains(SearchString.ToLower()) || 
+			                             c.Station.ToLower().Contains(searchString.ToLower()) ||
+			                             c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()));
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 		

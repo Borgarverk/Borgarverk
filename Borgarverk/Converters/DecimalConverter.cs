@@ -1,24 +1,25 @@
 ﻿using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Borgarverk
 {
-	public class BooleanToColorConverter: IValueConverter
+	public class DecimalConverter: IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			if ((bool)value)
-			{
-				return Color.Gray;
-			}
-			else
-			{
-				return Color.White;
-			}
+			Debug.WriteLine("Converting");
+			if (value is decimal)
+				return value.ToString();
+			return value;
 		}
+
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return null;
+			decimal dec;
+			if (decimal.TryParse(value as string, out dec))
+				return dec;
+			return value;
 		}
 	}
 }
