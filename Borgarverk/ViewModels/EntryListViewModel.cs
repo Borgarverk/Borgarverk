@@ -42,6 +42,7 @@ namespace Borgarverk.ViewModels
 			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
 			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
+			DeleteAllCommand = new Command(DeleteAll);
 			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
@@ -54,7 +55,7 @@ namespace Borgarverk.ViewModels
 		public Command ModifySelectedEntryCommand { get; }
 		public Command DeleteSelectedEntryCommand { get; }
 		public Command CloseCommand { get; }
-		//public Command SearchCommand { get; }
+		public Command DeleteAllCommand { get; }
 		#endregion
 
 		#region properties
@@ -231,6 +232,16 @@ namespace Borgarverk.ViewModels
 			                             c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()));
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
+
+		async void DeleteAll()
+		{
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesting", "Ertu viss um að þú viljir eyða öllum færslum?", "Já", "Nei");
+			if (confirmed)
+			{
+				DataService.DeleteEntries();
+				allEntries.Clear();
+			}
+		}
 		
 		void SendAllEntries()
 		{
@@ -253,10 +264,14 @@ namespace Borgarverk.ViewModels
 					tmpEntry.Sent = true;
 					tmpEntry.TimeSent = DateTime.Now;
 					DataService.UpdateEntry(tmpEntry);
-					AllEntries.Insert(AllEntries.IndexOf(tmpEntry), tmpEntry);
-					AllEntries.Remove(tmpEntry);
 				}
+				RefreshEntries();
 			}
+		}
+
+		private void RefreshEntries()
+		{
+			AllEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

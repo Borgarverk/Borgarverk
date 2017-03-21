@@ -112,7 +112,7 @@
 					WidthRequest="250" 
 					HeightRequest="70" 
 					HorizontalOptions="CenterAndExpand" 
-					Command="{Binding DeleteSelectedEntriesCommand}"
+					Command="{Binding DeleteAllCommand}"
 				/>
 
 				<Button x:Name="SendAllEntriesButton" 
