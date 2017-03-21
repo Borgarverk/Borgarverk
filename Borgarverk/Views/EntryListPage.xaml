@@ -102,41 +102,6 @@
 				<Button BackgroundColor="White" Grid.Row="1" Grid.Column="6" Command="{Binding CloseCommand}" Image="ic_close_black_24dp"></Button>
 				<Button BackgroundColor="White" Grid.Row="2" Grid.Column="6" Command="{Binding DeleteSelectedEntryCommand}" Image="icon_delete"></Button>
 			</Grid>
-			<Grid Grid.Row="4" HeightRequest="200" Padding="30,0,30,0" IsVisible="{Binding IsEditing}">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="2" />
-					<RowDefinition Height="40" />
-					<RowDefinition Height="40" />
-					<RowDefinition Height="40" />
-					<RowDefinition Height="40" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="50"/>
-					<ColumnDefinition Width="60"/>
-					<ColumnDefinition Width="60"/>
-					<ColumnDefinition Width="60"/>
-					<ColumnDefinition Width="65"/>
-					<ColumnDefinition Width="60"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<BoxView BackgroundColor="#00447b" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"/>
-				<Label Grid.Row="1" Grid.Column="0">Breidd:</Label>
-				<Label Grid.Row="1" Grid.Column="2">Lengd:</Label>
-				<Label Grid.Row="1" Grid.Column="4">Flatarmál:</Label>
-				<Label Grid.Row="2" Grid.Column="0">Lítrar:</Label>
-				<Label Grid.Row="2" Grid.Column="2">Forskrift:</Label>
-				<Label Grid.Row="2" Grid.Column="4">Gráður:</Label>
-				<Label Grid.Row="3" Grid.Column="0">Bíll:</Label>
-				<Label Grid.Row="3" Grid.Column="3">Stöð:</Label>
-				<Entry Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEntry.RoadWidth}" FontSize="11" Keyboard="Numeric"/>
-				<Entry Grid.Row="1" Grid.Column="3" Text="{Binding SelectedEntry.RoadLength}" FontSize="11" Keyboard="Numeric"/>
-				<Entry Grid.Row="1" Grid.Column="5" Text="{Binding SelectedEntry.RoadArea}" FontSize="11" Keyboard="Numeric"/>
-				<Entry Grid.Row="2" Grid.Column="1" Text="{Binding SelectedEntry.TarQty}" FontSize="11" Keyboard="Numeric"/>
-				<Entry Grid.Row="2" Grid.Column="3" Text="{Binding SelectedEntry.Rate}" FontSize="11" Keyboard="Numeric"/>
-				<Entry Grid.Row="2" Grid.Column="5" Text="{Binding SelectedEntry.Degrees}" FontSize="11" Keyboard="Numeric"/>
-				<Button BackgroundColor="White" Grid.Row="1" Grid.Column="6" Command="{Binding CloseCommand}" Image="ic_close_black_24dp"></Button>
-				<Button BackgroundColor="White" Grid.Row="2" Grid.Column="6" Command="{Binding ModifySelectedEntryCommand}" Image="icon_edit.png" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>
-			</Grid>
 			<StackLayout Orientation="Horizontal" Grid.Row="5" Padding="30,0,30,0">
 				<Button x:Name="DeleteSelectedEntriesButton" 
 					Image="icon_delete.png" 
