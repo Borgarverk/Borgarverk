@@ -257,7 +257,6 @@ namespace Borgarverk.ViewModels
 			// Er betra að setja það hér, reyna að senda og ef ekki tekst að senda þá breyta því til baka?
 			if (sendService.SendEntries(del))
 			{
-				Debug.WriteLine(del.Count);
 				for (var i = del.Count - 1; i >= 0; i--)
 				{
 					var tmpEntry = AllEntries[AllEntries.IndexOf(del[i])];

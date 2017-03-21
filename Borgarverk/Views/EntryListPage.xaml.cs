@@ -15,12 +15,6 @@ namespace Borgarverk
 			InitializeComponent();
 		}
 
-		// TODO: implement (async or not?)
-		public /*async*/ void SendButtonClicked(object sender, EventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine(sender);
-		}
-
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
@@ -34,25 +28,6 @@ namespace Borgarverk
 			viewModel = null;
 			BindingContext = null;
 		}
-
-		// TODO: implement
-		private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
-		{
-			System.Diagnostics.Debug.WriteLine("SearchBar_OnTextChanged");
-		}
-
-		// TODO: reyna að gera þetta í entrylistviewmodel frekar
-		//private void onEntryTapped(object sender, ItemTappedEventArgs e)
-		//{
-		//	EntryModel entry = e.Item as EntryModel;
-		//	System.Diagnostics.Debug.WriteLine("onEntryTapped");
-		//	viewModel.SelectedEntry = entry;
-			
-		//	//if (viewModel.SelectedEntry == null)
-		//	//{
-		//	//	viewModel.SelectedEntry = entry;
-		//	//}
-		//
 
 		public void OnMore(object sender, EventArgs e)
 		{

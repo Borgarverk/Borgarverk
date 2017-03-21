@@ -66,7 +66,6 @@ namespace Borgarverk
 			lock(locker)
 			{
 				var ret = database.Delete<EntryModel>(id);
-				Debug.WriteLine(ret);
 				return ret;
 			}
 		}
@@ -75,7 +74,15 @@ namespace Borgarverk
 		{
 			lock(locker)
 			{
-				return database.Insert(model);
+				var check = database.Table<EntryModel>().FirstOrDefault(t => t.ID == model.ID);
+				if (check == null)
+				{
+					return database.Insert(model);
+				}
+				else
+				{
+					return UpdateEntry(model);
+				}
 			} 	
 		}
 
@@ -126,7 +133,6 @@ namespace Borgarverk
 
 		public static int DeleteCar(int id)
 		{
-			Debug.WriteLine("TO DELETE: " + id);
 			lock (locker)
 			{
 				return database.Delete<CarModel>(id);			

@@ -13,7 +13,7 @@ namespace Borgarverk.ViewModels
 	{
 		#region private variables
 		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="";
-		private int id;
+		private int id = 0;
 		private CarModel car = null;
 		private StationModel station = null;
 		private DateTime? timeSent, timeCreated;
@@ -166,7 +166,6 @@ namespace Borgarverk.ViewModels
 				if (roadWidth != value)
 				{
 					roadWidth = value;
-					Debug.WriteLine(RoadWidth);
 					ValidEntry();
 					OnPropertyChanged("RoadWidth");
 				}
@@ -178,19 +177,11 @@ namespace Borgarverk.ViewModels
 			get { return roadLength; }
 			set
 			{
-				try
+				if (roadLength != value)
 				{
-					if (roadLength != value)
-					{
-						roadLength = value;
-						Debug.WriteLine(roadLength);
-						ValidEntry();
-						OnPropertyChanged("RoadLength");
-					}
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.InnerException.Message);
+					roadLength = value;
+					ValidEntry();
+					OnPropertyChanged("RoadLength");
 				}
 			}
 		}
@@ -233,7 +224,6 @@ namespace Borgarverk.ViewModels
 				{
 					rate = value;
 					ValidEntry();
-					Debug.WriteLine("RATE");
 					OnPropertyChanged("Rate");
 				}
 			}
@@ -248,7 +238,6 @@ namespace Borgarverk.ViewModels
 				{
 					degrees = value;
 					ValidEntry();
-					Debug.WriteLine("Degrees");
 					OnPropertyChanged("Degrees");
 				}
 			}
@@ -341,7 +330,6 @@ namespace Borgarverk.ViewModels
 				(Double.Parse(Degrees) > 0) &&
 				(Car != null) &&
 				(Station != null );
-			Debug.WriteLine(Double.Parse("2."));
 			IsValid = valid;
 			OnPropertyChanged("IsValid");
 			return valid;
@@ -353,6 +341,10 @@ namespace Borgarverk.ViewModels
 			if (confirmed)
 			{
 				EntryModel model = new EntryModel();
+				if (ID != 0)
+				{
+					model.ID = ID;
+				}
 				model.Car = Car.Num;
 				model.Station = Station.Name;
 				model.No = No;
