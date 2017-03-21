@@ -207,9 +207,9 @@ namespace Borgarverk.ViewModels
 		// spurja hvort þetta sé mögulega óþarfi fítus...
 		void ModifySelectedEntry()
 		{
-			IsEditing = true;
-			//var page = new NewEntryPage(this.sendService, selectedEntry);
-			//this.navigation.PushModalAsync(page);
+			IsSelected = false;
+			var page = new NewEntryPage(this.sendService, selectedEntry);
+			this.navigation.PushAsync(page);
 		}
 
 		void Close()

@@ -13,7 +13,6 @@ namespace Borgarverk
 		public EntryListPage()
 		{
 			InitializeComponent();
-			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
 		}
 
 		// TODO: implement (async or not?)
@@ -25,6 +24,7 @@ namespace Borgarverk
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+			viewModel = new EntryListViewModel(new SendService(), this.Navigation);
 			BindingContext = viewModel;
 		}
 

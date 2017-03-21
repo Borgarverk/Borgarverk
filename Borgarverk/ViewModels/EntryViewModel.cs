@@ -50,6 +50,20 @@ namespace Borgarverk.ViewModels
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			foreach (var c in cars)
+			{
+				if (c.Num == m.Car)
+				{
+					car = c;
+				}
+			}
+			foreach (var s in stations)
+			{
+				if (s.Name == m.Station)
+				{
+					station = s;
+				}
+			}
 			ID = m.ID;
 			jobNo = m.JobNo;
 			no = m.No;
