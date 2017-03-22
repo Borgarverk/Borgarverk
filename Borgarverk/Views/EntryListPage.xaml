@@ -41,7 +41,7 @@
 				<Label Grid.Column="5" VerticalOptions="Center" HorizontalOptions="EndAndExpand">Sent</Label>
 			</Grid>
 			
-			<ListView x:Name="listview" ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" ItemSelected="OnSelection" RowHeight="40" Grid.Row="2">
+			<ListView x:Name="listview" ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" RowHeight="40" Grid.Row="2">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>
@@ -104,7 +104,7 @@
 			</Grid>
 			<StackLayout Orientation="Horizontal" Grid.Row="5" Padding="30,0,30,0">
 				<Button x:Name="DeleteSelectedEntriesButton" 
-					Image="icon_delete.png" 
+					Image="ic_delete_forever_white_24dp" 
 					Text="Eyða öllum færslum" 
 					TextColor="White" 
 					BackgroundColor="#008ead" 
@@ -116,7 +116,7 @@
 				/>
 
 				<Button x:Name="SendAllEntriesButton" 
-					Image="icon_send.png" 
+					Image="ic_send_white_24dp" 
 					Text="Senda ósendar færslur" 
 					TextColor="White" 
 					BackgroundColor="#eca400" 

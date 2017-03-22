@@ -18,7 +18,7 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<StationModel> stations;
 		private ISendService sendService;
 		private EntryModel selectedEntry;
-		private bool deleteButtonActive, isSelected;
+		private bool isSelected;
 		private string searchString = "";
 		private INavigation navigation;
 		#endregion
@@ -42,7 +42,6 @@ namespace Borgarverk.ViewModels
 			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
 			DeleteAllCommand = new Command(DeleteAll);
-			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
 		}
@@ -81,17 +80,14 @@ namespace Borgarverk.ViewModels
 			get { return selectedEntry; }
 			set
 			{
-				Debug.WriteLine("Inn i selectedentry");
 				if (selectedEntry != value)
 				{
 					if (value == null)
 					{
-						Debug.WriteLine("value == null");
 						IsSelected = false;
 					}
 					else
 					{
-						Debug.WriteLine("value != null");
 						IsSelected = true;
 					}
 					selectedEntry = value;
@@ -99,22 +95,9 @@ namespace Borgarverk.ViewModels
 				}
 				else
 				{
-					Debug.WriteLine("selectedEntry == value");
 					selectedEntry = null;
 					IsSelected = false;
 					OnPropertyChanged("SelectedEntry");
-				}
-			}
-		}
-
-		public bool DeleteButtonActive { 
-			get { return deleteButtonActive; } 
-			set 
-			{
-				if (deleteButtonActive != value)
-				{
-					deleteButtonActive = value;
-					OnPropertyChanged("DeleteButtonActive");
 				}
 			}
 		}
