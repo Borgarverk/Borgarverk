@@ -18,8 +18,7 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<StationModel> stations;
 		private ISendService sendService;
 		private EntryModel selectedEntry;
-		private EntryModel unfocusedEntry;
-		private bool deleteButtonActive, isSelected, isEditing;
+		private bool deleteButtonActive, isSelected;
 		private string searchString = "";
 		private INavigation navigation;
 		#endregion
@@ -46,7 +45,6 @@ namespace Borgarverk.ViewModels
 			deleteButtonActive = false;
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
-			unfocusedEntry = null;
 		}
 
 		#region commands
@@ -83,19 +81,28 @@ namespace Borgarverk.ViewModels
 			get { return selectedEntry; }
 			set
 			{
+				Debug.WriteLine("Inn i selectedentry");
 				if (selectedEntry != value)
 				{
 					if (value == null)
 					{
+						Debug.WriteLine("value == null");
 						IsSelected = false;
-						OnPropertyChanged("SelectedEntry");
 					}
 					else
 					{
+						Debug.WriteLine("value != null");
 						IsSelected = true;
-						OnPropertyChanged("SelectedEntry");
 					}
 					selectedEntry = value;
+					OnPropertyChanged("SelectedEntry");
+				}
+				else
+				{
+					Debug.WriteLine("selectedEntry == value");
+					selectedEntry = null;
+					IsSelected = false;
+					OnPropertyChanged("SelectedEntry");
 				}
 			}
 		}
@@ -119,29 +126,8 @@ namespace Borgarverk.ViewModels
 			{
 				if (isSelected != value)
 				{
-					if (value == true)
-					{
-						IsEditing = false;
-					}
 					isSelected = value;
 					OnPropertyChanged("IsSelected");
-				}
-			}
-		}
-
-		public bool IsEditing
-		{
-			get { return isEditing; }
-			set
-			{
-				if (isEditing != value)
-				{
-					if (value == true)
-					{
-						IsSelected = false;
-					}
-					isEditing = value;
-					OnPropertyChanged("IsEditing");
 				}
 			}
 		}
@@ -204,19 +190,17 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		// TODO: implement
-		// spurja hvort þetta sé mögulega óþarfi fítus...
 		void ModifySelectedEntry()
 		{
-			IsSelected = false;
 			var page = new NewEntryPage(this.sendService, selectedEntry);
+			IsSelected = false;
+			SelectedEntry = null;
 			this.navigation.PushAsync(page);
 		}
 
 		void Close()
 		{
 			IsSelected = false;
-			IsEditing = false;
 			SelectedEntry = null;
 		}
 
@@ -235,6 +219,12 @@ namespace Borgarverk.ViewModels
 
 		async void DeleteAll()
 		{
+			// If there are no entries
+			if (allEntries.Count == 0)
+			{
+				return;
+			}
+
 			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesting", "Ertu viss um að þú viljir eyða öllum færslum?", "Já", "Nei");
 			if (confirmed)
 			{
@@ -245,6 +235,12 @@ namespace Borgarverk.ViewModels
 		
 		void SendAllEntries()
 		{
+			// If there are no entries
+			if (allEntries.Count == 0)
+			{
+				return;
+			}
+
 			List<EntryModel> del = new List<EntryModel>();
 			foreach (var entry in AllEntries)
 			{

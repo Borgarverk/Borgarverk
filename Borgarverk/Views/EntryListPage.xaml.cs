@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Borgarverk.Models;
 using Borgarverk.ViewModels;
 using Xamarin.Forms;
@@ -29,16 +30,14 @@ namespace Borgarverk
 			BindingContext = null;
 		}
 
-		public void OnMore(object sender, EventArgs e)
+		void OnSelection(object sender, SelectedItemChangedEventArgs e)
 		{
-			var mi = ((MenuItem)sender);
-			DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
-		}
-
-		public void OnDelete(object sender, EventArgs e)
-		{
-			var mi = ((MenuItem)sender);
-			DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+			/*if (e.SelectedItem == null)
+			{
+				return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+			}
+			DisplayAlert("Item Selected", e.SelectedItem.ToString(), "Ok");
+			//((ListView)sender).SelectedItem = null; //uncomment line if you want to disable the visual selection state.*/
 		}
 	}
 }

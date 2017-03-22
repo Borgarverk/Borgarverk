@@ -41,7 +41,7 @@
 				<Label Grid.Column="5" VerticalOptions="Center" HorizontalOptions="EndAndExpand">Sent</Label>
 			</Grid>
 			
-			<ListView ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" SelectedItem="{Binding SelectedEntry}" RowHeight="40" Grid.Row="2">
+			<ListView x:Name="listview" ItemsSource="{Binding AllEntries}" HorizontalOptions="Center" SelectedItem="{Binding SelectedEntry, Mode=TwoWay}" ItemSelected="OnSelection" RowHeight="40" Grid.Row="2">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>
