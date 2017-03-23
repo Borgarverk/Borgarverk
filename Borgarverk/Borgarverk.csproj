@@ -41,6 +41,9 @@
     <EmbeddedResource Include="Views\EntryListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\TimePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -73,6 +76,10 @@
       <DependentUpon>EntryListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DecimalConverter.cs" />
+    <Compile Include="ViewModels\TimeViewModel.cs" />
+    <Compile Include="Views\TimePage.xaml.cs">
+      <DependentUpon>TimePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLitePCLRaw.core">

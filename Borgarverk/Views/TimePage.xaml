@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.TimePage" xmlns:toolkit=
+"clr-namespace:Borgarverk;assembly=Borgarverk" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	 <ContentPage.Resources>
+ <ResourceDictionary>
+ <toolkit:TimeViewModel x:Key="timeViewModel" />
+ <Style TargetType="Label">
+ <Setter Property="FontSize" Value="Large" />
+ <Setter Property="HorizontalTextAlignment" Value="Center" />
+ </Style>
+ </ResourceDictionary>
+ </ContentPage.Resources>
+<ContentPage.Content>
+		<StackLayout VerticalOptions="Center">
+			<Label Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='Job started at {0:F}'}" />
+			<Label Text="{Binding Source={StaticResource timeViewModel}, Path=Timer}"/>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

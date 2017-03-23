@@ -34,6 +34,13 @@ namespace Borgarverk
 			await Navigation.PushAsync(new SettingPage(), false);
 		}
 
+		public async void StartJobButtonClicked(object sender, EventArgs e)
+		{
+			newJobButton.SetValue(OpacityProperty, 0.2);
+			//await Task.Delay(100);
+			await Navigation.PushAsync(new TimePage(), false);
+		}
+
 		#region OnAppearing()
 		protected override void OnAppearing()
 		{
