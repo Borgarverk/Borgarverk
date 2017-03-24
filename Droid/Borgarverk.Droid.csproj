@@ -216,8 +216,6 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_delete_forever_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_delete_forever_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_send_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-ldrtl-xxhdpi\ic_send_white_24dp.png" />
-    <AndroidResource Include="Resources\drawable-ldrtl-xxxhdpi\ic_send_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_send_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_play_arrow_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_play_arrow_white_24dp.png" />
@@ -239,6 +237,16 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_stop_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_stop_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_stop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_close_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_close_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_close_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_close_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_close_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_arrow_forward_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_arrow_forward_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_arrow_forward_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_arrow_forward_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_arrow_forward_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">

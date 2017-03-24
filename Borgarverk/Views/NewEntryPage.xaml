@@ -18,8 +18,7 @@
 					<RowDefinition Height="230" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
+					<RowDefinition Height="100" />
 					<RowDefinition Height="3*" />
 					<RowDefinition Height="150" />
 				</Grid.RowDefinitions>
@@ -91,6 +90,8 @@
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
@@ -100,26 +101,28 @@
 					<Label Text="Breidd" Grid.Row="0" Grid.Column="0" />
 					<Label Text="Lengd" Grid.Row="0" Grid.Column="1" />
 					<Label Text="Flatarmál" Grid.Row="0" Grid.Column="2" />
+					<Label Text="Lítrar" Grid.Row="2" Grid.Column="0" />
+					<Label Text="Forskrift" Grid.Row="2" Grid.Column="1" />
+					<Label Text="Gráður" Grid.Row="2" Grid.Column="2" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding RoadWidth, Mode=TwoWay}" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding RoadLength, Mode=TwoWay}" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="2" Text="{Binding RoadArea, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="3" Grid.Column="0" Text="{Binding TarQty, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="3" Grid.Column="1" Text="{Binding Rate, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="3" Grid.Column="2" Text="{Binding Degrees, Mode=TwoWay}" />
 				</Grid>
 				<Grid Grid.Row="4">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="60" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
-					<Label Text="Lítrar" Grid.Row="0" Grid.Column="0" />
-					<Label Text="Forskrift" Grid.Row="0" Grid.Column="1" />
-					<Label Text="Gráður" Grid.Row="0" Grid.Column="2" />
-					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding TarQty, Mode=TwoWay}" />
-					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding Rate, Mode=TwoWay}" />
-					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="2" Text="{Binding Degrees, Mode=TwoWay}" />
+					<Label Text="Skilaboð" Grid.Column="0" />
+					<Editor 
+						HeightRequest="70"
+						WidthRequest="500"
+						HorizontalOptions="StartAndExpand"
+						BackgroundColor="#f2f2f2"
+						Grid.Column="1" />
 				</Grid>
 				<Button Text="Staðfesta" TextColor="White" HorizontalOptions="CenterAndExpand" Grid.Row="5" HeightRequest="80" WidthRequest="200" Command="{Binding ConfirmOneCommand}" BackgroundColor="#00447b">
 				</Button>

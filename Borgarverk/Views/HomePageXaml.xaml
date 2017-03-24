@@ -13,15 +13,13 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<Button x:Name="newJobButton" Image="ic_access_time_white_24dp" Text="Hefja Verk" TextColor="White" BackgroundColor="#264653" Grid.Row="0" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="StartJobButtonClicked"/>
-			<Button x:Name="newEntryButton" Image="ic_input_white_24dp" Text="Ný Færsla" TextColor="White" BackgroundColor="#00447b" Grid.Row="1" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="NewEntryButtonClicked"/>
-			<Button x:Name="allEntriesButton" Image="ic_view_list_white_24dp" Text="Allar Færslur" TextColor="White" BackgroundColor="#008ead" Grid.Row="2" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="AllEntriesButtonClicked"/>
-			<Button x:Name="settingsButton" Image="ic_settings_white_24dp" Text="Stillingar" TextColor="White" BackgroundColor="#e9c46a" Grid.Row="3" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="SettingsButtonClicked"/>
+			<Button x:Name="newJobButton" Image="ic_access_time_white_24dp" Text="Hefja Verk" TextColor="White" BackgroundColor="#00447b" Grid.Row="0" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="StartJobButtonClicked"/>
+			<Button x:Name="allEntriesButton" Image="ic_view_list_white_24dp" Text="Allar Færslur" TextColor="White" BackgroundColor="#008ead" Grid.Row="1" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="AllEntriesButtonClicked"/>
+			<Button x:Name="settingsButton" Image="ic_settings_white_24dp" Text="Stillingar" TextColor="White" BackgroundColor="#e9c46a" Grid.Row="2" WidthRequest="320" HeightRequest="80" HorizontalOptions="CenterAndExpand" Clicked="SettingsButtonClicked"/>
 		</Grid>
 	</Grid>
 	</ContentPage.Content>

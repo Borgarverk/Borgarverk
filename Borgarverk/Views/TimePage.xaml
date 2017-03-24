@@ -20,23 +20,26 @@
 			</Grid.ColumnDefinitions>
 			<StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="CenterAndExpand">
 				<Label Text="Verk hófst:" FontSize="20"></Label>
-				<Label Text="{Binding StartTime}}" FontSize="20"/>
+				<Label Text="{Binding StartTime}" FontSize="20"/>
 			</StackLayout>
-			<Label Text="{Binding Timer}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="70" HorizontalOptions="Center"/>
-			<Button Image="ic_pause_white_24dp" 
-					Text="Stöðva verk"
+			<StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="CenterAndExpand" IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}">
+				<Label Text="Verk endaði:" FontSize="20"></Label>
+				<Label Text="{Binding EndTime}" FontSize="20"/>
+			</StackLayout>
+			<Button Image="ic_stop_white_24dp" 
+					Text="Enda verk"
 					Grid.Row="2"
 					Grid.Column="0"
 					Grid.ColumnSpan="2"
 					TextColor="White" 
-					BackgroundColor="#008ead"
+					BackgroundColor="#00447b"
 					WidthRequest="250" 
 					HeightRequest="70" 
 					HorizontalOptions="CenterAndExpand" 
-					Command="{Binding PauseTimerCommand}"
+					Command="{Binding EndJobCommand}"
 					IsVisible="{Binding Active}"/>
-			<Button Image="ic_play_arrow_white_24dp" 
-					Text="Endurhefja verk" 
+			<Button Image="ic_close_white_24dp" 
+					Text="Hætta við verk" 
 					Grid.Row="2"
 					Grid.Column="0"
 					TextColor="White" 
@@ -44,18 +47,18 @@
 					WidthRequest="250" 
 					HeightRequest="70" 
 					HorizontalOptions="CenterAndExpand" 
-					Command="{Binding ResumeTimerCommand}"
+					Command="{Binding CancelCommand}"
 					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
-			<Button Image="ic_stop_white_24dp" 
-					Text="Loka verki"
+			<Button Image="ic_arrow_forward_white_24dp" 
+					Text="Halda áfram"
 					Grid.Row="2"
 					Grid.Column="1"
 					TextColor="White" 
-					BackgroundColor="#eca400" 
+					BackgroundColor="#e9c46a" 
 					WidthRequest="250" 
 					HeightRequest="70" 
 					HorizontalOptions="CenterAndExpand" 
-					Command="{Binding EndJobCommand}"
+					Command="{Binding ContinueCommand}"
 					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
 		</Grid>
 	</ContentPage.Content>

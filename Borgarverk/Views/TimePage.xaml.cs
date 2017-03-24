@@ -7,10 +7,11 @@ namespace Borgarverk
 {
 	public partial class TimePage : ContentPage
 	{
+		private TimeViewModel viewModel;
 		public TimePage()
 		{
 			InitializeComponent();
-			var viewModel = new TimeViewModel();
+			viewModel = new TimeViewModel(this.Navigation);
 			BindingContext = viewModel;
 		}
 	}

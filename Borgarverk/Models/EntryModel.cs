@@ -17,8 +17,11 @@ namespace Borgarverk.Models
 		public string TarQty { get; set; }
 		public string Rate { get; set; }
 		public string Degrees { get; set; }
+		public string Comment { get; set; }
 		public DateTime? TimeSent { get; set; }
-		public DateTime TimeCreated { get; set; }
+		public DateTime? TimeCreated { get; set; }
+		public DateTime? StartTime { get; set; }
+		public DateTime? EndTime { get; set; }
 		public bool Sent { get; set; }
 	}
 }

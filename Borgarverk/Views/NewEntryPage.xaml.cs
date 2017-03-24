@@ -12,10 +12,10 @@ namespace Borgarverk
 	public partial class NewEntryPage : ContentPage
 	{
 		private EntryViewModel viewModel;
-		public NewEntryPage()
+		public NewEntryPage(DateTime start, DateTime end)
 		{
 			InitializeComponent();
-			viewModel = new EntryViewModel(this.Navigation, new SendService());
+			viewModel = new EntryViewModel(this.Navigation, new SendService(), start, end);
 			BindingContext = viewModel;
 		}
 

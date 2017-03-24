@@ -12,11 +12,11 @@ namespace Borgarverk.ViewModels
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="", title="";
+		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="", title="", comment="";
 		private int id = 0;
 		private CarModel car = null;
 		private StationModel station = null;
-		private DateTime? timeSent, timeCreated;
+		private DateTime? timeSent, timeCreated, startTime, endTime;
 		private bool isValid = false;
 		private readonly ISendService sendService;
 		private ObservableCollection<CarModel> cars;
@@ -31,20 +31,21 @@ namespace Borgarverk.ViewModels
 			this.sendService = sService;
 			this.cars = new ObservableCollection<CarModel>();
 			this.stations = new ObservableCollection<StationModel>();
-			title = "Ný færlsa";
+			title = "Nýtt verk";
 		}
 
-		public EntryViewModel(INavigation navigation, ISendService sService)
+		public EntryViewModel(INavigation navigation, ISendService sService, DateTime start, DateTime end)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.sendService = sService;
 			this.navigation = navigation;
+			this.startTime = start;
+			this.endTime = end;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-			title = "Ný færlsa"; 
+			title ="Nýtt verk";
 		}
 
-		// TODO Er þetta nauðsynlegt?
 		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
 		{
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
@@ -246,6 +247,19 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
+		public string Comment
+		{
+			get { return comment; }
+			set
+			{
+				if (comment != value)
+				{
+					comment = value;
+					OnPropertyChanged("Comment");
+				}
+			}
+		}
+
 		public DateTime? TimeSent
 		{
 			get { return timeSent; }
@@ -268,6 +282,32 @@ namespace Borgarverk.ViewModels
 				{
 					timeCreated = value;
 					OnPropertyChanged("TimeSent");
+				}
+			}
+		}
+
+		public DateTime? StartTime
+		{
+			get { return startTime; }
+			set
+			{
+				if (startTime != value)
+				{
+					startTime = value;
+					OnPropertyChanged("StartTime");
+				}
+			}
+		}
+
+		public DateTime? EndTime
+		{
+			get { return endTime; }
+			set
+			{
+				if (endTime != value)
+				{
+					endTime = value;
+					OnPropertyChanged("EndTime");
 				}
 			}
 		}
@@ -368,6 +408,9 @@ namespace Borgarverk.ViewModels
 				model.Rate = (Double.Parse(Rate)).ToString();
 				model.Degrees = (Double.Parse(Degrees)).ToString();
 				model.TimeCreated = DateTime.Now;
+				model.StartTime = StartTime;
+				model.EndTime = EndTime;
+				model.Comment = Comment;
 
 				if (sendService.SendEntry(model))
 				{

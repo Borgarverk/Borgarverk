@@ -7,35 +7,35 @@ namespace Borgarverk
 {
 	public class TimeViewModel: INotifyPropertyChanged
 	{
-		
-		private int seconds = 0;
-		private int minutes = 59;
-		private int hours = 0;
-		private string timer;
-		private DateTime startTime = DateTime.UtcNow;
-		private DateTime endTime;
+		private DateTime startTime = DateTime.Now;
+		private DateTime endTime = DateTime.Now;
 		private bool active = true;
+		private INavigation navigation;
 
 		public TimeViewModel()
 		{
-			Device.StartTimer(TimeSpan.FromMilliseconds(1000), OnTimerTick);
-			UpdateTimer();
-			PauseTimerCommand = new Command(() => PauseTimer());
-			ResumeTimerCommand = new Command(() => ResumeTimer());
+		}
+
+		public TimeViewModel(INavigation n)
+		{
+			this.navigation = n;
+			//Device.StartTimer(TimeSpan.FromMilliseconds(1000), OnTimerTick);
 			EndJobCommand = new Command(() => EndJob());
+			CancelCommand = new Command(() => Cancel());
+			ContinueCommand = new Command(() => Continue());
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		#region commands
-		public Command PauseTimerCommand { get; }
-		public Command ResumeTimerCommand { get; }
 		public Command EndJobCommand { get; }
+		public Command CancelCommand { get; }
+		public Command ContinueCommand { get; }
 		#endregion
 
 		bool OnTimerTick()
 		{
-			Seconds += 1;
+			Debug.WriteLine("Timer enn on");
 			return active;
 		}
 
@@ -45,88 +45,17 @@ namespace Borgarverk
 			private set
 			{
 				startTime = value;
+				OnPropertyChanged("StartTime");
 			}
 		}
 
-		public DateTime Endtime
+		public DateTime EndTime
 		{
 			get { return endTime; }
 			private set
 			{
 				endTime = value;
-			}
-		}
-
-		public int Seconds
-		{
-			get { return seconds; }
-			set
-			{
-				if (seconds != value)
-				{
-					if (seconds == 59)
-					{
-						seconds = 0;
-						Minutes += 1;
-
-					}
-					else
-					{
-						seconds = value;
-					}
-					UpdateTimer();
-					OnPropertyChanged("Seconds");
-				}
-			}
-		}
-
-		public int Minutes
-		{
-			get { return minutes; }
-			set
-			{
-				if (minutes != value)
-				{
-					if (minutes == 59 && Seconds == 59)
-					{
-						minutes = 0;
-						Hours += 1;
-					}
-					else
-					{
-						minutes = value;
-					}
-					UpdateTimer();
-					OnPropertyChanged("Minutes");
-				}
-			}
-		}
-
-		public int Hours
-		{
-			get { return hours; }
-			set
-			{
-				if (hours != value)
-				{
-					hours = value;
-					UpdateTimer();
-					OnPropertyChanged("Hours");
-				}
-			}
-				
-		}
-
-		public string Timer
-		{
-			get { return timer; }
-			set
-			{
-				if (timer != value)
-				{
-					timer = value;
-					OnPropertyChanged("Timer");
-				}
+				OnPropertyChanged("EndTime");
 			}
 		}
 
@@ -144,53 +73,20 @@ namespace Borgarverk
 				
 		}
 
-		private void UpdateTimer()
+		void EndJob()
 		{
-			string sec = "", min = "", h = "";
-			if (seconds < 10)
-			{
-				sec = String.Format("0{0}", seconds);
-			}
-			else
-			{
-				sec = String.Format("{0}", seconds);
-			}
-
-			if (minutes < 10)
-			{
-				min = String.Format("0{0}", minutes);
-			}
-			else
-			{
-				min = String.Format("{0}", minutes);
-			}
-
-			if (hours < 10)
-			{
-				h = String.Format("0{0}", hours);
-			}
-			else
-			{
-				h = String.Format("{0}", hours);
-			}
-
-			Timer = String.Format("{0}:{1}:{2}", h, min, sec);
-		}
-
-		void PauseTimer()
-		{
+			EndTime = DateTime.Now;
 			Active = false;
 		}
 
-		void ResumeTimer()
+		void Cancel()
 		{
-			Active = true;
-			Device.StartTimer(TimeSpan.FromMilliseconds(1000), OnTimerTick);
+			this.navigation.PopAsync();
 		}
 
-		void EndJob()
+		void Continue()
 		{
-			throw new NotImplementedException();
+			this.navigation.PushAsync(new NewEntryPage(StartTime, EndTime));
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

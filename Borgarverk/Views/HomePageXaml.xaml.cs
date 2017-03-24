@@ -12,13 +12,6 @@ namespace Borgarverk
 			InitializeComponent();
 		}
 
-		public async void NewEntryButtonClicked(object sender, EventArgs e)
-		{
-			newEntryButton.SetValue(OpacityProperty, 0.2);
-			//await Task.Delay(100);
-			await Navigation.PushAsync(new NewEntryPage(), false);
-		}
-
 		public async void AllEntriesButtonClicked(object sender, EventArgs e)
 		{
 			allEntriesButton.SetValue(OpacityProperty, 0.2);
@@ -45,7 +38,6 @@ namespace Borgarverk
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			newEntryButton.SetValue(OpacityProperty, 1);
 			allEntriesButton.SetValue(OpacityProperty, 1);
 			settingsButton.SetValue(OpacityProperty, 1);
 			newJobButton.SetValue(OpacityProperty, 1);
