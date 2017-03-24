@@ -48,6 +48,7 @@ namespace Borgarverk
 			newEntryButton.SetValue(OpacityProperty, 1);
 			allEntriesButton.SetValue(OpacityProperty, 1);
 			settingsButton.SetValue(OpacityProperty, 1);
+			newJobButton.SetValue(OpacityProperty, 1);
 		}
 		#endregion
 	}

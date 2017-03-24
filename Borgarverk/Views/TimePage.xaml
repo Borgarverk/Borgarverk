@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Borgarverk.TimePage" xmlns:toolkit=
-"clr-namespace:Borgarverk;assembly=Borgarverk" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-	 <ContentPage.Resources>
- <ResourceDictionary>
- <toolkit:TimeViewModel x:Key="timeViewModel" />
- <Style TargetType="Label">
- <Setter Property="FontSize" Value="Large" />
- <Setter Property="HorizontalTextAlignment" Value="Center" />
- </Style>
- </ResourceDictionary>
- </ContentPage.Resources>
+"clr-namespace:Borgarverk;assembly=Borgarverk" xmlns:sys="clr-namespace:System;assembly=mscorlib" Title="Nýtt Verk">
+<ContentPage.Resources>
+	<ResourceDictionary>
+ 		<toolkit:TimeViewModel x:Key="timeViewModel" />
+		<toolkit:NegateBooleanConverter x:Key="cnvInvert"></toolkit:NegateBooleanConverter>
+	</ResourceDictionary>
+</ContentPage.Resources>
 <ContentPage.Content>
-		<StackLayout VerticalOptions="Center">
-			<Label Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='Job started at {0:F}'}" />
-			<Label Text="{Binding Source={StaticResource timeViewModel}, Path=Timer}"/>
-		</StackLayout>
+		<Grid VerticalOptions="Center" HorizontalOptions="CenterAndExpand" WidthRequest="400" HeightRequest="400">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="70"/>
+				<RowDefinition Height="100"/>
+				<RowDefinition Height="70"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="CenterAndExpand">
+				<Label Text="Verk hófst:" FontSize="20"></Label>
+				<Label Text="{Binding StartTime}}" FontSize="20"/>
+			</StackLayout>
+			<Label Text="{Binding Timer}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="70" HorizontalOptions="Center"/>
+			<Button Image="ic_pause_white_24dp" 
+					Text="Stöðva verk"
+					Grid.Row="2"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					TextColor="White" 
+					BackgroundColor="#008ead"
+					WidthRequest="250" 
+					HeightRequest="70" 
+					HorizontalOptions="CenterAndExpand" 
+					Command="{Binding PauseTimerCommand}"
+					IsVisible="{Binding Active}"/>
+			<Button Image="ic_play_arrow_white_24dp" 
+					Text="Endurhefja verk" 
+					Grid.Row="2"
+					Grid.Column="0"
+					TextColor="White" 
+					BackgroundColor="#008ead" 
+					WidthRequest="250" 
+					HeightRequest="70" 
+					HorizontalOptions="CenterAndExpand" 
+					Command="{Binding ResumeTimerCommand}"
+					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
+			<Button Image="ic_stop_white_24dp" 
+					Text="Loka verki"
+					Grid.Row="2"
+					Grid.Column="1"
+					TextColor="White" 
+					BackgroundColor="#eca400" 
+					WidthRequest="250" 
+					HeightRequest="70" 
+					HorizontalOptions="CenterAndExpand" 
+					Command="{Binding EndJobCommand}"
+					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>

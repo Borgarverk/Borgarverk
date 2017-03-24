@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="Borgarverk.NewEntryPage" 
 	xmlns:local="clr-namespace:Borgarverk;assembly=Borgarverk" 
-	Title="Ný Færsla">
+	Title="{Binding Title}">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<local:NegateBooleanConverter x:Key="cnvInvert"></local:NegateBooleanConverter>

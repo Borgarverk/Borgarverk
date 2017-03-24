@@ -10,6 +10,8 @@ namespace Borgarverk
 		public TimePage()
 		{
 			InitializeComponent();
+			var viewModel = new TimeViewModel();
+			BindingContext = viewModel;
 		}
 	}
 }

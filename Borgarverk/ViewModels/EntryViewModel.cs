@@ -12,7 +12,7 @@ namespace Borgarverk.ViewModels
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="";
+		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="", title="";
 		private int id = 0;
 		private CarModel car = null;
 		private StationModel station = null;
@@ -31,6 +31,7 @@ namespace Borgarverk.ViewModels
 			this.sendService = sService;
 			this.cars = new ObservableCollection<CarModel>();
 			this.stations = new ObservableCollection<StationModel>();
+			title = "Ný færlsa";
 		}
 
 		public EntryViewModel(INavigation navigation, ISendService sService)
@@ -40,6 +41,7 @@ namespace Borgarverk.ViewModels
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			title = "Ný færlsa"; 
 		}
 
 		// TODO Er þetta nauðsynlegt?
@@ -50,6 +52,7 @@ namespace Borgarverk.ViewModels
 			this.navigation = navigation;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			title = "Breyta færslu";
 			foreach (var c in cars)
 			{
 				if (c.Num == m.Car)
@@ -280,6 +283,15 @@ namespace Borgarverk.ViewModels
 					OnPropertyChanged("IsValid");
 					ConfirmOneCommand.ChangeCanExecute();
 				}
+			}
+		}
+
+		public string Title
+		{
+			get { return title; }
+			private set
+			{
+				title = value;
 			}
 		}
 

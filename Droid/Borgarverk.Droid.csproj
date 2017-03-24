@@ -219,6 +219,26 @@
     <AndroidResource Include="Resources\drawable-ldrtl-xxhdpi\ic_send_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-ldrtl-xxxhdpi\ic_send_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_send_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_play_arrow_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_play_arrow_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_play_arrow_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_play_arrow_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_play_arrow_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_access_time_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_access_time_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_access_time_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_access_time_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_access_time_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_pause_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_pause_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_pause_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_pause_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_pause_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_stop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_stop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_stop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_stop_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_stop_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="devexpress-grid">
