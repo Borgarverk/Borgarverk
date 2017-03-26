@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Borgarverk.Models;
 
 namespace Borgarverk
@@ -8,7 +9,7 @@ namespace Borgarverk
 	{
 		string EntryToJSon(EntryModel entry);
 		string EntriesToJson(List<EntryModel> entries);
-		bool SendEntry(EntryModel entry);
+		Task<Boolean> SendEntry(EntryModel entry);
 		bool SendEntries(List<EntryModel> entries);
 	}
 }
