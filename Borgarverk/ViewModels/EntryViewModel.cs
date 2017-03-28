@@ -255,6 +255,7 @@ namespace Borgarverk.ViewModels
 				if (comment != value)
 				{
 					comment = value;
+					Debug.WriteLine(comment);
 					OnPropertyChanged("Comment");
 				}
 			}
@@ -368,10 +369,6 @@ namespace Borgarverk.ViewModels
 			bool valid = (No.Length > 0) &&
 				(JobNo.Length > 0) &&
 				(Double.Parse(JobNo) > 0) &&
-				(RoadLength.Length > 0) &&
-				(Double.Parse(RoadLength) > 0) &&
-				(RoadWidth.Length > 0) &&
-				(Double.Parse(RoadWidth) > 0) &&
 				(RoadArea.Length > 0) &&
 				(Double.Parse(RoadArea) > 0) &&
 				(TarQty.Length > 0) &&
@@ -427,7 +424,7 @@ namespace Borgarverk.ViewModels
 					DataService.AddEntry(model);
 				}
 
-				await navigation.PopAsync(false);
+				await navigation.PopToRootAsync(false);
 			}
 		}
 

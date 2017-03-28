@@ -122,9 +122,10 @@
 						WidthRequest="500"
 						HorizontalOptions="StartAndExpand"
 						BackgroundColor="#f2f2f2"
-						Grid.Column="1" />
+						Grid.Column="1" 
+						Text="{Binding Comment, Mode=TwoWay}"/>
 				</Grid>
-				<Button Text="Staðfesta" TextColor="White" HorizontalOptions="CenterAndExpand" Grid.Row="5" HeightRequest="80" WidthRequest="200" Command="{Binding ConfirmOneCommand}" BackgroundColor="#00447b">
+				<Button Text="Staðfesta" TextColor="White" HorizontalOptions="CenterAndExpand" Grid.Row="5" HeightRequest="60" WidthRequest="200" Command="{Binding ConfirmOneCommand}" BackgroundColor="#00447b">
 				</Button>
 				<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="5" IsVisible="{Binding IsValid, Converter={StaticResource cnvInvert}}" Grid.Row="6">
 					<Image Source="error" HeightRequest="15" WidthRequest="15" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand">
