@@ -42,6 +42,7 @@ namespace Borgarverk.ViewModels
 			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
 			DeleteAllCommand = new Command(DeleteAll);
+			SendEntryCommand = new Command(() => SendEntry());
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
 		}
@@ -53,6 +54,7 @@ namespace Borgarverk.ViewModels
 		public Command DeleteSelectedEntryCommand { get; }
 		public Command CloseCommand { get; }
 		public Command DeleteAllCommand { get; }
+		public Command SendEntryCommand { get; }
 		#endregion
 
 		#region properties
@@ -245,6 +247,25 @@ namespace Borgarverk.ViewModels
 				}
 				RefreshEntries();
 			}
+			else
+			{
+				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
+			}
+		}
+
+		void SendEntry()
+		{
+			if (sendService.SendEntry(SelectedEntry))
+			{
+				SelectedEntry.Sent = true;
+				SelectedEntry.TimeSent = DateTime.Now;
+				DataService.UpdateEntry(SelectedEntry);
+			}
+			else
+			{
+				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
+			}
+			RefreshEntries();
 		}
 
 		private void RefreshEntries()
