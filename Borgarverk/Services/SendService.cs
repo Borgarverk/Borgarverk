@@ -37,9 +37,8 @@ namespace Borgarverk
 			{
 				entry.TimeSent = DateTime.Now;
 				entry.Sent = true;
+				SendEntry(entry);
 			}
-
-			string sendString = EntriesToJson(entries);
 
 			return true;
 		}
