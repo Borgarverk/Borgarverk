@@ -17,9 +17,9 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="35"/>
 				<RowDefinition Height="35"/>
-				<RowDefinition Height="7*"/>
-				<RowDefinition Height="2*"/>
-				<RowDefinition Height="4*"/>
+				<RowDefinition Height="12*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="5*"/>
 				<RowDefinition Height="60"/>
 			</Grid.RowDefinitions>
 			<SearchBar Placeholder="Leita..." VerticalOptions="EndAndExpand" Text="{Binding SearchString}" HeightRequest="35" Grid.Row="0"></SearchBar>
@@ -67,20 +67,19 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<ScrollView  Grid.Row="4" Padding="30,0,30,0" IsVisible="{Binding IsSelected}" IsClippedToBounds="true" HorizontalOptions="EndAndExpand">
-			<Grid HeightRequest="220">
+			<Grid Grid.Row="4" IsVisible="{Binding IsSelected}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="2" />
-					<RowDefinition Height="30" />
-					<RowDefinition Height="30" />
-					<RowDefinition Height="30" />
-					<RowDefinition Height="30" />
-					<RowDefinition Height="80" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="25" />
+					<RowDefinition Height="60" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="2*"/>
 					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="3*"/>
@@ -103,20 +102,22 @@
 				<Label Grid.Row="2" Grid.Column="3" Text="{Binding SelectedEntry.Station}"/>
 				<Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
 				<Label Grid.Row="2" Grid.Column="5" Text="{Binding SelectedEntry.No}"/>
-				<Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Text="{Binding SelectedEntry.Comment}"/>
+				<ContentView Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5">
+					<ScrollView IsClippedToBounds="true" HorizontalOptions="EndAndExpand" HeightRequest="60">
+						<Label Text="{Binding SelectedEntry.Comment}"/>
+					</ScrollView>
+				</ContentView>
 				<Label Grid.Row="1" Grid.Column="5" Text="{Binding SelectedEntry.JobNo}"/>
 				<Button BackgroundColor="White" Grid.Row="3" Grid.Column="6" Command="{Binding ModifySelectedEntryCommand}" Image="icon_edit.png" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>
 				<Button BackgroundColor="White" Grid.Row="1" Grid.Column="6" Command="{Binding CloseCommand}" Image="ic_close_black_24dp"></Button>
 				<Button BackgroundColor="White" Grid.Row="2" Grid.Column="6" Command="{Binding DeleteSelectedEntryCommand}" Image="icon_delete"></Button>
 			</Grid>
-			</ScrollView>
 			<StackLayout Orientation="Horizontal" Grid.Row="5" Padding="30,0,30,0" HeightRequest="60">
 				<Button x:Name="DeleteSelectedEntriesButton" 
 					Image="ic_delete_forever_white_24dp" 
 					Text="Eyða öllum færslum" 
 					TextColor="White" 
 					BackgroundColor="#008ead" 
-					Grid.Row="0" 
 					WidthRequest="250" 
 					HeightRequest="60" 
 					HorizontalOptions="CenterAndExpand" 
@@ -128,7 +129,6 @@
 					Text="Senda ósendar færslur" 
 					TextColor="White" 
 					BackgroundColor="#eca400" 
-					Grid.Row="0" 
 					WidthRequest="250" 
 					HeightRequest="60" 
 					HorizontalOptions="CenterAndExpand" 

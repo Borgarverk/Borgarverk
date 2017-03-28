@@ -255,7 +255,6 @@ namespace Borgarverk.ViewModels
 				if (comment != value)
 				{
 					comment = value;
-					Debug.WriteLine(comment);
 					OnPropertyChanged("Comment");
 				}
 			}
@@ -397,9 +396,24 @@ namespace Borgarverk.ViewModels
 				model.Car = Car.Num;
 				model.Station = Station.Name;
 				model.No = No;
-				model.JobNo = JobNo;
-				model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
-				model.RoadLength = (Double.Parse(RoadLength)).ToString();
+				model.JobNo = (Double.Parse(JobNo)).ToString();
+				// RoadWidth and RoadLength can be left unfilled
+				if (RoadWidth != "")
+				{
+					model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
+				}
+				else
+				{
+					model.RoadWidth = RoadWidth;
+				}
+				if (RoadLength != "")
+				{
+					model.RoadLength = (Double.Parse(RoadLength)).ToString();
+				}
+				else
+				{
+					model.RoadLength = RoadLength;
+				}
 				model.RoadArea = (Double.Parse(RoadArea)).ToString();
 				model.TarQty = (Double.Parse(TarQty)).ToString();
 				model.Rate = (Double.Parse(Rate)).ToString();
