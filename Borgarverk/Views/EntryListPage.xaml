@@ -78,10 +78,10 @@
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="2*"/>
-					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="2*"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="2*"/>
 					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
@@ -103,7 +103,7 @@
 				<Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
 				<Label Grid.Row="2" Grid.Column="5" Text="{Binding SelectedEntry.No}"/>
 				<ContentView Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5">
-					<ScrollView IsClippedToBounds="true" HorizontalOptions="EndAndExpand" HeightRequest="60">
+					<ScrollView IsClippedToBounds="true" HorizontalOptions="StartAndExpand" HeightRequest="60">
 						<Label Text="{Binding SelectedEntry.Comment}"/>
 					</ScrollView>
 				</ContentView>
