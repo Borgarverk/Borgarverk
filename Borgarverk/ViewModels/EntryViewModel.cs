@@ -41,8 +41,8 @@ namespace Borgarverk.ViewModels
 			this.navigation = navigation;
 			this.startTime = start;
 			this.endTime = end;
-			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
-			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			this.cars = App.Current.AppData.Cars;
+			this.stations = App.Current.AppData.Stations;
 			title ="Nýtt verk";
 		}
 
@@ -51,8 +51,9 @@ namespace Borgarverk.ViewModels
 			ConfirmOneCommand = new Command(async () => await SaveEntry(), () => ValidEntry());
 			this.sendService = sService;
 			this.navigation = navigation;
-			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
-			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
+			this.cars = App.Current.AppData.Cars;
+			this.stations = App.Current.AppData.Stations;
+			RestoreState();
 			title = "Breyta færslu";
 			foreach (var c in cars)
 			{
@@ -77,6 +78,9 @@ namespace Borgarverk.ViewModels
 			tarQty = m.TarQty;
 			rate = m.Rate;
 			degrees = m.Degrees;
+			comment = m.Comment;
+			startTime = m.StartTime;
+			endTime = m.EndTime;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -157,6 +161,7 @@ namespace Borgarverk.ViewModels
 				{
 					jobNo = value;
 					ValidEntry();
+					App.Current.AppData.JobNo = value;
 					OnPropertyChanged("JobNo");
 				}
 			}
@@ -362,7 +367,6 @@ namespace Borgarverk.ViewModels
 
 		#endregion
 
-		// No entry can be empty and numeric values cannot be less then or equal to 0
 		public bool ValidEntry()
 		{
 			bool valid = (No.Length > 0) &&
@@ -439,6 +443,52 @@ namespace Borgarverk.ViewModels
 				}
 
 				await navigation.PopToRootAsync(false);
+			}
+		}
+
+		internal void OnAppearing()
+		{
+			//RestoreState();
+		}
+
+		void RestoreState()
+		{
+			var appData = App.Current.AppData;
+			if (appData.JobNo != null)
+			{
+				jobNo = appData.JobNo;
+			}
+			if (appData.No != null)
+			{
+				no = appData.No;
+			}
+			if (appData.RoadWidth != null)
+			{
+				roadWidth = appData.RoadWidth;
+			}
+			if (appData.RoadLength != null)
+			{
+				roadLength = appData.RoadLength;
+			}
+			if (appData.RoadArea != null)
+			{
+				roadArea = appData.RoadArea;
+			}
+			if (appData.TarQty != null)
+			{
+				tarQty = appData.TarQty;
+			}
+			if (appData.Rate != null)
+			{
+				rate = appData.Rate;
+			}
+			if (appData.Degrees != null)
+			{
+				degrees = appData.Degrees;
+			}
+			if (appData.Comment != null)
+			{
+				comment = appData.Comment;
 			}
 		}
 

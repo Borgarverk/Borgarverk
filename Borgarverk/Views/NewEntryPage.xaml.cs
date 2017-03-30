@@ -29,22 +29,19 @@ namespace Borgarverk
 		public NewEntryPage(ISendService service, EntryModel model)
 		{
 			InitializeComponent();
-			this.viewModel = viewModel = new EntryViewModel(this.Navigation, service, model);
+			this.viewModel = new EntryViewModel(this.Navigation, service, model);
 			BindingContext = viewModel;
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			//viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
-			//BindingContext = viewModel;
+			viewModel.OnAppearing();
 		}
 
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			viewModel = null;
-			BindingContext = null;
 		}
 	}
 }

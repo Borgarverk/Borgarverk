@@ -80,6 +80,7 @@
     <Compile Include="Views\TimePage.xaml.cs">
       <DependentUpon>TimePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLitePCLRaw.core">
