@@ -43,8 +43,6 @@ namespace Borgarverk
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			viewModel = null;
-			BindingContext = null;
 		}
 	}
 }

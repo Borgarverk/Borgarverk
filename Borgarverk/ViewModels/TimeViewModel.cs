@@ -19,7 +19,6 @@ namespace Borgarverk
 		public TimeViewModel(INavigation n)
 		{
 			this.navigation = n;
-			//Device.StartTimer(TimeSpan.FromMilliseconds(1000), OnTimerTick);
 			EndJobCommand = new Command(() => EndJob());
 			CancelCommand = new Command(() => Cancel());
 			ContinueCommand = new Command(() => Continue());
