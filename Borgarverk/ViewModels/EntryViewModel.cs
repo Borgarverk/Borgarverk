@@ -438,6 +438,11 @@ namespace Borgarverk.ViewModels
 					DataService.AddEntry(model);
 				}
 
+				// Job finished, delete the saved start time
+				if (Application.Current.Properties.ContainsKey("startTime"))
+				{
+					Application.Current.Properties.Remove("startTime");
+				}
 				await navigation.PopToRootAsync(false);
 			}
 		}
