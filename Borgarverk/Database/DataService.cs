@@ -92,14 +92,19 @@ namespace Borgarverk
 			currModel.Car = model.Car;
 			currModel.Station = model.Station;
 			currModel.No = model.No;
-			currModel.RoadWidth = model.RoadArea;
+			currModel.JobNo = model.JobNo;
+			currModel.RoadWidth = model.RoadWidth;
 			currModel.RoadLength = model.RoadLength;
 			currModel.RoadArea = model.RoadArea;
 			currModel.TarQty = model.TarQty;
 			currModel.Rate = model.Rate;
+			currModel.Degrees = model.Degrees;
+			currModel.Comment = model.Comment;
 			currModel.TimeCreated = model.TimeCreated;
 			currModel.Sent = model.Sent;
 			currModel.TimeSent = model.TimeSent;
+			currModel.StartTime = model.StartTime;
+			currModel.EndTime = model.EndTime;
 			return database.Update(currModel);
 		}
 

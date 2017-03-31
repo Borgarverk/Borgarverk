@@ -22,13 +22,17 @@ namespace Borgarverk
 			if (Application.Current.Properties.ContainsKey("startTime"))
 			{
 				startTime = (DateTime)(Application.Current.Properties["startTime"]);
-				Debug.WriteLine("Það er key");
 			}
 			else // If not save the startTime
 			{
-				Debug.WriteLine("Reyni að búa til key");
 				Application.Current.Properties["startTime"] = startTime;
-				Debug.WriteLine("Það er ekki key, bjó til");
+			}
+
+			// If job has ended, retreive the endtime
+			if (Application.Current.Properties.ContainsKey("endTime"))
+			{
+				endTime = (DateTime)(Application.Current.Properties["endTime"]);
+				active = false;
 			}
 			this.navigation = n;
 			EndJobCommand = new Command(() => EndJob());
@@ -87,6 +91,7 @@ namespace Borgarverk
 		void EndJob()
 		{
 			EndTime = DateTime.Now;
+			Application.Current.Properties["endTime"] = endTime;
 			Active = false;
 		}
 
@@ -96,6 +101,10 @@ namespace Borgarverk
 			if (Application.Current.Properties.ContainsKey("startTime"))
 			{
 				Application.Current.Properties.Remove("startTime");
+			}
+			if (Application.Current.Properties.ContainsKey("endTime"))
+			{
+				Application.Current.Properties.Remove("endTime");
 			}
 			this.navigation.PopAsync();
 		}

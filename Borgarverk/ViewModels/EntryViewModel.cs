@@ -77,6 +77,9 @@ namespace Borgarverk.ViewModels
 			tarQty = m.TarQty;
 			rate = m.Rate;
 			degrees = m.Degrees;
+			comment = m.Comment;
+			startTime = m.StartTime;
+			endTime = m.EndTime;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -144,6 +147,7 @@ namespace Borgarverk.ViewModels
 				{
 					no = value;
 					ValidEntry();
+					OnPropertyChanged("No");
 				}
 			}
 		}
@@ -438,10 +442,14 @@ namespace Borgarverk.ViewModels
 					DataService.AddEntry(model);
 				}
 
-				// Job finished, delete the saved start time
+				// Job finished, delete the saved start time and end time
 				if (Application.Current.Properties.ContainsKey("startTime"))
 				{
 					Application.Current.Properties.Remove("startTime");
+				}
+				if (Application.Current.Properties.ContainsKey("endTime"))
+				{
+					Application.Current.Properties.Remove("endTime");
 				}
 				await navigation.PopToRootAsync(false);
 			}
