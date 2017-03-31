@@ -8,7 +8,7 @@
 	</ResourceDictionary>
 </ContentPage.Resources>
 <ContentPage.Content>
-		<Grid VerticalOptions="Center" HorizontalOptions="CenterAndExpand" WidthRequest="400" HeightRequest="400">
+		<Grid VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="500" HeightRequest="400">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="70"/>
 				<RowDefinition Height="100"/>
@@ -29,13 +29,11 @@
 			<Button Image="ic_stop_white_24dp" 
 					Text="Enda verk"
 					Grid.Row="2"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
+					Grid.Column="1"
 					TextColor="White" 
 					BackgroundColor="#00447b"
 					WidthRequest="250" 
 					HeightRequest="70" 
-					HorizontalOptions="CenterAndExpand" 
 					Command="{Binding EndJobCommand}"
 					IsVisible="{Binding Active}"/>
 			<Button Image="ic_close_white_24dp" 
@@ -46,9 +44,7 @@
 					BackgroundColor="#008ead" 
 					WidthRequest="250" 
 					HeightRequest="70" 
-					HorizontalOptions="CenterAndExpand" 
-					Command="{Binding CancelCommand}"
-					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
+					Command="{Binding CancelCommand}"/>
 			<Button Image="ic_arrow_forward_white_24dp" 
 					Text="Halda áfram"
 					Grid.Row="2"
@@ -56,8 +52,7 @@
 					TextColor="White" 
 					BackgroundColor="#e9c46a" 
 					WidthRequest="250" 
-					HeightRequest="70" 
-					HorizontalOptions="CenterAndExpand" 
+					HeightRequest="70"  
 					Command="{Binding ContinueCommand}"
 					IsVisible="{Binding Active, Converter={StaticResource cnvInvert}}"/>
 		</Grid>

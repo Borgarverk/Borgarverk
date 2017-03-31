@@ -18,12 +18,13 @@ namespace Borgarverk
 
 		public TimeViewModel(INavigation n)
 		{
+			// If a job has aldready started retreive the startTime
 			if (Application.Current.Properties.ContainsKey("startTime"))
 			{
 				startTime = (DateTime)(Application.Current.Properties["startTime"]);
 				Debug.WriteLine("Það er key");
 			}
-			else
+			else // If not save the startTime
 			{
 				Debug.WriteLine("Reyni að búa til key");
 				Application.Current.Properties["startTime"] = startTime;
@@ -91,6 +92,7 @@ namespace Borgarverk
 
 		void Cancel()
 		{
+			// Job canceled, delete the saved starttime
 			if (Application.Current.Properties.ContainsKey("startTime"))
 			{
 				Application.Current.Properties.Remove("startTime");
