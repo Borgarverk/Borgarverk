@@ -18,6 +18,17 @@ namespace Borgarverk
 
 		public TimeViewModel(INavigation n)
 		{
+			if (Application.Current.Properties.ContainsKey("startTime"))
+			{
+				startTime = (DateTime)(Application.Current.Properties["startTime"]);
+				Debug.WriteLine("Það er key");
+			}
+			else
+			{
+				Debug.WriteLine("Reyni að búa til key");
+				Application.Current.Properties["startTime"] = startTime;
+				Debug.WriteLine("Það er ekki key, bjó til");
+			}
 			this.navigation = n;
 			EndJobCommand = new Command(() => EndJob());
 			CancelCommand = new Command(() => Cancel());
@@ -80,6 +91,10 @@ namespace Borgarverk
 
 		void Cancel()
 		{
+			if (Application.Current.Properties.ContainsKey("startTime"))
+			{
+				Application.Current.Properties.Remove("startTime");
+			}
 			this.navigation.PopAsync();
 		}
 
