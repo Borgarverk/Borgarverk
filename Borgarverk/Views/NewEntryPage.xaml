@@ -33,8 +33,11 @@
 					</Grid.ColumnDefinitions>
 					<Label Text="Verknúmer" Grid.Row="0" Grid.Column="0" TextColor="#00447b" FontAttributes="Bold"/>
 					<Label Text="Færslunúmer" Grid.Row="0" Grid.Column="1" TextColor="#00447b" FontAttributes="Bold"/>
-					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding JobNo, Mode=TwoWay}" />
-					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding No, Mode=TwoWay}" />
+					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding JobNo, Mode=TwoWay}"/>
+					<StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+						<Label Margin="10,10,0,0" Text="VSB" IsVisible="{Binding SelectedHladbaerColas}" TextColor="Black" FontSize="17" HorizontalOptions="StartAndExpand"/>
+						<Entry WidthRequest="220" Keyboard="Numeric" Text="{Binding No, Mode=TwoWay}" HorizontalOptions="EndAndExpand"/>
+					</StackLayout>
 				</Grid>
 				<Grid Grid.Row="1">
 					<Grid.RowDefinitions>

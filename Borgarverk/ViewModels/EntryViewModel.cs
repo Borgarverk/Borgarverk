@@ -22,7 +22,14 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
 		private INavigation navigation;
+		private Boolean selectedHladbaerColas;
 		#endregion
+
+		public Boolean SelectedHladbaerColas
+		{
+			get { return selectedHladbaerColas; }
+			set { selectedHladbaerColas = value; }
+		}
 
 		// For Testing
 		public EntryViewModel(ISendService sService)
@@ -32,6 +39,7 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>();
 			this.stations = new ObservableCollection<StationModel>();
 			title = "Nýtt verk";
+			this.selectedHladbaerColas = false;
 		}
 
 		public EntryViewModel(INavigation navigation, ISendService sService, DateTime start, DateTime end)
@@ -44,6 +52,7 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			title ="Nýtt verk";
+			this.selectedHladbaerColas = false;
 		}
 
 		public EntryViewModel(INavigation navigation, ISendService sService, EntryModel m)
@@ -80,6 +89,7 @@ namespace Borgarverk.ViewModels
 			comment = m.Comment;
 			startTime = m.StartTime;
 			endTime = m.EndTime;
+			this.selectedHladbaerColas = false;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -120,16 +130,13 @@ namespace Borgarverk.ViewModels
 				{
 					if (value.Name == "Hlaðbær Colas")
 					{
-						No = "VSB";
-						OnPropertyChanged("No");
+						this.selectedHladbaerColas = true;
+						OnPropertyChanged("SelectedHladbaerColas");
 					}
 					else
 					{
-						if (No.Contains("VSB"))
-						{
-							No = "";
-							OnPropertyChanged("No");
-						}
+						this.selectedHladbaerColas = false;
+						OnPropertyChanged("SelectedHladbaerColas");
 					}
 					station = value;
 					ValidEntry();
@@ -193,7 +200,6 @@ namespace Borgarverk.ViewModels
 				}
 			}
 		}
-
 
 		public string RoadArea
 		{
@@ -399,7 +405,15 @@ namespace Borgarverk.ViewModels
 				}
 				model.Car = Car.Num;
 				model.Station = Station.Name;
-				model.No = No;
+				if (this.selectedHladbaerColas)
+				{
+					model.No = "VSB" + No;
+				}
+				else
+				{
+					model.No = No;
+				}
+
 				model.JobNo = (Double.Parse(JobNo)).ToString();
 				// RoadWidth and RoadLength can be left unfilled
 				if (RoadWidth != "")
