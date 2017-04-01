@@ -197,8 +197,10 @@ namespace Borgarverk.ViewModels
 				AllEntries = entries;
 			}
 			var match = entries.Where(c => c.No.ToLower().Contains(SearchString.ToLower()) || 
-			                             c.Station.ToLower().Contains(searchString.ToLower()) ||
-			                             c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()));
+			                          c.Station.ToLower().Contains(searchString.ToLower()) ||
+			                          c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()) ||
+			                          c.TarQty.ToString().Contains(SearchString) ||
+			                          c.RoadArea.ToString().Contains(SearchString));
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 

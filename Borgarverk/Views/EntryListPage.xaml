@@ -108,9 +108,9 @@
 					</ScrollView>
 				</ContentView>
 				<Label Grid.Row="1" Grid.Column="5" Text="{Binding SelectedEntry.JobNo}"/>
-				<Button BackgroundColor="White" Grid.Row="3" Grid.Column="6" Command="{Binding ModifySelectedEntryCommand}" Image="icon_edit.png" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>
 				<Button BackgroundColor="White" Grid.Row="1" Grid.Column="6" Command="{Binding CloseCommand}" Image="ic_close_black_24dp"></Button>
 				<Button BackgroundColor="White" Grid.Row="2" Grid.Column="6" Command="{Binding DeleteSelectedEntryCommand}" Image="icon_delete"></Button>
+				<Button BackgroundColor="White" Grid.Row="3" Grid.Column="6" Command="{Binding ModifySelectedEntryCommand}" Image="icon_edit" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>
 				<Button BackgroundColor="White" Grid.Row="4" Grid.Column="6" Command="{Binding SendEntryCommand}" Image="ic_send_black_24dp" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>
 			</Grid>
 			<StackLayout Orientation="Horizontal" Grid.Row="5" Padding="30,0,30,0" HeightRequest="60">
