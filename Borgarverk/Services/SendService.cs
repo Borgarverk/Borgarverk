@@ -34,10 +34,28 @@ namespace Borgarverk
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var client = new HttpClient();
-            //var result = await client.PostAsync("https://httpbin.org/post", byteContent);
-            await client.PostAsync("https://httpbin.org/post", byteContent);
-            return false;
+			var client = new HttpClient(new HttpClientHandler
+			{
+				UseProxy = false
+			});
+			//var result = await client.PostAsync("https://httpbin.org/post", byteContent);
+
+			try
+			{
+				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
+			}
+			catch (Exception ex)
+			{
+				//if (response == null)
+				//{
+				//	response = new HttpResponseMessage();
+				//}
+				//response.StatusCode = HttpStatusCode.InternalServerError;
+				//response.ReasonPhrase = string.Format("RestHttpClient.SendRequest failed: {0}", ex);
+				return false;
+			}
+            
+			return true;
 		}
 
 		public bool SendEntries(List<EntryModel> entries)
