@@ -441,7 +441,7 @@ namespace Borgarverk.ViewModels
 				model.EndTime = EndTime;
 				model.Comment = Comment;
 
-				if (sendService.SendEntry(model))
+				if (sendService.SendEntry(model).Result)
 				{
 					model.TimeSent = DateTime.Now;
 					model.Sent = true;

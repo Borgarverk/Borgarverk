@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Borgarverk.Models;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Borgarverk
 {
@@ -23,12 +26,18 @@ namespace Borgarverk
 			return json;
 		}
 
-		public bool SendEntry(EntryModel entry)
+		public async Task<Boolean> SendEntry(EntryModel entry)
 		{
 			entry.TimeSent = DateTime.Now;
 			entry.Sent = true;
-			string sendString = EntryToJSon(entry);
-			return false;
+            var myContent = JsonConvert.SerializeObject(entry);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var client = new HttpClient();
+            //var result = await client.PostAsync("https://httpbin.org/post", byteContent);
+            await client.PostAsync("https://httpbin.org/post", byteContent);
+            return false;
 		}
 
 		public bool SendEntries(List<EntryModel> entries)

@@ -257,7 +257,7 @@ namespace Borgarverk.ViewModels
 
 		void SendEntry()
 		{
-			if (sendService.SendEntry(SelectedEntry))
+			if (sendService.SendEntry(SelectedEntry).Result)
 			{
 				SelectedEntry.Sent = true;
 				SelectedEntry.TimeSent = DateTime.Now;
