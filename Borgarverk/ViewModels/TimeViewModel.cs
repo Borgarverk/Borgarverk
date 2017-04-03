@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Borgarverk
@@ -35,8 +36,8 @@ namespace Borgarverk
 				active = false;
 			}
 			this.navigation = n;
-			EndJobCommand = new Command(() => EndJob());
-			CancelCommand = new Command(() => Cancel());
+			EndJobCommand = new Command(async () => await EndJob());
+			CancelCommand = new Command(async () => await Cancel());
 			ContinueCommand = new Command(() => Continue());
 		}
 
@@ -88,25 +89,33 @@ namespace Borgarverk
 				
 		}
 
-		void EndJob()
+		async Task EndJob()
 		{
-			EndTime = DateTime.Now;
-			Application.Current.Properties["endTime"] = endTime;
-			Active = false;
+			var confirm = await Application.Current.MainPage.DisplayAlert("Ljúka verki", "Viltu ljúka verki?", "Já", "Nei");
+			if (confirm)
+			{
+				EndTime = DateTime.Now;
+				Application.Current.Properties["endTime"] = endTime;
+				Active = false;
+			}
 		}
 
-		void Cancel()
+		async Task Cancel()
 		{
-			// Job canceled, delete the saved starttime
-			if (Application.Current.Properties.ContainsKey("startTime"))
+			var confirm = await Application.Current.MainPage.DisplayAlert("Hætta við verk", "Viltu hætta við verk?", "Já", "Nei");
+			if (confirm)
 			{
-				Application.Current.Properties.Remove("startTime");
+				// Job canceled, delete the saved starttime
+				if (Application.Current.Properties.ContainsKey("startTime"))
+				{
+					Application.Current.Properties.Remove("startTime");
+				}
+				if (Application.Current.Properties.ContainsKey("endTime"))
+				{
+					Application.Current.Properties.Remove("endTime");
+				}
+				await this.navigation.PopAsync();
 			}
-			if (Application.Current.Properties.ContainsKey("endTime"))
-			{
-				Application.Current.Properties.Remove("endTime");
-			}
-			this.navigation.PopAsync();
 		}
 
 		void Continue()

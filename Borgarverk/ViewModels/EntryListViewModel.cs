@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Borgarverk.Models;
 using Xamarin.Forms;
 
@@ -37,12 +38,12 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			Entries = AllEntries;
-			SendAllEntriesCommand = new Command(() => SendAllEntries());
-			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
-			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
+			SendAllEntriesCommand = new Command(async () => await SendAllEntries());
+			ModifySelectedEntryCommand = new Command(async () => await ModifySelectedEntry());
+			DeleteSelectedEntryCommand = new Command(async () => await DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
-			DeleteAllCommand = new Command(DeleteAll);
-			SendEntryCommand = new Command(() => SendEntry());
+			DeleteAllCommand = new Command(async () => await DeleteAll());
+			SendEntryCommand = new Command(async () => await SendEntry());
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
 		}
@@ -159,28 +160,31 @@ namespace Borgarverk.ViewModels
 		}
 		#endregion
 
-		void DeleteSelectedEntry()
+		async Task DeleteSelectedEntry()
 		{
-			
-			try
+			var confirm = await Application.Current.MainPage.DisplayAlert("Eyða færslu", "Viltu eyða þessari færslu?", "Já", "Nei");
+			if (confirm)
 			{
-				DataService.DeleteEntry(SelectedEntry.ID);
-				allEntries.Remove(selectedEntry);
-				IsSelected = false;
-				SelectedEntry = null;
-			}
-			catch
-			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
+				try
+				{
+					DataService.DeleteEntry(SelectedEntry.ID);
+					allEntries.Remove(selectedEntry);
+					IsSelected = false;
+					SelectedEntry = null;
+				}
+				catch
+				{
+					await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að eyða færslu", "OK");
+				}
 			}
 		}
 
-		void ModifySelectedEntry()
+		async Task ModifySelectedEntry()
 		{
 			var page = new NewEntryPage(this.sendService, selectedEntry);
 			IsSelected = false;
 			SelectedEntry = null;
-			this.navigation.PushAsync(page);
+			await this.navigation.PushAsync(page);
 		}
 
 		void Close()
@@ -204,15 +208,15 @@ namespace Borgarverk.ViewModels
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 
-		async void DeleteAll()
+		async Task DeleteAll()
 		{
 			// If there are no entries
 			if (allEntries.Count == 0)
 			{
-				return;
+				return ;
 			}
 
-			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesting", "Ertu viss um að þú viljir eyða öllum færslum?", "Já", "Nei");
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Eyða öllum færslum", "Viltu eyða öllum færslum?", "Já", "Nei");
 			if (confirmed)
 			{
 				DataService.DeleteEntries();
@@ -220,7 +224,7 @@ namespace Borgarverk.ViewModels
 			}
 		}
 		
-		void SendAllEntries()
+		async Task SendAllEntries()
 		{
 			// If there are no entries
 			if (allEntries.Count == 0)
@@ -251,11 +255,11 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
 			}
 		}
 
-		void SendEntry()
+		async Task SendEntry()
 		{
 			var sendResult = sendService.SendEntry(SelectedEntry);
 			if (sendResult.Result)
@@ -266,7 +270,7 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
 			}
 			RefreshEntries();
 		}
