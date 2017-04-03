@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace Borgarverk
 {
@@ -30,6 +31,7 @@ namespace Borgarverk
 		{
 			entry.TimeSent = DateTime.Now;
 			entry.Sent = true;
+
             var myContent = JsonConvert.SerializeObject(entry);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
@@ -43,8 +45,9 @@ namespace Borgarverk
 			try
 			{
 				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
+				Debug.WriteLine(response);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				//if (response == null)
 				//{
@@ -58,13 +61,13 @@ namespace Borgarverk
 			return true;
 		}
 
-		public bool SendEntries(List<EntryModel> entries)
+		public async Task<Boolean> SendEntries(List<EntryModel> entries)
 		{
 			foreach (var entry in entries)
 			{
 				entry.TimeSent = DateTime.Now;
 				entry.Sent = true;
-				SendEntry(entry);
+				await SendEntry(entry);
 			}
 
 			return true;

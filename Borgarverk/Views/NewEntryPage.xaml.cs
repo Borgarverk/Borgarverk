@@ -36,8 +36,6 @@ namespace Borgarverk
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			//viewModel = new EntryViewModel(new DataService(), this.Navigation, new SendService());
-			//BindingContext = viewModel;
 		}
 
 		protected override void OnDisappearing()

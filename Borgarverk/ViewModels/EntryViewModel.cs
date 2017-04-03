@@ -395,7 +395,7 @@ namespace Borgarverk.ViewModels
 
 		async Task SaveEntry()
 		{
-			var confirmed = await Application.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Vista og senda færslu", "Viltu vista og senda færslu?", "Já", "Nei");
 			if (confirmed)
 			{
 				EntryModel model = new EntryModel();

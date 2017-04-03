@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Borgarverk.Models;
 using Xamarin.Forms;
 
@@ -37,18 +38,17 @@ namespace Borgarverk.ViewModels
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
 			Entries = AllEntries;
-			SendAllEntriesCommand = new Command(() => SendAllEntries());
+			SendAllEntriesCommand = new Command(async () => await SendAllEntries());
 			ModifySelectedEntryCommand = new Command(() => ModifySelectedEntry());
-			DeleteSelectedEntryCommand = new Command(() => DeleteSelectedEntry());
+			DeleteSelectedEntryCommand = new Command(async () => await DeleteSelectedEntry());
 			CloseCommand = new Command(() => Close());
-			DeleteAllCommand = new Command(DeleteAll);
-			SendEntryCommand = new Command(() => SendEntry());
+			DeleteAllCommand = new Command(async () => await DeleteAll());
+			SendEntryCommand = new Command(async () => await SendEntry());
 			ButtonColor = "#d0cccc";
 			selectedEntry = null;
 		}
 
 		#region commands
-		public Command SwipeButtonCommand { get; }
 		public Command SendAllEntriesCommand { get; }
 		public Command ModifySelectedEntryCommand { get; }
 		public Command DeleteSelectedEntryCommand { get; }
@@ -159,19 +159,23 @@ namespace Borgarverk.ViewModels
 		}
 		#endregion
 
-		void DeleteSelectedEntry()
+		async Task DeleteSelectedEntry()
 		{
-			
-			try
+			var confirm = await Application.Current.MainPage.DisplayAlert("Eyða færslu", "Ertu viss um að þú viljir eyða færslu", "Já", "Nei");
+
+			if (confirm)
 			{
-				DataService.DeleteEntry(SelectedEntry.ID);
-				allEntries.Remove(selectedEntry);
-				IsSelected = false;
-				SelectedEntry = null;
-			}
-			catch
-			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að eyða færslu", "OK");
+				try
+				{
+					DataService.DeleteEntry(SelectedEntry.ID);
+					allEntries.Remove(selectedEntry);
+					IsSelected = false;
+					SelectedEntry = null;
+				}
+				catch
+				{
+					await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að eyða færslu", "OK");
+				}
 			}
 		}
 
@@ -199,12 +203,12 @@ namespace Borgarverk.ViewModels
 			var match = entries.Where(c => c.No.ToLower().Contains(SearchString.ToLower()) || 
 			                          c.Station.ToLower().Contains(searchString.ToLower()) ||
 			                          c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()) ||
-			                          c.TarQty.ToString().Contains(SearchString) ||
-			                          c.RoadArea.ToString().Contains(SearchString));
+			                          c.TarQty.Contains(SearchString) ||
+			                          c.RoadArea.Contains(SearchString));
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 
-		async void DeleteAll()
+		async Task DeleteAll()
 		{
 			// If there are no entries
 			if (allEntries.Count == 0)
@@ -220,7 +224,7 @@ namespace Borgarverk.ViewModels
 			}
 		}
 		
-		void SendAllEntries()
+		async Task SendAllEntries()
 		{
 			// If there are no entries
 			if (allEntries.Count == 0)
@@ -238,7 +242,8 @@ namespace Borgarverk.ViewModels
 			}
 			// Setjum timesent breytuna bæði hér og í sendservice gæti þá verið mismatch á tíma
 			// Er betra að setja það hér, reyna að senda og ef ekki tekst að senda þá breyta því til baka?
-			if (sendService.SendEntries(del))
+			var sendResult = sendService.SendEntries(del);
+			if (sendResult.Result)
 			{
 				for (var i = del.Count - 1; i >= 0; i--)
 				{
@@ -251,11 +256,11 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
 			}
 		}
 
-		void SendEntry()
+		async Task SendEntry()
 		{
 			var sendResult = sendService.SendEntry(SelectedEntry);
 			if (sendResult.Result)
@@ -266,7 +271,7 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
 			}
 			RefreshEntries();
 		}

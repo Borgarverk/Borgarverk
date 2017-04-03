@@ -100,7 +100,7 @@
 				<Label Grid.Row="3" Grid.Column="1" Text="{Binding SelectedEntry.Degrees}"/>
 				<Label Grid.Row="1" Grid.Column="3" Text="{Binding SelectedEntry.Car}"/>
 				<Label Grid.Row="2" Grid.Column="3" Text="{Binding SelectedEntry.Station}"/>
-				<Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
+				<Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
 				<Label Grid.Row="2" Grid.Column="5" Text="{Binding SelectedEntry.No}"/>
 				<ContentView Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5">
 					<ScrollView IsClippedToBounds="true" HorizontalOptions="StartAndExpand" HeightRequest="60">
