@@ -77,39 +77,58 @@
 					<RowDefinition Height="60" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="2*"/>
-					<ColumnDefinition Width="2*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="40*"/>
+					<ColumnDefinition Width="20*"/>
+					<ColumnDefinition Width="0.5*"/> <!-- line -->
+					<ColumnDefinition Width="20*"/>
+					<ColumnDefinition Width="40*"/>
+					<ColumnDefinition Width="0.5*"/> <!-- line -->
+					<ColumnDefinition Width="20*"/>
+					<ColumnDefinition Width="20*"/>
+					<ColumnDefinition Width="8*"/>
 				</Grid.ColumnDefinitions>
-				<BoxView BackgroundColor="#00447b" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"/>
-				<Label Grid.Row="1" Grid.Column="0">Breidd:</Label>
-				<Label Grid.Row="2" Grid.Column="0">Lengd:</Label>
+				<BoxView BackgroundColor="#00447b" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9"/>
+				
+				<BoxView BackgroundColor="#bfbfbf" Grid.Row="0" Grid.Column="2" Grid.RowSpan="4"/>
+				<BoxView BackgroundColor="#bfbfbf" Grid.Row="0" Grid.Column="5" Grid.RowSpan="4"/>
+				
+				<Label Grid.Row="1" Grid.Column="0">Verknúmer:</Label>
+				<Label Grid.Row="2" Grid.Column="0">Færslunúmer:</Label>
+				
+				<Label Grid.Row="1" Grid.Column="3">Bíll:</Label>
+				<Label Grid.Row="2" Grid.Column="3">Stöð:</Label>
+				
+				<Label Grid.Row="1" Grid.Column="6">Breidd:</Label>
+				<Label Grid.Row="2" Grid.Column="6">Lengd:</Label>
+				
 				<Label Grid.Row="3" Grid.Column="0">Hitastig bindiefnis:</Label>
-				<Label Grid.Row="1" Grid.Column="2">Bíll:</Label>
-				<Label Grid.Row="2" Grid.Column="2">Stöð:</Label>
-				<Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Sent þann:</Label>
-				<Label Grid.Row="2" Grid.Column="4">Nótunúmer:</Label>
-				<Label Grid.Row="5" Grid.Column="0">Skilaboð:</Label>
-				<Label Grid.Row="1" Grid.Column="4">Verknúmer:</Label>
-				<Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEntry.RoadWidth}"/>
-				<Label Grid.Row="2" Grid.Column="1" Text="{Binding SelectedEntry.RoadLength}"/>
-				<Label Grid.Row="3" Grid.Column="1" Text="{Binding SelectedEntry.Degrees}"/>
-				<Label Grid.Row="1" Grid.Column="3" Text="{Binding SelectedEntry.Car}"/>
-				<Label Grid.Row="2" Grid.Column="3" Text="{Binding SelectedEntry.Station}"/>
-				<Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
-				<Label Grid.Row="2" Grid.Column="5" Text="{Binding SelectedEntry.No}"/>
-				<ContentView Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5">
-					<ScrollView IsClippedToBounds="true" HorizontalOptions="StartAndExpand" HeightRequest="60">
-						<Label Text="{Binding SelectedEntry.Comment}"/>
-					</ScrollView>
-				</ContentView>
-				<Label Grid.Row="1" Grid.Column="5" Text="{Binding SelectedEntry.JobNo}"/>
+				<Label Grid.Row="3" Grid.Column="3">Sent:</Label>
 
-				<StackLayout Grid.Row="1" Grid.RowSpan="4" Grid.Column="6" Orientation="Vertical">
+				
+				<Label Grid.Row="1" Grid.Column="1" Text="{Binding SelectedEntry.No}"/> <!-- Verknr -->
+				<Label Grid.Row="2" Grid.Column="1" Text="{Binding SelectedEntry.JobNo}"/> <!-- Færslunr -->
+				
+				<Label Grid.Row="1" Grid.Column="4" Text="{Binding SelectedEntry.Car}"/>
+				<Label Grid.Row="2" Grid.Column="4" Text="{Binding SelectedEntry.Station}"/>
+				
+				<Label Grid.Row="1" Grid.Column="7" Text="{Binding SelectedEntry.RoadWidth}"/>
+				<Label Grid.Row="2" Grid.Column="7" Text="{Binding SelectedEntry.RoadLength}"/>
+				
+				
+				<Label Grid.Row="3" Grid.Column="1" Text="{Binding SelectedEntry.Degrees}"/>
+				<Label Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Text="{Binding SelectedEntry.TimeSent, StringFormat='{0:d MMMM, yyyy}'}}"/>
+
+				<!-- Skilaboð/Comment -->
+				<StackLayout Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6">
+					<Label>Skilaboð:</Label>
+					<ContentView>
+						<ScrollView IsClippedToBounds="true" HorizontalOptions="StartAndExpand" HeightRequest="60">
+							<Label Text="{Binding SelectedEntry.Comment}"/>
+						</ScrollView>
+					</ContentView>
+				</StackLayout>
+
+				<StackLayout Grid.Row="1" Grid.RowSpan="4" Grid.Column="8" Orientation="Vertical">
 					<Button HeightRequest="33" BackgroundColor="White" Command="{Binding CloseCommand}" Image="ic_close_black_24dp"></Button>
 					<Button HeightRequest="33" BackgroundColor="White" Command="{Binding DeleteSelectedEntryCommand}" Image="icon_delete"></Button>
 					<Button HeightRequest="33" BackgroundColor="White" Command="{Binding ModifySelectedEntryCommand}" Image="icon_edit" IsVisible="{Binding SelectedEntry.Sent, Converter={StaticResource cnvInvert}}"></Button>

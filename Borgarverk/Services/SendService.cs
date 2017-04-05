@@ -54,8 +54,8 @@ namespace Borgarverk
 				//response.ReasonPhrase = string.Format("RestHttpClient.SendRequest failed: {0}", ex);
 				return false;
 			}
-            
-			return true;
+
+			return false;
 		}
 
 		public async Task<Boolean> SendEntries(List<EntryModel> entries)
