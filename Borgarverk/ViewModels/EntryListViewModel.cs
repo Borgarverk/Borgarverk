@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Borgarverk.Models;
@@ -232,21 +231,21 @@ namespace Borgarverk.ViewModels
 				return;
 			}
 
-			List<EntryModel> del = new List<EntryModel>();
+			List<EntryModel> send = new List<EntryModel>();
 			foreach (var entry in AllEntries)
 			{
 				if (!entry.Sent)
 				{
-					del.Add(entry);
+					send.Add(entry);
 				}
 			}
-			// Setjum timesent breytuna bæði hér og í sendservice gæti þá verið mismatch á tíma
-			// Er betra að setja það hér, reyna að senda og ef ekki tekst að senda þá breyta því til baka?
-			if (sendService.SendEntries(del))
+
+			var sendResult = sendService.SendEntries(send);
+			if (sendResult.Result)
 			{
-				for (var i = del.Count - 1; i >= 0; i--)
+				for (var i = send.Count - 1; i >= 0; i--)
 				{
-					var tmpEntry = AllEntries[AllEntries.IndexOf(del[i])];
+					var tmpEntry = AllEntries[AllEntries.IndexOf(send[i])];
 					tmpEntry.Sent = true;
 					tmpEntry.TimeSent = DateTime.Now;
 					DataService.UpdateEntry(tmpEntry);
@@ -255,7 +254,7 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				await Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
 			}
 		}
 
@@ -270,7 +269,7 @@ namespace Borgarverk.ViewModels
 			}
 			else
 			{
-				await Application.Current.MainPage.DisplayAlert("", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
+				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
 			}
 			RefreshEntries();
 		}

@@ -10,6 +10,6 @@ namespace Borgarverk
 		string EntryToJSon(EntryModel entry);
 		string EntriesToJson(List<EntryModel> entries);
         Task<Boolean> SendEntry(EntryModel entry);
-        bool SendEntries(List<EntryModel> entries);
+        Task<Boolean> SendEntries(List<EntryModel> entries);
 	}
 }

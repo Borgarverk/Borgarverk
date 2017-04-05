@@ -44,7 +44,7 @@ namespace Borgarverk
 			{
 				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				//if (response == null)
 				//{
@@ -58,13 +58,13 @@ namespace Borgarverk
 			return true;
 		}
 
-		public bool SendEntries(List<EntryModel> entries)
+		public async Task<Boolean> SendEntries(List<EntryModel> entries)
 		{
 			foreach (var entry in entries)
 			{
 				entry.TimeSent = DateTime.Now;
 				entry.Sent = true;
-				SendEntry(entry);
+				await SendEntry(entry);
 			}
 
 			return true;

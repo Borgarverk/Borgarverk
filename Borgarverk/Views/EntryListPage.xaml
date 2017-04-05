@@ -81,14 +81,14 @@
 					<ColumnDefinition Width="2*"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<BoxView BackgroundColor="#00447b" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"/>
 				<Label Grid.Row="1" Grid.Column="0">Breidd:</Label>
 				<Label Grid.Row="2" Grid.Column="0">Lengd:</Label>
-				<Label Grid.Row="3" Grid.Column="0">Gráður:</Label>
+				<Label Grid.Row="3" Grid.Column="0">Hitastig bindiefnis:</Label>
 				<Label Grid.Row="1" Grid.Column="2">Bíll:</Label>
 				<Label Grid.Row="2" Grid.Column="2">Stöð:</Label>
 				<Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">Sent þann:</Label>

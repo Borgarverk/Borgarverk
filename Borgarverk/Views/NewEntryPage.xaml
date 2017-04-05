@@ -106,7 +106,7 @@
 					<Label Text="Flatarmál" Grid.Row="0" Grid.Column="2" />
 					<Label Text="Lítrar" Grid.Row="2" Grid.Column="0" />
 					<Label Text="Forskrift" Grid.Row="2" Grid.Column="1" />
-					<Label Text="Gráður" Grid.Row="2" Grid.Column="2" />
+					<Label Text="Hitastig bindisefnis" Grid.Row="2" Grid.Column="2" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="0" Text="{Binding RoadWidth, Mode=TwoWay}" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="1" Text="{Binding RoadLength, Mode=TwoWay}" />
 					<Entry Keyboard="Numeric" Grid.Row="1" Grid.Column="2" Text="{Binding RoadArea, Mode=TwoWay}" />
