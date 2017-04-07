@@ -222,7 +222,7 @@ namespace Borgarverk.ViewModels
 				allEntries.Clear();
 			}
 		}
-		
+
 		async Task SendAllEntries()
 		{
 			// If there are no entries
@@ -231,30 +231,68 @@ namespace Borgarverk.ViewModels
 				return;
 			}
 
-			List<EntryModel> send = new List<EntryModel>();
-			foreach (var entry in AllEntries)
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Senda allar færslur", "Viltu senda allar færslur?", "Já", "Nei");
+			if (confirmed)
 			{
-				if (!entry.Sent)
+				List<EntryModel> sentEntries = new List<EntryModel>();
+				List<EntryModel> UnSentEntries = new List<EntryModel>();
+				/*foreach (var entry in AllEntries)
 				{
-					send.Add(entry);
+					if (!entry.Sent)
+					{
+						var sendResult = sendService.SendEntry(entry);
+						if (!sendResult.Result)
+						{
+							UnSentEntries.Add(entry);
+						}
+						else
+						{
+							sentEntries.Add(entry);
+						}
+					}
 				}
-			}
 
-			var sendResult = sendService.SendEntries(send);
-			if (sendResult.Result)
-			{
-				for (var i = send.Count - 1; i >= 0; i--)
+				for (var i = sentEntries.Count - 1; i >= 0; i--)
 				{
-					var tmpEntry = AllEntries[AllEntries.IndexOf(send[i])];
+					var tmpEntry = AllEntries[AllEntries.IndexOf(sentEntries[i])];
 					tmpEntry.Sent = true;
 					tmpEntry.TimeSent = DateTime.Now;
 					DataService.UpdateEntry(tmpEntry);
 				}
+
+				if (UnSentEntries.Count != 0)
+				{
+					var msg = String.Format("Ekki tókst að senda {0} færslur, reyndu aftur síðar", UnSentEntries.Count);
+					await Application.Current.MainPage.DisplayAlert("Sending Mistókst", msg, "Loka");
+				}
+				RefreshEntries();*/
+
+				for (var i = allEntries.Count - 1; i >= 0; i--)
+				{
+					if (!allEntries[i].Sent)
+					{
+						var e = allEntries[i];
+						var sendResult = sendService.SendEntry(e);
+						if (!sendResult.Result)
+						{
+							UnSentEntries.Add(e);
+						}
+						else
+						{
+							sentEntries.Add(e);
+							e.Sent = true;
+							e.TimeSent = DateTime.Now;
+							DataService.UpdateEntry(e);
+						}
+					}
+				}
+
+				if (UnSentEntries.Count != 0)
+				{
+					var msg = String.Format("Ekki tókst að senda {0} færslur, reyndu aftur síðar", UnSentEntries.Count);
+					await Application.Current.MainPage.DisplayAlert("Sending Mistókst", msg, "Loka");
+				}
 				RefreshEntries();
-			}
-			else
-			{
-				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
 			}
 		}
 

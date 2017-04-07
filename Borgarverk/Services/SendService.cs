@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace Borgarverk
 {
@@ -43,6 +44,7 @@ namespace Borgarverk
 			try
 			{
 				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
+				Debug.WriteLine(response);
 			}
 			catch (Exception)
 			{
@@ -53,18 +55,6 @@ namespace Borgarverk
 				//response.StatusCode = HttpStatusCode.InternalServerError;
 				//response.ReasonPhrase = string.Format("RestHttpClient.SendRequest failed: {0}", ex);
 				return false;
-			}
-
-			return false;
-		}
-
-		public async Task<Boolean> SendEntries(List<EntryModel> entries)
-		{
-			foreach (var entry in entries)
-			{
-				entry.TimeSent = DateTime.Now;
-				entry.Sent = true;
-				await SendEntry(entry);
 			}
 
 			return true;

@@ -27,6 +27,8 @@ namespace Borgarverk
 			else // If not save the startTime
 			{
 				Application.Current.Properties["startTime"] = startTime;
+				SaveProperties();
+
 			}
 
 			// If job has ended, retreive the endtime
@@ -96,6 +98,7 @@ namespace Borgarverk
 			{
 				EndTime = DateTime.Now;
 				Application.Current.Properties["endTime"] = endTime;
+				await SaveProperties();
 				Active = false;
 			}
 		}
@@ -109,10 +112,12 @@ namespace Borgarverk
 				if (Application.Current.Properties.ContainsKey("startTime"))
 				{
 					Application.Current.Properties.Remove("startTime");
+					await SaveProperties();
 				}
 				if (Application.Current.Properties.ContainsKey("endTime"))
 				{
 					Application.Current.Properties.Remove("endTime");
+					await SaveProperties();
 				}
 				await this.navigation.PopAsync();
 			}
@@ -121,6 +126,11 @@ namespace Borgarverk
 		void Continue()
 		{
 			this.navigation.PushAsync(new NewEntryPage(StartTime, EndTime));
+		}
+
+		async Task SaveProperties()
+		{
+			await Application.Current.SavePropertiesAsync();
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

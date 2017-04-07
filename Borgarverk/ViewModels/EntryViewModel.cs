@@ -459,13 +459,29 @@ namespace Borgarverk.ViewModels
 				if (Application.Current.Properties.ContainsKey("startTime"))
 				{
 					Application.Current.Properties.Remove("startTime");
+                    await SaveProperties();
+
 				}
 				if (Application.Current.Properties.ContainsKey("endTime"))
 				{
 					Application.Current.Properties.Remove("endTime");
+					await SaveProperties();
 				}
 				await navigation.PopToRootAsync(false);
 			}
+		}
+
+
+
+
+
+
+
+
+
+		async Task SaveProperties()
+		{
+			await Application.Current.SavePropertiesAsync();
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
