@@ -39,25 +39,23 @@ namespace Borgarverk
 			{
 				UseProxy = false
 			});
-			//var result = await client.PostAsync("https://httpbin.org/post", byteContent);
 
 			try
 			{
 				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
-				Debug.WriteLine(response);
+				if (response.StatusCode == System.Net.HttpStatusCode.OK)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			catch (Exception)
 			{
-				//if (response == null)
-				//{
-				//	response = new HttpResponseMessage();
-				//}
-				//response.StatusCode = HttpStatusCode.InternalServerError;
-				//response.ReasonPhrase = string.Format("RestHttpClient.SendRequest failed: {0}", ex);
 				return false;
 			}
-
-			return true;
 		}
 	}
 }
