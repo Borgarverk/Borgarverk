@@ -10,7 +10,7 @@ namespace Borgarverk.ViewModels
 	public class EntryViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees="", title="", comment="";
+		private string roadWidth = "", no = "", jobNo = "", roadLength = "", roadArea = "", tarQty = "", rate = "", degrees = "", title = "", comment = "";
 		private int id = 0;
 		private CarModel car = null;
 		private StationModel station = null;
@@ -49,7 +49,7 @@ namespace Borgarverk.ViewModels
 			this.endTime = end;
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-			title ="Nýtt verk";
+			title = "Nýtt verk";
 			this.selectedHladbaerColas = false;
 		}
 
@@ -99,7 +99,7 @@ namespace Borgarverk.ViewModels
 			get { return id; }
 			set
 			{
-				if (id!= value)
+				if (id != value)
 				{
 					id = value;
 				}
@@ -323,7 +323,7 @@ namespace Borgarverk.ViewModels
 		public bool IsValid
 		{
 			get { return isValid; }
-			set 
+			set
 			{
 				if (isValid != value)
 				{
@@ -385,7 +385,7 @@ namespace Borgarverk.ViewModels
 				(Degrees.Length > 0) &&
 				(Double.Parse(Degrees) > 0) &&
 				(Car != null) &&
-				(Station != null );
+				(Station != null);
 			IsValid = valid;
 			OnPropertyChanged("IsValid");
 			return valid;
@@ -393,79 +393,93 @@ namespace Borgarverk.ViewModels
 
 		async Task SaveEntry()
 		{
-			var confirmed = await Application.Current.MainPage.DisplayAlert("Confirmation", "Staðfesta sendingu forms?", "Já", "Nei");
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesta sendingu", "Staðfesta sendingu forms?", "Já", "Nei");
 			if (confirmed)
 			{
-				EntryModel model = new EntryModel();
-				if (ID != 0)
-				{
-					model.ID = ID;
-				}
-				model.Car = Car.Num;
-				model.Station = Station.Name;
-				if (this.selectedHladbaerColas)
-				{
-					model.No = "VSB" + No;
-				}
-				else
-				{
-					model.No = No;
-				}
-
-				model.JobNo = (Double.Parse(JobNo)).ToString();
-				// RoadWidth and RoadLength can be left unfilled
-				if (RoadWidth != "")
-				{
-					model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
-				}
-				else
-				{
-					model.RoadWidth = RoadWidth;
-				}
-				if (RoadLength != "")
-				{
-					model.RoadLength = (Double.Parse(RoadLength)).ToString();
-				}
-				else
-				{
-					model.RoadLength = RoadLength;
-				}
-				model.RoadArea = (Double.Parse(RoadArea)).ToString();
-				model.TarQty = (Double.Parse(TarQty)).ToString();
-				model.Rate = (Double.Parse(Rate)).ToString();
-				model.Degrees = (Double.Parse(Degrees)).ToString();
-				model.TimeCreated = DateTime.Now;
-				model.StartTime = StartTime;
-				model.EndTime = EndTime;
-				model.Comment = Comment;
-
-				var sendResult = sendService.SendEntry(model);
-				if (sendResult.Result)
-				{
-					model.TimeSent = DateTime.Now;
-					model.Sent = true;
-					// Var það þannig að ef að það er entry i database-inum 
-					//með sama ID þá er ekki insertað heldur update-að?
-					DataService.AddEntry(model);
-				}
-				else
-				{
-					model.TimeSent = null;
-					model.Sent = false;
-					DataService.AddEntry(model);
-				}
-
+				Save();
 				// Job finished, delete the saved start time and end time
 				if (Application.Current.Properties.ContainsKey("startTime"))
 				{
 					Application.Current.Properties.Remove("startTime");
+					await SaveProperties();
+
 				}
 				if (Application.Current.Properties.ContainsKey("endTime"))
 				{
 					Application.Current.Properties.Remove("endTime");
+					await SaveProperties();
 				}
 				await navigation.PopToRootAsync(false);
 			}
+		}
+
+		async Task Save()
+		{
+			EntryModel model = new EntryModel();
+			if (ID != 0)
+			{
+				model.ID = ID;
+			}
+			model.Car = Car.Num;
+			model.Station = Station.Name;
+			if (this.selectedHladbaerColas)
+			{
+				model.No = "VSB" + No;
+			}
+			else
+			{
+				model.No = No;
+			}
+
+			model.JobNo = (Double.Parse(JobNo)).ToString();
+			// RoadWidth and RoadLength can be left unfilled
+			if (RoadWidth != "")
+			{
+				model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
+			}
+			else
+			{
+				model.RoadWidth = RoadWidth;
+			}
+			if (RoadLength != "")
+			{
+				model.RoadLength = (Double.Parse(RoadLength)).ToString();
+			}
+			else
+			{
+				model.RoadLength = RoadLength;
+			}
+			model.RoadArea = (Double.Parse(RoadArea)).ToString();
+			model.TarQty = (Double.Parse(TarQty)).ToString();
+			model.Rate = (Double.Parse(Rate)).ToString();
+			model.Degrees = (Double.Parse(Degrees)).ToString();
+			model.TimeCreated = DateTime.Now;
+			model.StartTime = StartTime;
+			model.EndTime = EndTime;
+			model.Comment = Comment;
+
+			var sendResult = await sendService.SendEntry(model);
+			if (sendResult)
+			{
+				model.TimeSent = DateTime.Now;
+				model.Sent = true;
+				// Var það þannig að ef að það er entry i database-inum 
+				//með sama ID þá er ekki insertað heldur update-að?
+				DataService.AddEntry(model);
+				await Application.Current.MainPage.DisplayAlert("Sending tókst", "Færslan hefur verið send", "Loka");
+			}
+			else
+			{
+				model.TimeSent = null;
+				model.Sent = false;
+				DataService.AddEntry(model);
+				await Application.Current.MainPage.DisplayAlert("Sending mistókst", "Ekki tókst að senda færslu", "Loka");
+			}
+		}
+
+		async Task SaveProperties()
+		{
+			await Application.Current.SavePropertiesAsync();
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

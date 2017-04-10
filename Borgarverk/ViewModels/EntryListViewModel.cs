@@ -12,8 +12,7 @@ namespace Borgarverk.ViewModels
 	public class EntryListViewModel : INotifyPropertyChanged
 	{
 		#region private variables
-		private ObservableCollection<EntryModel> allEntries;
-		private ObservableCollection<EntryModel> entries;
+		private ObservableCollection<EntryModel> entries, allEntries, sentEntries, unSentEntries;
 		private ObservableCollection<CarModel> cars;
 		private ObservableCollection<StationModel> stations;
 		private ISendService sendService;
@@ -27,16 +26,16 @@ namespace Borgarverk.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		// Ath þurfum navigation ef við ætlum að geta editað færslu
-		// en kannski vilja þeir það ekki? spyrjum á fundinum
 		public EntryListViewModel(ISendService sService, INavigation navigation)
 		{
 			this.sendService = sService;
 			this.navigation = navigation;
 			allEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
+			Entries = AllEntries;
+			sentEntries = new ObservableCollection<EntryModel>();
+			unSentEntries = new ObservableCollection<EntryModel>();
 			this.cars = new ObservableCollection<CarModel>(DataService.GetCars());
 			this.stations = new ObservableCollection<StationModel>(DataService.GetStations());
-			Entries = AllEntries;
 			SendAllEntriesCommand = new Command(async () => await SendAllEntries());
 			ModifySelectedEntryCommand = new Command(async () => await ModifySelectedEntry());
 			DeleteSelectedEntryCommand = new Command(async () => await DeleteSelectedEntry());
@@ -78,7 +77,8 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		public EntryModel SelectedEntry { 
+		public EntryModel SelectedEntry
+		{
 			get { return selectedEntry; }
 			set
 			{
@@ -199,11 +199,11 @@ namespace Borgarverk.ViewModels
 			{
 				AllEntries = entries;
 			}
-			var match = entries.Where(c => c.No.ToLower().Contains(SearchString.ToLower()) || 
-			                          c.Station.ToLower().Contains(searchString.ToLower()) ||
-			                          c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()) ||
-			                          c.TarQty.ToString().Contains(SearchString) ||
-			                          c.RoadArea.ToString().Contains(SearchString));
+			var match = entries.Where(c => c.No.ToLower().Contains(SearchString.ToLower()) ||
+									  c.Station.ToLower().Contains(searchString.ToLower()) ||
+									  c.TimeCreated.ToString().ToLower().Contains(SearchString.ToLower()) ||
+									  c.TarQty.ToString().Contains(SearchString) ||
+									  c.RoadArea.ToString().Contains(SearchString));
 			AllEntries = new ObservableCollection<EntryModel>(match);
 		}
 
@@ -212,7 +212,7 @@ namespace Borgarverk.ViewModels
 			// If there are no entries
 			if (allEntries.Count == 0)
 			{
-				return ;
+				return;
 			}
 
 			var confirmed = await Application.Current.MainPage.DisplayAlert("Eyða öllum færslum", "Viltu eyða öllum færslum?", "Já", "Nei");
@@ -222,7 +222,7 @@ namespace Borgarverk.ViewModels
 				allEntries.Clear();
 			}
 		}
-		
+
 		async Task SendAllEntries()
 		{
 			// If there are no entries
@@ -231,33 +231,52 @@ namespace Borgarverk.ViewModels
 				return;
 			}
 
-			List<EntryModel> send = new List<EntryModel>();
-			foreach (var entry in AllEntries)
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Senda allar færslur", "Viltu senda allar færslur?", "Já", "Nei");
+			if (confirmed)
 			{
-				if (!entry.Sent)
-				{
-					send.Add(entry);
-				}
-			}
+				await Send();
 
-			var sendResult = sendService.SendEntries(send);
-			if (sendResult.Result)
-			{
-				for (var i = send.Count - 1; i >= 0; i--)
+				if (unSentEntries.Count != 0)
 				{
-					var tmpEntry = AllEntries[AllEntries.IndexOf(send[i])];
-					tmpEntry.Sent = true;
-					tmpEntry.TimeSent = DateTime.Now;
-					DataService.UpdateEntry(tmpEntry);
+					var msg = "";
+					if (unSentEntries.Count == 1)
+					{
+						msg = String.Format("Ekki tókst að senda {0} færslu, reyndu aftur síðar", unSentEntries.Count);
+					}
+					else
+					{
+						msg = String.Format("Ekki tókst að senda {0} færslur, reyndu aftur síðar", unSentEntries.Count);
+					}
+
+					await Application.Current.MainPage.DisplayAlert("Sending Mistókst", msg, "Loka");
 				}
+				unSentEntries.Clear();
 				RefreshEntries();
-			}
-			else
-			{
-				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslur, reyndu aftur síðar", "OK");
 			}
 		}
 
+		async Task Send()
+		{
+			for (var i = allEntries.Count - 1; i >= 0; i--)
+			{
+				if (!allEntries[i].Sent)
+				{
+					var e = allEntries[i];
+					var sendResult = await sendService.SendEntry(e);
+					if (!sendResult)
+					{
+						unSentEntries.Add(e);
+					}
+					else
+					{
+						sentEntries.Add(e);
+						e.Sent = true;
+						e.TimeSent = DateTime.Now;
+						DataService.UpdateEntry(e);
+					}
+				}
+			}
+		}
 		async Task SendEntry()
 		{
 			var sendResult = sendService.SendEntry(SelectedEntry);

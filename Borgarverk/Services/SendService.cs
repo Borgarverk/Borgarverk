@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace Borgarverk
 {
@@ -30,44 +31,31 @@ namespace Borgarverk
 		{
 			entry.TimeSent = DateTime.Now;
 			entry.Sent = true;
-            var myContent = JsonConvert.SerializeObject(entry);
-            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+			var myContent = JsonConvert.SerializeObject(entry);
+			var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+			var byteContent = new ByteArrayContent(buffer);
+			byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			var client = new HttpClient(new HttpClientHandler
 			{
 				UseProxy = false
 			});
-			//var result = await client.PostAsync("https://httpbin.org/post", byteContent);
 
 			try
 			{
 				var response = await client.PostAsync("https://httpbin.org/post", byteContent).ConfigureAwait(continueOnCapturedContext: false);
+				if (response.StatusCode == System.Net.HttpStatusCode.OK)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			catch (Exception)
 			{
-				//if (response == null)
-				//{
-				//	response = new HttpResponseMessage();
-				//}
-				//response.StatusCode = HttpStatusCode.InternalServerError;
-				//response.ReasonPhrase = string.Format("RestHttpClient.SendRequest failed: {0}", ex);
 				return false;
 			}
-
-			return false;
-		}
-
-		public async Task<Boolean> SendEntries(List<EntryModel> entries)
-		{
-			foreach (var entry in entries)
-			{
-				entry.TimeSent = DateTime.Now;
-				entry.Sent = true;
-				await SendEntry(entry);
-			}
-
-			return true;
 		}
 	}
 }
