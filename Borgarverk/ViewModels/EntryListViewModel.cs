@@ -236,36 +236,6 @@ namespace Borgarverk.ViewModels
 			{
 				List<EntryModel> sentEntries = new List<EntryModel>();
 				List<EntryModel> UnSentEntries = new List<EntryModel>();
-				/*foreach (var entry in AllEntries)
-				{
-					if (!entry.Sent)
-					{
-						var sendResult = sendService.SendEntry(entry);
-						if (!sendResult.Result)
-						{
-							UnSentEntries.Add(entry);
-						}
-						else
-						{
-							sentEntries.Add(entry);
-						}
-					}
-				}
-
-				for (var i = sentEntries.Count - 1; i >= 0; i--)
-				{
-					var tmpEntry = AllEntries[AllEntries.IndexOf(sentEntries[i])];
-					tmpEntry.Sent = true;
-					tmpEntry.TimeSent = DateTime.Now;
-					DataService.UpdateEntry(tmpEntry);
-				}
-
-				if (UnSentEntries.Count != 0)
-				{
-					var msg = String.Format("Ekki tókst að senda {0} færslur, reyndu aftur síðar", UnSentEntries.Count);
-					await Application.Current.MainPage.DisplayAlert("Sending Mistókst", msg, "Loka");
-				}
-				RefreshEntries();*/
 
 				for (var i = allEntries.Count - 1; i >= 0; i--)
 				{
