@@ -30,7 +30,6 @@ namespace Borgarverk
 		public async Task<Boolean> SendEntry(EntryModel entry)
 		{
 			entry.TimeSent = DateTime.Now;
-			entry.Sent = true;
 			var myContent = JsonConvert.SerializeObject(entry);
 			var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
 			var byteContent = new ByteArrayContent(buffer);

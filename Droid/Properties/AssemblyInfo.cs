@@ -25,8 +25,9 @@ using Android.App;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-#if DEBUG
+
+/*#if DEBUG
 [assembly: Application(Debuggable=true, Icon = "@drawable/Borgarverk_icon") ]
 #else
 [assembly: Application(Debuggable = false, Icon = "@drawable/Borgarverk_icon")]
-#endif
+#endif*/
