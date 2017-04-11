@@ -1,10 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using SQLite;
 
 namespace Borgarverk.Models
 {
-	public class EntryModel
+	public class EntryModel : INotifyPropertyChanged
 	{
+		#region events
+		public event PropertyChangedEventHandler PropertyChanged;
+		#endregion
 		[PrimaryKey, AutoIncrement]
 		public int ID { get; set; }
 		public string Car { get; set; }
@@ -23,5 +27,28 @@ namespace Borgarverk.Models
 		public DateTime? StartTime { get; set; }
 		public DateTime? EndTime { get; set; }
 		public bool Sent { get; set; }
+		private bool active = false;
+
+		public bool Active
+		{
+			get { return active; }
+			set
+			{
+				if (active != value)
+				{
+					active = value;
+					OnPropertyChanged("Active");
+				}
+			}
+		}
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			var changed = PropertyChanged;
+			if (changed != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
 	}
 }

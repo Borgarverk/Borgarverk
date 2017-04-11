@@ -262,16 +262,19 @@ namespace Borgarverk.ViewModels
 				if (!allEntries[i].Sent)
 				{
 					var e = allEntries[i];
+					e.Active = true;
 					var sendResult = await sendService.SendEntry(e);
 					if (!sendResult)
 					{
 						unSentEntries.Add(e);
+						e.Active = false;
 					}
 					else
 					{
 						sentEntries.Add(e);
 						e.Sent = true;
 						e.TimeSent = DateTime.Now;
+						e.Active = false;
 						DataService.UpdateEntry(e);
 					}
 				}
@@ -279,15 +282,18 @@ namespace Borgarverk.ViewModels
 		}
 		async Task SendEntry()
 		{
+			SelectedEntry.Active = true;
 			var sendResult = sendService.SendEntry(SelectedEntry);
 			if (sendResult.Result)
 			{
 				SelectedEntry.Sent = true;
 				SelectedEntry.TimeSent = DateTime.Now;
+				SelectedEntry.Active = false;
 				DataService.UpdateEntry(SelectedEntry);
 			}
 			else
 			{
+				SelectedEntry.Active = false;
 				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
 			}
 			RefreshEntries();

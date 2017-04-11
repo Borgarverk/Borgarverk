@@ -61,6 +61,7 @@
 										<Label Grid.Column="3" Text="{Binding TarQty}" VerticalOptions="Center"/>
 										<Label Grid.Column="4" Text="{Binding RoadArea}" VerticalOptions="Center"/>
 					                	<Image Grid.Column="5" Source="icon_done.png"  IsVisible="{Binding Sent}" HorizontalOptions="End" Margin="10" VerticalOptions="Center"/>
+										<ActivityIndicator Grid.Column="5" IsVisible="{Binding Active}" IsRunning="{Binding Active}" HorizontalOptions="End" Margin="10" VerticalOptions="Center"/>
 								</Grid>
 							</ViewCell.View>
 						</ViewCell>
