@@ -234,7 +234,7 @@ namespace Borgarverk.ViewModels
 			var confirmed = await Application.Current.MainPage.DisplayAlert("Senda allar færslur", "Viltu senda allar færslur?", "Já", "Nei");
 			if (confirmed)
 			{
-				await Send();
+				await SendAll();
 
 				if (unSentEntries.Count != 0)
 				{
@@ -254,7 +254,7 @@ namespace Borgarverk.ViewModels
 			}
 		}
 
-		async Task Send()
+		async Task SendAll()
 		{
 			for (var i = allEntries.Count - 1; i >= 0; i--)
 			{
@@ -279,12 +279,19 @@ namespace Borgarverk.ViewModels
 				}
 			}
 		}
+
 		async Task SendEntry()
 		{
 			var confirm = await Application.Current.MainPage.DisplayAlert("Staðfesta sendingu", "Staðesta sendingu færslu?", "Já", "Nei");
 			if (confirm)
 			{
-				SelectedEntry.Active = true;
+				await Task.Run(() => SendOne());
+			}
+		}
+
+		async Task SendOne()
+		{
+			SelectedEntry.Active = true;
 				var sendResult = sendService.SendEntry(SelectedEntry);
 				if (sendResult.Result)
 				{
@@ -297,12 +304,6 @@ namespace Borgarverk.ViewModels
 				{
 					SelectedEntry.Active = false;
 				}
-			}
-		}
-
-		private void RefreshEntries()
-		{
-			AllEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)

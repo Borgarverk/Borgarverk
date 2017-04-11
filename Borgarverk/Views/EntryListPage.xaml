@@ -71,10 +71,10 @@
 			<Grid Grid.Row="4" IsVisible="{Binding IsSelected}" Padding="30,0,30,0">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="2" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
-					<RowDefinition Height="25" />
+					<RowDefinition Height="30" />
+					<RowDefinition Height="30" />
+					<RowDefinition Height="30" />
+					<RowDefinition Height="30" />
 					<RowDefinition Height="60" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
