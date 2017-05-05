@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="2.0" package="hf-design.borgarverk">
-	<uses-sdk android:minSdkVersion="24" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="2.0" package="hf_design.borgarverk">
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="23" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:label="Borgarverk" android:icon="@drawable/Borgarverk_icon" android:theme="@style/MyTheme"></application>
 </manifest>
