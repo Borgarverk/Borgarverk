@@ -393,7 +393,7 @@ namespace Borgarverk.ViewModels
 
 		async Task SaveEntry()
 		{
-			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesta sendingu", "Staðfesta sendingu forms?", "Já", "Nei");
+			var confirmed = await Application.Current.MainPage.DisplayAlert("Staðfesta sendingu", "Staðfesta sendingu færslu?", "Já", "Nei");
 			if (confirmed)
 			{
 				Save();
@@ -466,14 +466,16 @@ namespace Borgarverk.ViewModels
 				// Var það þannig að ef að það er entry i database-inum 
 				//með sama ID þá er ekki insertað heldur update-að?
 				DataService.AddEntry(model);
-				await Application.Current.MainPage.DisplayAlert("Sending tókst", "Færslan hefur verið send", "Loka");
+				DependencyService.Get<IPopUp>().ShowToast("Sending tókst");
+				//await Application.Current.MainPage.DisplayAlert("Sending tókst", "Færslan hefur verið send", "Loka");
 			}
 			else
 			{
 				model.TimeSent = null;
 				model.Sent = false;
 				DataService.AddEntry(model);
-				await Application.Current.MainPage.DisplayAlert("Sending mistókst", "Ekki tókst að senda færslu", "Loka");
+				DependencyService.Get<IPopUp>().ShowToast("Sending mistókst");
+				//await Application.Current.MainPage.DisplayAlert("Sending mistókst", "Ekki tókst að senda færslu", "Loka");
 			}
 		}
 

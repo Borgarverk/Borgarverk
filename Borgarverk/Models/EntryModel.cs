@@ -26,7 +26,7 @@ namespace Borgarverk.Models
 		public DateTime? TimeCreated { get; set; }
 		public DateTime? StartTime { get; set; }
 		public DateTime? EndTime { get; set; }
-		public bool Sent { get; set; }
+		public bool sent = false;
 		private bool active = false;
 
 		public bool Active
@@ -38,6 +38,19 @@ namespace Borgarverk.Models
 				{
 					active = value;
 					OnPropertyChanged("Active");
+				}
+			}
+		}
+
+		public bool Sent
+		{
+			get { return sent; }
+			set
+			{
+				if (sent != value)
+				{
+					sent = value;
+					OnPropertyChanged("Sent");
 				}
 			}
 		}

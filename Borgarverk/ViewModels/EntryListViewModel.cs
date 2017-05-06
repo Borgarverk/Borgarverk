@@ -234,7 +234,7 @@ namespace Borgarverk.ViewModels
 			var confirmed = await Application.Current.MainPage.DisplayAlert("Senda allar færslur", "Viltu senda allar færslur?", "Já", "Nei");
 			if (confirmed)
 			{
-				await Send();
+				await SendAll();
 
 				if (unSentEntries.Count != 0)
 				{
@@ -248,14 +248,13 @@ namespace Borgarverk.ViewModels
 						msg = String.Format("Ekki tókst að senda {0} færslur, reyndu aftur síðar", unSentEntries.Count);
 					}
 
-					await Application.Current.MainPage.DisplayAlert("Sending Mistókst", msg, "Loka");
+					DependencyService.Get<IPopUp>().ShowToast(msg);
 				}
 				unSentEntries.Clear();
-				RefreshEntries();
 			}
 		}
 
-		async Task Send()
+		async Task SendAll()
 		{
 			for (var i = allEntries.Count - 1; i >= 0; i--)
 			{
@@ -272,36 +271,39 @@ namespace Borgarverk.ViewModels
 					else
 					{
 						sentEntries.Add(e);
-						e.Sent = true;
 						e.TimeSent = DateTime.Now;
 						e.Active = false;
+						e.Sent = true;
 						DataService.UpdateEntry(e);
 					}
 				}
 			}
 		}
+
 		async Task SendEntry()
 		{
-			SelectedEntry.Active = true;
-			var sendResult = sendService.SendEntry(SelectedEntry);
-			if (sendResult.Result)
+			var confirm = await Application.Current.MainPage.DisplayAlert("Staðfesta sendingu", "Staðesta sendingu færslu?", "Já", "Nei");
+			if (confirm)
 			{
-				SelectedEntry.Sent = true;
-				SelectedEntry.TimeSent = DateTime.Now;
-				SelectedEntry.Active = false;
-				DataService.UpdateEntry(SelectedEntry);
+				await Task.Run(() => SendOne());
 			}
-			else
-			{
-				SelectedEntry.Active = false;
-				await Application.Current.MainPage.DisplayAlert("Villa", "Ekki tókst að senda færslu, reyndu aftur síðar", "OK");
-			}
-			RefreshEntries();
 		}
 
-		private void RefreshEntries()
+		async Task SendOne()
 		{
-			AllEntries = new ObservableCollection<EntryModel>(DataService.GetEntries());
+			SelectedEntry.Active = true;
+				var sendResult = sendService.SendEntry(SelectedEntry);
+				if (sendResult.Result)
+				{
+					SelectedEntry.TimeSent = DateTime.Now;
+					SelectedEntry.Active = false;
+					SelectedEntry.Sent = true;
+					DataService.UpdateEntry(SelectedEntry);
+				}
+				else
+				{
+					SelectedEntry.Active = false;
+				}
 		}
 
 		protected virtual void OnPropertyChanged(string propertyName)
