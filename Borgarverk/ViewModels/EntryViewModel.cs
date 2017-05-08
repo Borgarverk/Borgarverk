@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Borgarverk.Models;
 using Xamarin.Forms;
@@ -457,23 +458,27 @@ namespace Borgarverk.ViewModels
 			model.StartTime = StartTime;
 			model.EndTime = EndTime;
 			model.Comment = Comment;
+			model.TimeSent = null;
+			model.Sent = false;
 
-			var sendResult = await sendService.SendEntry(model);
+			var entryId = DataService.AddEntry(model);
+			var send = DataService.GetEntry(entryId);
+			Debug.WriteLine("ID");
+			Debug.WriteLine(entryId);
+
+			var sendResult = await sendService.SendEntry(DataService.GetEntry(send.ID));
 			if (sendResult)
 			{
-				model.TimeSent = DateTime.Now;
-				model.Sent = true;
+				send.TimeSent = DateTime.Now;
+				send.Sent = true;
 				// Var það þannig að ef að það er entry i database-inum 
 				//með sama ID þá er ekki insertað heldur update-að?
-				DataService.AddEntry(model);
+				DataService.UpdateEntry(send);
 				DependencyService.Get<IPopUp>().ShowToast("Sending tókst");
 				//await Application.Current.MainPage.DisplayAlert("Sending tókst", "Færslan hefur verið send", "Loka");
 			}
 			else
 			{
-				model.TimeSent = null;
-				model.Sent = false;
-				DataService.AddEntry(model);
 				DependencyService.Get<IPopUp>().ShowToast("Sending mistókst");
 				//await Application.Current.MainPage.DisplayAlert("Sending mistókst", "Ekki tókst að senda færslu", "Loka");
 			}

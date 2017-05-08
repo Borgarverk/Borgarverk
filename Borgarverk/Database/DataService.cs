@@ -77,7 +77,15 @@ namespace Borgarverk
 				var check = database.Table<EntryModel>().FirstOrDefault(t => t.ID == model.ID);
 				if (check == null)
 				{
-					return database.Insert(model);
+					var inserted = database.Insert(model);
+					if (inserted == 1)
+					{
+						return model.ID;
+					}
+					else
+					{
+						return 0;
+					}
 				}
 				else
 				{

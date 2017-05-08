@@ -16,7 +16,7 @@ namespace Borgarverk
 			info.roadworkid = model.ID.ToString();
 			info.mobile = mobileId;
 			info.station = model.Station;
-			info.number = model.Car;
+			info.number = "ZI-K22";
 			info.job_number = model.JobNo;
 			info.road_length = model.RoadLength;
 			info.road_width = model.RoadWidth;
