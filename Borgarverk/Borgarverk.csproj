@@ -81,6 +81,9 @@
       <DependentUpon>TimePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\IPopUp.cs" />
+    <Compile Include="Models\IdModel.cs" />
+    <Compile Include="Models\InfoModel.cs" />
+    <Compile Include="Services\InfoFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLitePCLRaw.core">
