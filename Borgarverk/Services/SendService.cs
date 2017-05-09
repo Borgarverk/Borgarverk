@@ -40,13 +40,11 @@ namespace Borgarverk
 
 			// Get mobileId
 			var getAddress = $"https://floti.trackwell.com/api/mobiles/{number}/";
-			var mobileId = "";
-			Debug.WriteLine("Headers FIRST");
-			Debug.WriteLine(client.DefaultRequestHeaders);
+			var mobileId = 0;
 			try
 			{
 				var response = await client.GetAsync(getAddress);
-				if (response.IsSuccessStatusCode)
+				if (response.StatusCode == System.Net.HttpStatusCode.OK)
 				{
 					var resContent = await response.Content.ReadAsStringAsync();
 					mobileId = JsonConvert.DeserializeObject<IdModel>(resContent).Id;
@@ -61,29 +59,17 @@ namespace Borgarverk
 				return false;
 			}
 
-
 			// Post entry
 			var postAddress = "https://floti.trackwell.com/api/roadwork/";
 			var uri = new Uri(postAddress);
-
 			entry.TimeSent = DateTime.Now;
-			var info = factory.ConstructInfo(entry, mobileId); 
-
+			var info = factory.ConstructInfo(entry, mobileId);
 			var json = JsonConvert.SerializeObject(info);
-			var buffer = System.Text.Encoding.UTF8.GetBytes(json);
-			var byteContent = new ByteArrayContent(buffer);
-			Debug.WriteLine("JSON");
-			Debug.WriteLine(json);
-			Debug.WriteLine("Uri");
-			Debug.WriteLine(uri);
-			Debug.WriteLine("Headers");
-			Debug.WriteLine(client.DefaultRequestHeaders);
-			Debug.WriteLine("Byte Content");
-			Debug.WriteLine(byteContent);
+			var content = new StringContent(json, Encoding.UTF8, "application/json");
 			try
 			{
-				var response = await client.PostAsync(uri, byteContent);
-				if (response.StatusCode == System.Net.HttpStatusCode.OK)
+				var response = await client.PostAsync(uri, content);
+				if (response.StatusCode == System.Net.HttpStatusCode.Created)
 				{
 					return true;
 				}

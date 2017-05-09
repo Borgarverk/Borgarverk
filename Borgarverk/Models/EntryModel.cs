@@ -14,13 +14,13 @@ namespace Borgarverk.Models
 		public string Car { get; set; }
 		public string Station { get; set; }
 		public string No { get; set; }
-		public string JobNo { get; set; }
-		public string RoadLength { get; set; }
-		public string RoadWidth { get; set; }
-		public string RoadArea { get; set; }
-		public string TarQty { get; set; }
-		public string Rate { get; set; }
-		public string Degrees { get; set; }
+		public int JobNo { get; set; }
+		public double RoadLength { get; set; }
+		public double RoadWidth { get; set; }
+		public double RoadArea { get; set; }
+		public double TarQty { get; set; }
+		public double Rate { get; set; }
+		public double Degrees { get; set; }
 		public string Comment { get; set; }
 		public DateTime? TimeSent { get; set; }
 		public DateTime? TimeCreated { get; set; }

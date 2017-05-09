@@ -7,7 +7,7 @@ namespace Borgarverk
 		{
 		}
 
-		public string Id { get; set; }
+		public int Id { get; set; }
 		public string GlobalId { get; set; }
 	}
 }

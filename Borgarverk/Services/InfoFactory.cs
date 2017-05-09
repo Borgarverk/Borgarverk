@@ -9,14 +9,14 @@ namespace Borgarverk
 		{
 		}
 
-		public InfoModel ConstructInfo (EntryModel model, string mobileId)
+		public InfoModel ConstructInfo (EntryModel model, int mobileId)
 		{
 			var info = new InfoModel();
 
-			info.roadworkid = model.ID.ToString();
+			info.roadworkid = model.ID;
 			info.mobile = mobileId;
 			info.station = model.Station;
-			info.number = "ZI-K22";
+			info.number = model.No;
 			info.job_number = model.JobNo;
 			info.road_length = model.RoadLength;
 			info.road_width = model.RoadWidth;

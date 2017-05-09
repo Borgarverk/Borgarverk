@@ -128,6 +128,8 @@ namespace Borgarverk.ViewModels
 			{
 				return;
 			}
+			FixCarNo();
+
 			var nCar = new CarModel(NewCar);
 			DataService.AddCar(nCar);
 			Cars.Add(new SelectableItemWrapper<CarModel>(nCar));
@@ -145,6 +147,11 @@ namespace Borgarverk.ViewModels
 			DataService.AddStation(nStation);
 			Stations.Add(new SelectableItemWrapper<StationModel>(nStation));
 			NewStation = ""; //Clear entry after saving
+		}
+
+		void FixCarNo()
+		{
+			NewCar = NewCar.ToUpper(); // ml-345 -> ML-345
 		}
 	}
 }

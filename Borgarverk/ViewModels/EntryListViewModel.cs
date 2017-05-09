@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Borgarverk.Models;
@@ -256,25 +257,25 @@ namespace Borgarverk.ViewModels
 
 		async Task SendAll()
 		{
-			for (var i = allEntries.Count - 1; i >= 0; i--)
+			foreach(var entry in allEntries) //(var i = allEntries.Count - 1; i >= 0; i--)
 			{
-				if (!allEntries[i].Sent)
+				if (!entry.sent/*!allEntries[i].Sent*/)
 				{
-					var e = allEntries[i];
-					e.Active = true;
-					var sendResult = await sendService.SendEntry(e);
+					//var e = allEntries[i];
+					entry.Active = true;
+					var sendResult = await sendService.SendEntry(entry);
 					if (!sendResult)
 					{
-						unSentEntries.Add(e);
-						e.Active = false;
+						unSentEntries.Add(entry);
+						entry.Active = false;
 					}
 					else
 					{
-						sentEntries.Add(e);
-						e.TimeSent = DateTime.Now;
-						e.Active = false;
-						e.Sent = true;
-						DataService.UpdateEntry(e);
+						sentEntries.Add(entry);
+						entry.TimeSent = DateTime.Now;
+						entry.Active = false;
+						entry.Sent = true;
+						DataService.UpdateEntry(entry);
 					}
 				}
 			}

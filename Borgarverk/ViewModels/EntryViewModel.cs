@@ -22,6 +22,8 @@ namespace Borgarverk.ViewModels
 		private ObservableCollection<StationModel> stations;
 		private INavigation navigation;
 		private Boolean selectedHladbaerColas;
+
+		private InfoFactory fa = new InfoFactory();
 		#endregion
 
 		public Boolean SelectedHladbaerColas
@@ -77,14 +79,14 @@ namespace Borgarverk.ViewModels
 				}
 			}
 			ID = m.ID;
-			jobNo = m.JobNo;
+			jobNo = (m.JobNo).ToString();
 			no = m.No;
-			roadWidth = m.RoadWidth;
-			roadLength = m.RoadLength;
-			roadArea = m.RoadArea;
-			tarQty = m.TarQty;
-			rate = m.Rate;
-			degrees = m.Degrees;
+			roadWidth = (m.RoadWidth).ToString();
+			roadLength = (m.RoadLength).ToString();
+			roadArea = (m.RoadArea).ToString();
+			tarQty = (m.TarQty).ToString();
+			rate = (m.Rate).ToString();
+			degrees = (m.Degrees).ToString();
 			comment = m.Comment;
 			startTime = m.StartTime;
 			endTime = m.EndTime;
@@ -416,55 +418,10 @@ namespace Borgarverk.ViewModels
 
 		async Task Save()
 		{
-			EntryModel model = new EntryModel();
-			if (ID != 0)
-			{
-				model.ID = ID;
-			}
-			model.Car = Car.Num;
-			model.Station = Station.Name;
-			if (this.selectedHladbaerColas)
-			{
-				model.No = "VSB" + No;
-			}
-			else
-			{
-				model.No = No;
-			}
-
-			model.JobNo = (Double.Parse(JobNo)).ToString();
-			// RoadWidth and RoadLength can be left unfilled
-			if (RoadWidth != "")
-			{
-				model.RoadWidth = (Double.Parse(RoadWidth)).ToString();
-			}
-			else
-			{
-				model.RoadWidth = RoadWidth;
-			}
-			if (RoadLength != "")
-			{
-				model.RoadLength = (Double.Parse(RoadLength)).ToString();
-			}
-			else
-			{
-				model.RoadLength = RoadLength;
-			}
-			model.RoadArea = (Double.Parse(RoadArea)).ToString();
-			model.TarQty = (Double.Parse(TarQty)).ToString();
-			model.Rate = (Double.Parse(Rate)).ToString();
-			model.Degrees = (Double.Parse(Degrees)).ToString();
-			model.TimeCreated = DateTime.Now;
-			model.StartTime = StartTime;
-			model.EndTime = EndTime;
-			model.Comment = Comment;
-			model.TimeSent = null;
-			model.Sent = false;
+			var model = ConstructModel();
 
 			var entryId = DataService.AddEntry(model);
 			var send = DataService.GetEntry(entryId);
-			Debug.WriteLine("ID");
-			Debug.WriteLine(entryId);
 
 			var sendResult = await sendService.SendEntry(DataService.GetEntry(send.ID));
 			if (sendResult)
@@ -482,6 +439,50 @@ namespace Borgarverk.ViewModels
 				DependencyService.Get<IPopUp>().ShowToast("Sending mistókst");
 				//await Application.Current.MainPage.DisplayAlert("Sending mistókst", "Ekki tókst að senda færslu", "Loka");
 			}
+		}
+
+		private EntryModel ConstructModel()
+		{
+			EntryModel model = new EntryModel();
+			if (ID != 0)
+			{
+				model.ID = ID;
+			}
+			model.Car = Car.Num;
+			model.Station = Station.Name;
+			if (this.selectedHladbaerColas)
+			{
+				model.No = "VSB" + No;
+			}
+			else
+			{
+				model.No = No;
+			}
+
+			model.JobNo = (Int32.Parse(JobNo));
+			// RoadWidth and RoadLength can be left unfilled
+			if (RoadWidth != "")
+			{
+				model.RoadWidth = (Double.Parse(RoadWidth));
+			}
+		
+			if (RoadLength != "")
+			{
+				model.RoadLength = (Double.Parse(RoadLength));
+			}
+		
+			model.RoadArea = (Double.Parse(RoadArea));
+			model.TarQty = (Double.Parse(TarQty));
+			model.Rate = (Double.Parse(Rate));
+			model.Degrees = (Double.Parse(Degrees));
+			model.TimeCreated = DateTime.Now;
+			model.StartTime = StartTime;
+			model.EndTime = EndTime;
+			model.Comment = Comment;
+			model.TimeSent = null;
+			model.Sent = false;
+
+			return model;
 		}
 
 		async Task SaveProperties()
