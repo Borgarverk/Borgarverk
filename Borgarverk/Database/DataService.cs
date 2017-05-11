@@ -29,7 +29,7 @@ namespace Borgarverk
 					AddCar(new CarModel("MU-510"));
 					AddCar(new CarModel("BZ-963"));
 					AddCar(new CarModel("US-553"));
-					AddCar(new CarModel("AZ-R93"));
+					AddCar(new CarModel("AZ-R92"));
 				}
 				if (GetStations().Count() == 0)
 				{

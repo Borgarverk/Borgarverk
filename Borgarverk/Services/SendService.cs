@@ -35,8 +35,8 @@ namespace Borgarverk
 			{
 				UseProxy = false
 			});
-			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", "b0132e2c143281b242ccd9465a7d817e808df500");
-			var number = "ZI-K22";
+			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", "56a88b8eb1f26a81cd4a8341b03ed5485a40ae5f");
+			var number = entry.Car;
 
 			// Get mobileId
 			var getAddress = $"https://floti.trackwell.com/api/mobiles/{number}/";
